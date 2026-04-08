@@ -7,7 +7,6 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
-  // Explicit slot assignment — every project used once
   const p = mockProjects;
 
   return (
@@ -40,32 +39,33 @@ export default function Home() {
               </Link>
             </div>
 
-            {/*
-              Featured grid — hero card left + compact cards right/bottom.
-              Hero uses overlay text on image (works with real screenshots).
-              Compact cards have image on top + text below (no clipping risk).
-            */}
-            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
-              {/* Hero — large left, 2-row span on desktop */}
-              <div className="sm:col-span-2 lg:col-span-7 lg:row-span-2">
-                <ProjectCard project={p[0]} variant="hero" className="h-full min-h-[280px] sm:min-h-[360px]" />
+            {/* Row 1: 1 wide featured + 1 compact, equal height */}
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-5">
+              <div className="sm:col-span-3">
+                <ProjectCard project={p[0]} variant="compact" className="h-full" />
               </div>
-
-              {/* Right column pair — compact cards stack naturally */}
-              <div className="lg:col-span-5">
-                <ProjectCard project={p[1]} variant="compact" />
-              </div>
-              <div className="lg:col-span-5">
-                <ProjectCard project={p[2]} variant="compact" />
+              <div className="sm:col-span-2">
+                <ProjectCard project={p[1]} variant="compact" className="h-full" />
               </div>
             </div>
 
-            {/* Second row — 4 compact cards */}
-            <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
+            {/* Row 2: 3 equal */}
+            <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
+              <ProjectCard project={p[2]} variant="compact" />
               <ProjectCard project={p[3]} variant="compact" />
-              <ProjectCard project={p[4]} variant="compact" />
+              <div className="col-span-2 lg:col-span-1">
+                <ProjectCard project={p[4]} variant="compact" />
+              </div>
+            </div>
+
+            {/* Row 3: 4 tighter cards */}
+            <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
               <ProjectCard project={p[5]} variant="compact" />
               <ProjectCard project={p[6]} variant="compact" />
+              <ProjectCard project={p[7]} variant="compact" />
+              <div className="col-span-2 lg:col-span-1">
+                <ProjectCard project={p[8]} variant="compact" />
+              </div>
             </div>
           </div>
         </section>
@@ -73,7 +73,6 @@ export default function Home() {
         {/* ===== Explore + Submit ===== */}
         <section className="mx-auto max-w-[1200px] px-4 py-10 sm:px-6">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
-            {/* Left: explore capsules — flex-wrap fills the space */}
             <div className="flex-1 min-w-0">
               <p className="mb-3 text-xs font-medium text-muted-foreground tracking-wider uppercase">
                 快速探索
@@ -91,7 +90,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: submit CTA — wider */}
             <div className="shrink-0 lg:w-[340px]">
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/8 via-card to-secondary/8 border border-border/40 p-6">
                 <div className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
