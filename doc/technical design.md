@@ -67,7 +67,7 @@
 | 代码规范 | ESLint + Prettier |
 | 类型 | TypeScript（严格模式） |
 | 截图服务 | Playwright（本地）/ screenshotone.com API（线上） |
-| 邮件 | Resend（前期） → 阿里云邮件推送（国内迁移后） |
+| 邮件 | 公开发布前里程碑接入 Resend → 阿里云邮件推送（国内迁移后） |
 | 分析 | Umami（自部署，隐私友好）或 Plausible |
 | 错误监控 | Sentry |
 
@@ -252,6 +252,33 @@ solo-product/
 ### 3.1 Project（项目）
 
 ```typescript
+type FieldSourceType =
+  | 'public_page'
+  | 'third_party_public'
+  | 'founder_submitted'
+  | 'founder_confirmed'
+  | 'editor_verified'
+  | 'ai_inference_internal';
+
+type VerificationStatus = 'unverified' | 'founder_confirmed' | 'editor_verified';
+
+interface VerifiableField<T> {
+  value: T;
+  sourceType: FieldSourceType;
+  sourceUrl?: string;
+  verificationStatus: VerificationStatus;
+  updatedAt: string;                   // ISO 8601
+  confidence?: number;                 // 仅内部参考，公开展示时可隐藏
+  isPublic: boolean;                   // 是否允许对外展示
+}
+
+interface DerivedInsight {
+  text: string;
+  sampleSize: number;
+  basedOnProjectIds: string[];
+  generatedAt: string;                 // ISO 8601
+}
+
 interface Project {
   // 基础标识
   id: string;                          // UUID
@@ -276,6 +303,7 @@ interface Project {
   // 标签体系（辅助维度）
   tags: {
     track: string[];                   // 赛道标签
+    taskScenario: string[];            // 核心任务场景强标签
     tools: string[];                   // 工具标签
     techStack: string[];               // 技术栈标签
     market: string[];                  // 市场标签
@@ -284,10 +312,10 @@ interface Project {
   
   // 数据指标（可选公开）
   metrics?: {
-    revenueRange?: RevenueRange;       // 收入区间
-    userCount?: string;                // 用户量描述
-    launchedDate?: string;             // 上线日期 (ISO 8601)
-    buildDuration?: string;            // 构建耗时描述
+    revenueRange?: VerifiableField<RevenueRange>; // 收入区间
+    userCount?: VerifiableField<string>;          // 用户量描述
+    launchedDate?: VerifiableField<string>;       // 上线日期 (ISO 8601)
+    buildDuration?: VerifiableField<string>;      // 构建耗时描述
   };
   
   // Build Story（可选，创始人后续填写）
@@ -302,11 +330,11 @@ interface Project {
   
   // 衍生数据（系统自动生成）
   derived?: {
-    relatedByStrack: string[];         // 同赛道项目 ID
+    relatedByTrack: string[];          // 同赛道项目 ID
     relatedByGrowth: string[];         // 同增长方式项目 ID
     relatedByFounder: string[];        // 同创始人画像项目 ID
     trackStats?: TrackStats;           // 赛道统计数据
-    insights: string[];                // 事实性观察
+    insights: DerivedInsight[];        // 事实性观察
   };
   
   // 来源信息
@@ -354,11 +382,13 @@ type RevenueRange =
   | '10k_50k' | '50k_plus';
 
 interface TrackStats {
+  sampleSize: number;                  // 参与统计的项目数
   totalInTrack: number;                // 同赛道项目总数
   businessModelDistribution: Record<string, number>;
   growthChannelDistribution: Record<string, number>;
   avgBuildEffort?: string;
   revenueDistribution?: Record<string, number>;
+  generatedAt: string;                 // 统计生成时间
 }
 ```
 
@@ -532,6 +562,7 @@ interface ProjectFilters {
   growthChannel?: GrowthChannel[];
   founderType?: FounderType[];
   stage?: ProjectStage[];
+  taskScenario?: string[];
   tags?: string[];
   search?: string;                     // 全文搜索
 }
@@ -576,7 +607,7 @@ interface AIService {
   generateDraft(project: Project, angle: string): Promise<ContentDraftResult>;
   
   // 赛道洞察生成
-  generateTrackInsights(trackProjects: Project[]): Promise<string[]>;
+  generateTrackInsights(trackProjects: Project[]): Promise<DerivedInsight[]>;
   
   // 反馈分析
   analyzeFeedback(feedback: Feedback): Promise<FeedbackAnalysis>;
@@ -610,7 +641,7 @@ interface ContentDraftResult {
   jikeVersion: string;                 // 即刻深度版
   xiaohongshuVersion: string;          // 小红书精华版
   cardData: Partial<Project>;          // 项目卡片结构化数据
-  derivedInsights: string[];           // 衍生观察
+  derivedInsights: DerivedInsight[];   // 衍生观察
 }
 ```
 
@@ -646,7 +677,7 @@ type NotificationTemplate =
   | 'track_update';             // 关注的赛道有新项目
 ```
 
-MVP 实现：仅支持邮件通知（Resend），其他通道做接口预留。
+MVP 阶段不接入通知通道，只保留接口定义。公开发布前里程碑优先接入邮件摘要；微信通道视主体条件和实际需求再接入。
 
 ### 4.5 截图服务 (ScreenshotService)
 
@@ -738,17 +769,23 @@ async function generateTrackStats(project: Project): Promise<TrackStats> {
     tags: project.tags.track,
     status: ['basic', 'featured', 'story'],
   }, { pageSize: 100, sortBy: 'newest' });
+
+  const publicRevenueProjects = trackProjects.items.filter(
+    p => p.metrics?.revenueRange?.isPublic && p.metrics.revenueRange.value
+  );
   
   return {
+    sampleSize: trackProjects.items.length,
     totalInTrack: trackProjects.total,
     businessModelDistribution: countBy(trackProjects.items, 'businessModel'),
     growthChannelDistribution: countBy(trackProjects.items, 'growthChannel'),
-    revenueDistribution: countBy(trackProjects.items, p => p.metrics?.revenueRange),
+    revenueDistribution: countBy(publicRevenueProjects, p => p.metrics?.revenueRange?.value),
+    generatedAt: new Date().toISOString(),
   };
 }
 ```
 
-结果缓存，项目库变更时失效重算。数据量小时实时计算也足够快。
+结果缓存，项目库变更时失效重算。数据量小时实时计算也足够快。样本量不足时前端只展示事实描述，不展示比例型结论。
 
 ### 5.4 分享卡片图生成
 
@@ -770,10 +807,10 @@ GET /api/share/[projectSlug]
 
 ### 5.5 筛选系统
 
-前端筛选器组件支持多维度交叉筛选。URL query params 同步筛选状态（支持分享带筛选条件的链接）。
+前端筛选器组件支持多维度交叉筛选。URL query params 同步筛选状态（支持分享带筛选条件的链接）。核心任务场景作为强标签参与筛选和相关推荐。
 
 ```
-/browse?businessModel=subscription&growthChannel=seo&stage=revenue
+/browse?businessModel=subscription&growthChannel=seo&taskScenario=acquisition-playbook
 ```
 
 MVP 阶段数据量小，筛选在前端完成（SSG 生成全量数据，前端 filter）。数据量大后切到后端 API 筛选 + 分页。
@@ -1210,6 +1247,7 @@ MVP 阶段数据量极小，不需要复杂缓存。注意事项：
 - 不存储用户敏感信息（MVP 阶段无用户系统）
 - 反馈数据不公开展示
 - 符合中国大陆数据存储要求（国内迁移后数据存国内）
+- 关键数据字段保留来源、验证状态、更新时间，便于审计和纠错
 
 ### 9.4 内容合规
 
@@ -1221,23 +1259,44 @@ MVP 阶段数据量极小，不需要复杂缓存。注意事项：
 
 ## 十、监控与分析
 
-### 10.1 访问分析
+### 10.1 产品成功指标
+
+- 北极星指标：每周深度发现会话数
+- 辅助指标：首页/落地页 → 首个详情页点击率
+- 辅助指标：详情页 → 关联项目二跳率
+- 辅助指标：深度发现会话占比
+- 辅助指标：被收录创始人的回访/补充率
+- 辅助指标：每周新增推荐/自荐数量
+
+建议埋点事件：
+- `project_detail_view`
+- `related_project_click`
+- `browse_filter_apply`
+- `task_scenario_click`
+- `deep_discovery_session`
+- `submission_start`
+- `submission_complete`
+- `founder_outreach_sent`
+- `founder_reply_received`
+
+### 10.2 访问分析
 
 使用 Umami（自部署）或 Plausible（隐私友好，不需要 cookie 弹窗）：
 - PV / UV / 页面停留时间
 - 来源渠道分析（小红书/即刻/搜索引擎/直接访问）
 - 热门项目排行
 - 筛选维度使用分析（哪些分类被用得最多）
-- 转化漏斗：浏览 → 查看详情 → 提交项目
+- 浏览者漏斗：落地页浏览 → 首个详情页 → 关联跳转 → 深度发现会话
+- 创始人漏斗：被收录后触达 → 回站查看 → 补充/纠错 → 分享收录页
 
-### 10.2 错误监控
+### 10.3 错误监控
 
 Sentry 集成：
 - 前端 JS 错误捕获
 - API Route 错误捕获
 - AI 服务调用失败告警
 
-### 10.3 工作流监控
+### 10.4 工作流监控
 
 Pipeline 执行日志：
 - 每次扫描的候选项目数
@@ -1257,6 +1316,7 @@ Pipeline 执行日志：
 - AI 预填流程：URL → 预填结果的完整链路
 - 提交流程：提交 → 存储 → 状态流转
 - 分类配置：分类/标签加载正确性
+- 关键数据字段：来源/验证状态/更新时间渲染正确
 
 ### 11.2 手工回归清单
 
@@ -1269,6 +1329,7 @@ Pipeline 执行日志：
 - [ ] 反馈提交走通
 - [ ] 移动端响应式正常（重点检查小红书/即刻内链接打开的体验）
 - [ ] 分享卡片图正确生成
+- [ ] 关键数据的来源、验证状态、更新时间显示正确
 - [ ] SEO meta 正确（用 Google Rich Results Test 验证）
 
 ---
@@ -1301,11 +1362,19 @@ Pipeline 执行日志：
 
 ## 十三、后续迭代规划
 
-### 第二阶段（MVP 验证后 1-2 个月）
+### 公开发布前里程碑（MVP 完成后，正式宣传前）
 
-- 用户登录系统（NextAuth + 手机验证码 + 微信登录）
+- 用户登录系统（优先服务认领/补充资料）
+- 项目认领流程系统化
+- 邮件订阅 / 每周精选摘要
+- 收录 / 精选通知模板
+- 创始人补充信息入口
+- 微信推送通知（如主体条件具备则接入，否则后移）
+
+### 第二阶段（公开发布后 1-2 个月）
+
 - 收藏/关注功能
-- 微信推送通知
+- 赛道/创始人订阅
 - 数据库迁移到 Supabase
 - 里程碑更新系统
 - 自动化信息源扫描（cron job）
