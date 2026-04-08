@@ -1,0 +1,15 @@
+{
+  "id": "founder_001",
+  "name": "张三",
+  "avatar": "https://placehold.co/80x80/DB6B25/FFFFFF?text=Z",
+  "bio": "全栈开发者，前字节员工，目前全职做独立产品",
+  "backgroundType": "tech_to_product",
+  "socialLinks": {
+    "jike": "#",
+    "twitter": "#",
+    "github": "#"
+  },
+  "projectIds": ["proj_001"],
+  "createdAt": "2026-04-01T00:00:00.000Z",
+  "updatedAt": "2026-04-08T00:00:00.000Z"
+}

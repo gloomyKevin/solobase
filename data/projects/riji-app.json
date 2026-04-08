@@ -1,0 +1,42 @@
+{
+  "id": "proj_002",
+  "slug": "riji-app",
+  "status": "basic",
+  "name": "日记本 App",
+  "tagline": "极简 AI 日记，帮你把碎碎念变成人生洞察",
+  "description": "日记本 App 是一个极简 AI 日记应用。用户随手记录生活片段，AI 自动整理分析，帮你发现生活中的规律和洞察。\n\n产品定位为极简体验，降低记录门槛，让日记从负担变成享受。",
+  "url": "https://riji-app.example.com",
+  "screenshots": ["https://placehold.co/800x500/E8F4F0/E8F4F0"],
+  "businessModel": "freemium",
+  "buildEffort": "monthly",
+  "growthChannel": "community",
+  "founderType": "non_tech_ai",
+  "stage": "launched",
+  "tags": {
+    "track": ["ai", "health"],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": ["china"],
+    "platform": ["ios", "web"]
+  },
+  "metrics": {
+    "userCount": { "value": "800+", "verificationStatus": "unverified", "isPublic": true },
+    "launchedDate": { "value": "2025-12", "verificationStatus": "unverified", "isPublic": true },
+    "buildDuration": { "value": "~5 周", "verificationStatus": "unverified", "isPublic": true }
+  },
+  "buildStory": {
+    "origin": "创始人自己有写日记的习惯，但觉得现有工具都太复杂，于是用 AI 辅助开发了一个极简版本。",
+    "toolsUsed": "Cursor + Claude（开发）、React Native（前端）、Supabase（后端）",
+    "timeline": "从 idea 到上线大约 5 周，中间迭代了 3 次 UI。",
+    "challenges": "作为非技术背景的创始人，最大挑战是学习理解 AI 生成代码的边界。",
+    "acquisition": "通过即刻社区分享开发过程，吸引了第一批用户。",
+    "currentStatus": "已上线，用户持续增长中，正在打磨付费转化率。"
+  },
+  "source": { "type": "curated", "claimedByFounder": false },
+  "founderId": "founder_002",
+  "stageColor": "#DB6B25",
+  "createdAt": "2026-04-02T00:00:00.000Z",
+  "updatedAt": "2026-04-08T00:00:00.000Z",
+  "publishedAt": "2026-04-03T00:00:00.000Z"
+}

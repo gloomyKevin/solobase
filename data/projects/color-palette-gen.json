@@ -1,0 +1,41 @@
+{
+  "id": "proj_005",
+  "slug": "color-palette-gen",
+  "status": "basic",
+  "name": "ColorPal",
+  "tagline": "给独立开发者的配色方案生成器，一键导出 Tailwind 变量",
+  "description": "ColorPal 帮助独立开发者快速生成专业配色方案，并一键导出为 Tailwind CSS 变量。不需要设计背景也能做出好看的产品。\n\n产品本身就是最好的营销：用户生成的配色方案自带分享属性。",
+  "url": "https://colorpal.example.com",
+  "screenshots": ["https://placehold.co/800x500/FBF5E8/FBF5E8"],
+  "businessModel": "freemium",
+  "buildEffort": "weekend",
+  "growthChannel": "viral",
+  "founderType": "designer",
+  "stage": "launched",
+  "tags": {
+    "track": ["design", "devtools"],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": ["global"],
+    "platform": ["web"]
+  },
+  "metrics": {
+    "userCount": { "value": "2,000+", "verificationStatus": "unverified", "isPublic": true },
+    "launchedDate": { "value": "2026-01", "verificationStatus": "unverified", "isPublic": true },
+    "buildDuration": { "value": "~2 周", "verificationStatus": "unverified", "isPublic": true }
+  },
+  "buildStory": {
+    "origin": "做自己项目时总要花大量时间调配色，就想做一个开发者友好的配色工具。",
+    "toolsUsed": "React + Tailwind CSS（前端）、Vercel（部署）",
+    "timeline": "核心功能两个周末搞定，后续断断续续优化了导出格式。",
+    "challenges": "色彩理论的学习曲线比预期陡，oklch 和 HSL 之间的转换细节很多。",
+    "acquisition": "产品自带传播属性，用户分享自己的配色方案时自然带来新用户。",
+    "currentStatus": "已上线，持续增加新功能如渐变生成器和对比度检测。"
+  },
+  "source": { "type": "curated", "claimedByFounder": false },
+  "stageColor": "#DB6B25",
+  "createdAt": "2026-04-03T00:00:00.000Z",
+  "updatedAt": "2026-04-08T00:00:00.000Z",
+  "publishedAt": "2026-04-04T00:00:00.000Z"
+}

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 const navLinks = [
   { label: "探索", href: "/browse" },
@@ -34,6 +35,7 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
 
         {/* Mobile toggle */}
@@ -62,6 +64,9 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+            <div className="px-3 py-1">
+              <ThemeToggle />
+            </div>
           </nav>
         </div>
       )}

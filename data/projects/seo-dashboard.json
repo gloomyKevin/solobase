@@ -1,0 +1,45 @@
+{
+  "id": "proj_003",
+  "slug": "seo-dashboard",
+  "status": "featured",
+  "name": "SEO Dashboard",
+  "tagline": "独立开发者的 SEO 数据中心，一个面板管所有站点",
+  "description": "SEO Dashboard 为独立开发者提供统一的 SEO 数据管理面板。支持多站点接入，一目了然查看关键词排名、流量趋势和竞争分析。\n\n两人团队通过写 SEO 教程博客反向获客，3 个月从 0 到 500 付费用户。",
+  "url": "https://seo-dashboard.example.com",
+  "screenshots": ["https://placehold.co/800x500/FDF5EB/FDF5EB"],
+  "businessModel": "subscription",
+  "buildEffort": "ongoing",
+  "growthChannel": "content_marketing",
+  "founderType": "small_team",
+  "stage": "scaling",
+  "tags": {
+    "track": ["devtools", "productivity"],
+    "taskScenario": ["saas-launch"],
+    "tools": [],
+    "techStack": [],
+    "market": ["global"],
+    "platform": ["web"]
+  },
+  "metrics": {
+    "revenueRange": { "value": "5k_10k", "verificationStatus": "unverified", "isPublic": true },
+    "userCount": { "value": "5,000+", "verificationStatus": "unverified", "isPublic": true },
+    "launchedDate": { "value": "2026-02", "verificationStatus": "unverified", "isPublic": true },
+    "buildDuration": { "value": "~5 周", "verificationStatus": "unverified", "isPublic": true }
+  },
+  "buildStory": {
+    "origin": "团队自己做 SEO 时发现需要同时看 Google Search Console、Ahrefs、Semrush 等多个工具的数据，于是做了统一面板。",
+    "toolsUsed": "Next.js + Tailwind CSS（前端）、Supabase（后端）、Vercel（部署）",
+    "timeline": "核心功能 5 周上线，后续持续迭代添加新的数据源集成。",
+    "challenges": "最大的难点是各 SEO 平台 API 的差异处理和数据归一化。",
+    "acquisition": "通过写 SEO 教程博客反向获客，博客文章带来的流量直接转化为产品用户。",
+    "currentStatus": "500+ 付费用户，MRR 增长中，正在做企业版功能。"
+  },
+  "source": { "type": "curated", "claimedByFounder": false },
+  "founderId": "founder_003",
+  "featuredInsight": "两个人的团队，通过写 SEO 教程博客反向获客，3 个月从 0 到 500 付费用户",
+  "isEditorsPick": true,
+  "stageColor": "#6C4FD6",
+  "createdAt": "2026-04-01T00:00:00.000Z",
+  "updatedAt": "2026-04-08T00:00:00.000Z",
+  "publishedAt": "2026-04-02T00:00:00.000Z"
+}

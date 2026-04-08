@@ -1,0 +1,42 @@
+{
+  "id": "proj_010",
+  "slug": "resume-craft",
+  "status": "basic",
+  "name": "简历匠",
+  "tagline": "AI 帮你写简历，针对 JD 自动优化关键词匹配度",
+  "description": "简历匠利用 AI 分析职位描述（JD），自动优化简历关键词和措辞，提升简历与岗位的匹配度。\n\n通过 SEO 精准获取求职相关搜索流量，转化率很高。",
+  "url": "https://resume-craft.example.com",
+  "screenshots": ["https://placehold.co/800x500/FBF0E6/FBF0E6"],
+  "businessModel": "freemium",
+  "buildEffort": "monthly",
+  "growthChannel": "seo",
+  "founderType": "product_manager",
+  "stage": "revenue",
+  "tags": {
+    "track": ["ai", "productivity"],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": ["china"],
+    "platform": ["web"]
+  },
+  "metrics": {
+    "revenueRange": { "value": "under_1k", "verificationStatus": "unverified", "isPublic": true },
+    "userCount": { "value": "2,000+", "verificationStatus": "unverified", "isPublic": true },
+    "launchedDate": { "value": "2026-01", "verificationStatus": "unverified", "isPublic": true },
+    "buildDuration": { "value": "~3 周", "verificationStatus": "unverified", "isPublic": true }
+  },
+  "buildStory": {
+    "origin": "帮朋友改简历时发现这个需求很普遍，而且 AI 做关键词优化特别合适。",
+    "toolsUsed": "Next.js（前端）、Claude API（AI 分析）、Supabase（后端）",
+    "timeline": "三周上线 MVP，后续重点优化 AI 分析精度。",
+    "challenges": "AI 生成的优化建议需要不过度美化，保持真实性是核心难题。",
+    "acquisition": "SEO 优化「简历优化」「AI 写简历」等关键词，自然搜索流量稳定增长。",
+    "currentStatus": "有稳定收入，正在考虑增加面试模拟功能。"
+  },
+  "source": { "type": "curated", "claimedByFounder": false },
+  "stageColor": "#3B9B8B",
+  "createdAt": "2026-04-05T00:00:00.000Z",
+  "updatedAt": "2026-04-08T00:00:00.000Z",
+  "publishedAt": "2026-04-06T00:00:00.000Z"
+}

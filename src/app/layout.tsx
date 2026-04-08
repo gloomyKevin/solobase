@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_SC, DM_Sans } from "next/font/google";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const notoSansSC = Noto_Sans_SC({
@@ -17,9 +18,21 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Solobase — 发现最值得关注的个人产品",
-  description:
-    "中文世界最有品味的个人产品发现平台。帮你在信息洪流中找到真正有启发的独立产品和 maker 故事。",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "Solobase — 发现最值得关注的个人产品",
+    template: "%s | Solobase",
+  },
+  description: siteConfig.description,
+  openGraph: {
+    type: "website",
+    locale: "zh_CN",
+    siteName: siteConfig.name,
+    images: [{ url: siteConfig.defaultOgImage, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
@@ -31,6 +44,7 @@ export default function RootLayout({
     <html
       lang="zh-CN"
       className={`${notoSansSC.variable} ${dmSans.variable} h-full antialiased`}
+      suppressHydrationWarning
       style={
         {
           "--font-sans":
@@ -40,6 +54,13 @@ export default function RootLayout({
         } as React.CSSProperties
       }
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('solobase-theme');if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

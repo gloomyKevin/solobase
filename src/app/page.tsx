@@ -2,12 +2,19 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ProjectCard } from "@/components/project/ProjectCard";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { mockProjects, exploreTags, radarStats } from "@/lib/mock-data";
+import { exploreTags, radarStats } from "@/lib/static-data";
+import { getDataService } from "@/services/data";
+import { toCardData } from "@/lib/project-utils";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
-  const p = mockProjects;
+export default async function Home() {
+  const dataService = getDataService();
+  const { items: projects } = await dataService.listProjects(
+    {},
+    { pageSize: 10, sortBy: "newest" }
+  );
+  const p = projects.map(toCardData);
 
   return (
     <div className="flex min-h-full flex-col">
@@ -40,33 +47,39 @@ export default function Home() {
             </div>
 
             {/* Row 1: 1 wide featured + 1 compact, equal height */}
-            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-5">
-              <div className="sm:col-span-3">
-                <ProjectCard project={p[0]} variant="compact" className="h-full" />
+            {p.length >= 2 && (
+              <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-5">
+                <div className="sm:col-span-3">
+                  <ProjectCard project={p[0]} variant="compact" className="h-full" />
+                </div>
+                <div className="sm:col-span-2">
+                  <ProjectCard project={p[1]} variant="compact" className="h-full" />
+                </div>
               </div>
-              <div className="sm:col-span-2">
-                <ProjectCard project={p[1]} variant="compact" className="h-full" />
-              </div>
-            </div>
+            )}
 
             {/* Row 2: 3 equal */}
-            <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
-              <ProjectCard project={p[2]} variant="compact" />
-              <ProjectCard project={p[3]} variant="compact" />
-              <div className="col-span-2 lg:col-span-1">
-                <ProjectCard project={p[4]} variant="compact" />
+            {p.length >= 5 && (
+              <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
+                <ProjectCard project={p[2]} variant="compact" />
+                <ProjectCard project={p[3]} variant="compact" />
+                <div className="col-span-2 lg:col-span-1">
+                  <ProjectCard project={p[4]} variant="compact" />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Row 3: 4 tighter cards */}
-            <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
-              <ProjectCard project={p[5]} variant="compact" />
-              <ProjectCard project={p[6]} variant="compact" />
-              <ProjectCard project={p[7]} variant="compact" />
-              <div className="col-span-2 lg:col-span-1">
-                <ProjectCard project={p[8]} variant="compact" />
+            {p.length >= 9 && (
+              <div className="mt-3 sm:mt-4 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
+                <ProjectCard project={p[5]} variant="compact" />
+                <ProjectCard project={p[6]} variant="compact" />
+                <ProjectCard project={p[7]} variant="compact" />
+                <div className="col-span-2 lg:col-span-1">
+                  <ProjectCard project={p[8]} variant="compact" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
 
@@ -115,21 +128,23 @@ export default function Home() {
         </section>
 
         {/* ===== Latest ===== */}
-        <section className="mx-auto max-w-[1200px] px-4 pb-10 sm:px-6">
-          <SectionTitle
-            title="最新收录"
-            action={{ label: "查看全部", href: "/browse" }}
-          />
-          <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
-            {p.slice(7).map((project) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                variant="compact"
-              />
-            ))}
-          </div>
-        </section>
+        {p.length > 7 && (
+          <section className="mx-auto max-w-[1200px] px-4 pb-10 sm:px-6">
+            <SectionTitle
+              title="最新收录"
+              action={{ label: "查看全部", href: "/browse" }}
+            />
+            <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
+              {p.slice(7).map((project) => (
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  variant="compact"
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ===== Radar ===== */}
         <section className="mx-auto max-w-[1200px] px-4 pb-12 sm:px-6">

@@ -1,0 +1,42 @@
+{
+  "id": "proj_006",
+  "slug": "ai-copywriter",
+  "status": "basic",
+  "name": "写手 AI",
+  "tagline": "小红书爆款文案生成器，10 秒出 5 条标题",
+  "description": "写手 AI 专为小红书内容创作者打造，输入产品关键词，10 秒生成 5 条爆款标题和配套文案。\n\n产品通过精准的付费投放快速起量，ROI 稳定在 3x 以上。",
+  "url": "https://ai-copywriter.example.com",
+  "screenshots": ["https://placehold.co/800x500/E8F0F4/E8F0F4"],
+  "businessModel": "subscription",
+  "buildEffort": "monthly",
+  "growthChannel": "paid_ads",
+  "founderType": "non_tech_ai",
+  "stage": "revenue",
+  "tags": {
+    "track": ["ai", "content"],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": ["china"],
+    "platform": ["web", "miniapp"]
+  },
+  "metrics": {
+    "revenueRange": { "value": "1k_5k", "verificationStatus": "unverified", "isPublic": true },
+    "userCount": { "value": "5,000+", "verificationStatus": "unverified", "isPublic": true },
+    "launchedDate": { "value": "2026-02", "verificationStatus": "unverified", "isPublic": true },
+    "buildDuration": { "value": "~3 周", "verificationStatus": "unverified", "isPublic": true }
+  },
+  "buildStory": {
+    "origin": "创始人做小红书运营时发现写标题是最痛苦的环节，AI 正好能解决这个问题。",
+    "toolsUsed": "Next.js（前端）、OpenAI API（AI）、Vercel（部署）",
+    "timeline": "MVP 三周上线，但后续花了大量时间优化 prompt 质量。",
+    "challenges": "AI 生成的文案质量不稳定，需要大量 prompt engineering 和人工筛选。",
+    "acquisition": "小红书信息流广告精准投放，ROI 稳定后逐步放量。",
+    "currentStatus": "月收入 $1k-5k，正在做微信小程序版本。"
+  },
+  "source": { "type": "curated", "claimedByFounder": false },
+  "stageColor": "#3B9B8B",
+  "createdAt": "2026-04-04T00:00:00.000Z",
+  "updatedAt": "2026-04-08T00:00:00.000Z",
+  "publishedAt": "2026-04-05T00:00:00.000Z"
+}

@@ -1,0 +1,14 @@
+{
+  "type": "self_submit",
+  "url": "https://www.indiehackers.com/products",
+  "confirmedData": {
+    "name": "Indiehackers",
+    "tagline": "A product at https://www.indiehackers.com/products",
+    "businessModel": "commission",
+    "buildEffort": "monthly",
+    "stage": "building"
+  },
+  "status": "pending_review",
+  "id": "3f3582c1-7855-4eb4-ac17-2714bd408fd4",
+  "submittedAt": "2026-04-08T13:56:45.455Z"
+}
