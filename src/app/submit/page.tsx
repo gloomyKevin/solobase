@@ -39,7 +39,7 @@ export default function SubmitPage() {
                 <Link2 className="h-4 w-4" />
                 <span>产品 URL</span>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <input
                   type="url"
                   placeholder="https://your-product.com"
@@ -141,7 +141,7 @@ export default function SubmitPage() {
                   <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                   以下字段需要你确认或补充
                 </p>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {[
                     { label: "产品阶段", placeholder: "选择阶段..." },
                     { label: "构建门槛", placeholder: "选择门槛..." },
@@ -162,7 +162,7 @@ export default function SubmitPage() {
             </div>
 
             {/* Actions */}
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <button className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 transition-opacity">
                 确认提交
                 <ArrowRight className="h-4 w-4" />

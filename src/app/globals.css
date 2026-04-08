@@ -152,3 +152,17 @@
     @apply font-sans scroll-smooth;
   }
 }
+
+@layer components {
+  .article-copy {
+    @apply text-base leading-8;
+  }
+
+  .article-copy p + p {
+    @apply mt-4;
+  }
+
+  .article-copy strong {
+    @apply font-semibold text-foreground;
+  }
+}
