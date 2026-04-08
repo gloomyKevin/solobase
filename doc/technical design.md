@@ -293,7 +293,7 @@ interface Project {
   screenshots: string[];               // 截图 URL 列表（第一张为主图）
   logo?: string;                       // Logo URL
   
-  // 分类体系（主维度）
+  // 分类体系（主维度，均支持 'undetermined' 表示信息不足暂未确认）
   businessModel: BusinessModel;        // 商业模式
   buildEffort: BuildEffort;            // 构建门槛
   growthChannel: GrowthChannel;        // 增长方式
@@ -329,6 +329,9 @@ interface Project {
   };
   
   // 衍生数据（系统自动生成）
+  // TODO: derived 数据的存储策略待定——存入项目 JSON 有一致性问题（新增/删除项目时所有关联项目需更新），
+  //       备选方案：1) 查询时实时计算（数据量 <1000 时性能足够）；2) 定时重算写入缓存文件，不存进项目本身。
+  //       MVP 先按当前结构实现，数据量增长后评估是否需要调整。
   derived?: {
     relatedByTrack: string[];          // 同赛道项目 ID
     relatedByGrowth: string[];         // 同增长方式项目 ID
@@ -361,19 +364,26 @@ interface Project {
 }
 
 // 枚举类型（全部从 config 文件读取，此处仅做类型约束）
+// 所有主维度均包含 'undetermined'，用于信息不足时的自然留白
+// UI 层面：undetermined 字段显示为淡色"待确认"标签或直接不展示该维度
+// 筛选层面：undetermined 项目不出现在该维度的筛选结果中，但在全量浏览和搜索中正常展示
+
 type BusinessModel = 
   | 'subscription' | 'one_time' | 'freemium' 
-  | 'ad_revenue' | 'commission' | 'open_source_plus' | 'content_paid';
+  | 'ad_revenue' | 'commission' | 'open_source_plus' | 'content_paid'
+  | 'undetermined';
 
-type BuildEffort = 'weekend' | 'monthly' | 'ongoing';
+type BuildEffort = 'weekend' | 'monthly' | 'ongoing' | 'undetermined';
 
 type GrowthChannel = 
   | 'seo' | 'community' | 'content_marketing' 
-  | 'paid_ads' | 'viral' | 'mixed';
+  | 'paid_ads' | 'viral' | 'mixed'
+  | 'undetermined';
 
 type FounderType = 
   | 'tech_to_product' | 'designer' | 'product_manager' 
-  | 'non_tech_ai' | 'small_team';
+  | 'non_tech_ai' | 'small_team'
+  | 'undetermined';
 
 type ProjectStage = 'idea' | 'building' | 'launched' | 'revenue' | 'scaling';
 
