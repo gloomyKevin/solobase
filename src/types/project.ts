@@ -236,8 +236,11 @@ export const ProjectFiltersSchema = z.object({
   growthChannel: z.array(z.enum(GrowthChannelValues)).optional(),
   founderType: z.array(z.enum(FounderTypeValues)).optional(),
   stage: z.array(z.enum(ProjectStageValues)).optional(),
+  revenueRange: z.array(z.enum(RevenueRangeValues)).optional(),
   taskScenario: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
+  market: z.array(z.string()).optional(),
+  platform: z.array(z.string()).optional(),
   search: z.string().optional(),
 });
 

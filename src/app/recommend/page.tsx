@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import {
@@ -72,12 +73,12 @@ export default function RecommendPage() {
               <p className="mt-2 text-sm text-muted-foreground">
                 感谢你的推荐，我们会尽快审核
               </p>
-              <a
+              <Link
                 href="/"
                 className="mt-6 inline-flex items-center justify-center rounded-xl border border-border px-6 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
               >
                 返回首页
-              </a>
+              </Link>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="rounded-2xl bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">

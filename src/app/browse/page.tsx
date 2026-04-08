@@ -12,6 +12,7 @@ import type {
   GrowthChannel,
   FounderType,
   ProjectStage,
+  RevenueRange,
 } from "@/types";
 
 // Map URL param keys to ProjectFilters fields
@@ -51,8 +52,24 @@ function parseSearchParams(
   if (str("stage")) {
     filters.stage = str("stage")!.split(",") as ProjectStage[];
   }
+  if (str("revenue")) {
+    const revenueMap: Record<string, RevenueRange[]> = {
+      "1k_plus": ["1k_5k", "5k_10k", "10k_50k", "50k_plus"],
+    };
+    const rawValues = str("revenue")!.split(",");
+    filters.revenueRange = rawValues.flatMap((value) => revenueMap[value] ?? [value as RevenueRange]);
+  }
+  if (str("scenario")) {
+    filters.taskScenario = str("scenario")!.split(",");
+  }
   if (str("tag")) {
     filters.tags = str("tag")!.split(",");
+  }
+  if (str("market")) {
+    filters.market = str("market")!.split(",");
+  }
+  if (str("platform")) {
+    filters.platform = str("platform")!.split(",");
   }
   if (str("q")) {
     filters.search = str("q");

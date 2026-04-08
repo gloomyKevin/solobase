@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { TagBadge } from "@/components/common/TagBadge";
 import {
   businessModelOptions,
@@ -372,12 +373,12 @@ export function SubmitForm() {
             <br />
             通常 1-3 个工作日内完成审核
           </p>
-          <a
+          <Link
             href="/"
             className="mt-6 inline-flex items-center justify-center rounded-xl border border-border px-6 py-2.5 text-sm font-medium hover:bg-muted transition-colors"
           >
             返回首页
-          </a>
+          </Link>
         </div>
       )}
     </div>

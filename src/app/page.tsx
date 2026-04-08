@@ -15,6 +15,7 @@ export default async function Home() {
     { pageSize: 10, sortBy: "newest" }
   );
   const p = projects.map(toCardData);
+  const latestProjects = p.slice(9);
 
   return (
     <div className="flex min-h-full flex-col">
@@ -128,14 +129,14 @@ export default async function Home() {
         </section>
 
         {/* ===== Latest ===== */}
-        {p.length > 7 && (
+        {latestProjects.length > 0 && (
           <section className="mx-auto max-w-[1200px] px-4 pb-10 sm:px-6">
             <SectionTitle
               title="最新收录"
               action={{ label: "查看全部", href: "/browse" }}
             />
             <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
-              {p.slice(7).map((project) => (
+              {latestProjects.map((project) => (
                 <ProjectCard
                   key={project.slug}
                   project={project}

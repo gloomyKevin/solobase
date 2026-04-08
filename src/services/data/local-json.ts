@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import crypto from "crypto";
+import os from "os";
 import type { DataService } from "./types";
 import type {
   Project,
@@ -13,6 +14,10 @@ import type { Submission } from "@/types/submission";
 import type { Feedback } from "@/types/feedback";
 
 const DATA_DIR = path.join(process.cwd(), "data");
+const DATA_WRITE_DIR =
+  process.env.SOLOBASE_DATA_WRITE_DIR ||
+  process.env.DATA_WRITE_DIR ||
+  path.join(os.tmpdir(), "solobase");
 
 // Simple in-memory cache for the index
 let indexCache: IndexEntry[] | null = null;
@@ -104,6 +109,46 @@ function matchesFilters(entry: IndexEntry, filters: ProjectFilters): boolean {
   return true;
 }
 
+function hasProjectLevelFilters(filters: ProjectFilters): boolean {
+  return Boolean(
+    filters.revenueRange?.length ||
+      filters.taskScenario?.length ||
+      filters.market?.length ||
+      filters.platform?.length
+  );
+}
+
+function matchesProjectLevelFilters(
+  project: Project,
+  filters: ProjectFilters
+): boolean {
+  if (
+    filters.revenueRange?.length &&
+    !filters.revenueRange.includes(project.metrics?.revenueRange?.value as never)
+  ) {
+    return false;
+  }
+  if (
+    filters.taskScenario?.length &&
+    !filters.taskScenario.some((value) => project.tags.taskScenario.includes(value))
+  ) {
+    return false;
+  }
+  if (
+    filters.market?.length &&
+    !filters.market.some((value) => project.tags.market.includes(value))
+  ) {
+    return false;
+  }
+  if (
+    filters.platform?.length &&
+    !filters.platform.some((value) => project.tags.platform.includes(value))
+  ) {
+    return false;
+  }
+  return true;
+}
+
 function sortEntries(
   entries: IndexEntry[],
   sortBy: string
@@ -171,6 +216,22 @@ export function createLocalJsonDataService(): DataService {
         });
       }
 
+      const projectCache = new Map<string, Project>();
+      if (hasProjectLevelFilters(filters)) {
+        const matchedEntries: IndexEntry[] = [];
+
+        for (const entry of filtered) {
+          const project = await readProject(entry.slug);
+          if (!project || !matchesProjectLevelFilters(project, filters)) {
+            continue;
+          }
+          projectCache.set(entry.slug, project);
+          matchedEntries.push(entry);
+        }
+
+        filtered = matchedEntries;
+      }
+
       // Sort
       const sorted = sortEntries(filtered, sortBy);
 
@@ -182,7 +243,7 @@ export function createLocalJsonDataService(): DataService {
       // Load full project data for the page
       const items: Project[] = [];
       for (const entry of pageEntries) {
-        const project = await readProject(entry.slug);
+        const project = projectCache.get(entry.slug) ?? await readProject(entry.slug);
         if (project) items.push(project);
       }
 
@@ -244,7 +305,7 @@ export function createLocalJsonDataService(): DataService {
         submittedAt: new Date().toISOString(),
       } as Submission;
 
-      const dir = path.join(DATA_DIR, "submissions");
+      const dir = path.join(DATA_WRITE_DIR, "submissions");
       await fs.mkdir(dir, { recursive: true });
       await fs.writeFile(
         path.join(dir, `${submission.id}.json`),
@@ -262,7 +323,7 @@ export function createLocalJsonDataService(): DataService {
         submittedAt: new Date().toISOString(),
       } as Feedback;
 
-      const dir = path.join(DATA_DIR, "feedback");
+      const dir = path.join(DATA_WRITE_DIR, "feedback");
       await fs.mkdir(dir, { recursive: true });
       await fs.writeFile(
         path.join(dir, `${feedback.id}.json`),

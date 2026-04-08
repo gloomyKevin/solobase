@@ -11,11 +11,11 @@ export const exploreTags = [
   { label: "内容创作", href: "/browse?tag=content" },
   { label: "设计师做产品", href: "/browse?founder=designer" },
   { label: "社区驱动", href: "/browse?growth=community" },
-  { label: "一次性付费", href: "/browse?model=one-time" },
+  { label: "一次性付费", href: "/browse?model=one_time" },
   { label: "效率工具", href: "/browse?tag=productivity" },
   { label: "Chrome 插件", href: "/browse?platform=chrome-ext" },
   { label: "小程序", href: "/browse?platform=miniapp" },
-  { label: "开源变现", href: "/browse?model=open-source" },
+  { label: "开源变现", href: "/browse?model=open_source_plus" },
   { label: "产品经理转型", href: "/browse?founder=pm" },
 ];
 

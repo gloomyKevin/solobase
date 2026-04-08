@@ -1,31 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Sun, Moon } from "lucide-react";
 
-export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
+function subscribe(callback: () => void) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
 
-  useEffect(() => {
-    setMounted(true);
-    setDark(document.documentElement.classList.contains("dark"));
-  }, []);
+  const observer = new MutationObserver(() => callback());
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+
+  return () => observer.disconnect();
+}
+
+function getSnapshot() {
+  if (typeof document === "undefined") {
+    return false;
+  }
+
+  return document.documentElement.classList.contains("dark");
+}
+
+export function ThemeToggle() {
+  const dark = useSyncExternalStore(subscribe, getSnapshot, () => false);
 
   function toggle() {
     const next = !dark;
-    setDark(next);
     document.documentElement.classList.toggle("dark", next);
     try {
       localStorage.setItem("solobase-theme", next ? "dark" : "light");
     } catch {
       // localStorage unavailable
     }
-  }
-
-  if (!mounted) {
-    // Render a placeholder to avoid layout shift
-    return <div className="h-8 w-8" />;
   }
 
   return (
