@@ -8,19 +8,24 @@ export default async function DemoPage() {
   const ds = getDataService();
   const { items } = await ds.listProjects({}, { pageSize: 10, sortBy: "newest" });
 
-  const projects = items.map(p => ({
-    slug: p.slug,
-    name: p.name,
-    tagline: p.tagline,
-    screenshot: p.screenshots?.[0] ?? "",
-    stage: p.stage as string,
-    stageColor: (p.stageColor ?? stageColorMap[p.stage] ?? "#9CA3AF") as string,
-    revenue: (() => { try { const r = (p.metrics as Record<string, { value?: string }> | undefined)?.revenueRange?.value; if (!r || r === "pre_revenue") return null; return getCategoryLabel(revenueRangeOptions, r); } catch { return null; } })(),
-    founderType: p.founderType as string,
-    buildEffort: p.buildEffort as string,
-    isEditorsPick: (p.isEditorsPick ?? false) as boolean,
-    featuredInsight: p.featuredInsight as string | undefined,
-  }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const projects = items.map((p: any) => {
+    const metrics = p.metrics as Record<string, { value?: string }> | undefined;
+    const revValue = metrics?.revenueRange?.value;
+    return {
+      slug: String(p.slug),
+      name: String(p.name),
+      tagline: String(p.tagline),
+      screenshot: String(p.screenshots?.[0] ?? ""),
+      stage: String(p.stage),
+      stageColor: String(p.stageColor ?? stageColorMap[p.stage] ?? "#9CA3AF"),
+      revenue: revValue && revValue !== "pre_revenue" ? getCategoryLabel(revenueRangeOptions, revValue) : null,
+      founderType: String(p.founderType),
+      buildEffort: String(p.buildEffort),
+      isEditorsPick: Boolean(p.isEditorsPick),
+      featuredInsight: p.featuredInsight ? String(p.featuredInsight) : undefined,
+    };
+  });
 
   return (
     <div className="min-h-screen bg-background">
