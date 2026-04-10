@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ProjectCard } from "@/components/project/ProjectCard";
 import { TagBadge } from "@/components/common/TagBadge";
 import { SectionTitle } from "@/components/common/SectionTitle";
+import { ShareButton } from "@/components/project/ShareButton";
 import { getDataService } from "@/services/data";
 import { toCardData } from "@/lib/project-utils";
 import { generateProjectMetadata, generateProjectJsonLd } from "@/lib/seo";
@@ -18,7 +19,6 @@ import {
 } from "@/config/categories";
 import {
   ExternalLink,
-  Share2,
   AlertCircle,
   ChevronRight,
   Globe,
@@ -377,10 +377,7 @@ export default async function ProjectDetailPage({
 
               {/* Actions */}
               <div className="space-y-3 rounded-2xl border border-border/60 bg-card p-5">
-                <button className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted">
-                  <Share2 className="h-4 w-4" />
-                  分享这个项目
-                </button>
+                <ShareButton slug={project.slug} name={project.name} />
                 <button className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
                   <AlertCircle className="h-4 w-4" />
                   信息有误？反馈纠错
