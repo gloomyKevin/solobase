@@ -1,0 +1,22 @@
+{
+  "jike": {
+    "apiBase": "https://api.ruguoapp.com",
+    "accessToken": "你的 token",
+    "topics": [
+      { "id": "5cebe59010f1330017971fd9", "name": "独立开发者的日常" }
+    ],
+    "searchKeywords": [
+      "做了个小工具",
+      "做了个产品",
+      "独立开发 上线",
+      "side project 发布",
+      "Product Hunt",
+      "开源了",
+      "我做的app",
+      "独立开发 收入"
+    ],
+    "maxPagesPerTopic": 100,
+    "maxPagesPerKeyword": 30,
+    "delayMs": 1500
+  }
+}
