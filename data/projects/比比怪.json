@@ -1,0 +1,65 @@
+{
+  "id": "proj_比比怪",
+  "slug": "比比怪",
+  "status": "basic",
+  "name": "比比怪",
+  "tagline": "截图识别店名，跳转美团/京东比价，帮你省外卖钱",
+  "description": "做了一个给自己省外卖钱的小工具。\n\n我点外卖挺频繁的，后来发现同一家店在不同平台价格会不一样。\n\n为了不每次都手动搜三家，我就做了个小工具：\n\n截一张订单提交页的图 → 识别店名 → 跳转到美团/京东秒送搜同店。\n\n为什么截图用淘宝闪购？\n因为淘宝搜索不太好用，我干脆把它当“识别入口”，识别后去美团/京东搜更顺，也更好比价。\n\n做完后我自己一直用：\n不是每次都省很多，但偶尔一单差几块、差十来块，累积下来也不少。\n\nApp 名字叫「比比怪 Compy」，已经上架了 App Store \n\nhttps://apps.apple.com/cn/app/%E6%AF%94%E6%AF%94%E6%80%AA-compy/id6757590970\n\n有兴趣的朋友可以评论或联系我，目前还剩一些兑换码",
+  "url": "https://apps.apple.com/cn/app/%E6%AF%94%E6%AF%94%E6%80%AA-compy/id6757590970",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FmattGyCBppsBHEjb1zbjXoVdl6ov3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/FmCMcViv6FOJ_X9ZFZlYa2S0fuWov3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/Fs1nerk0uWCclj4D2RoRS69fCbE3v3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "mobile-app"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69783176a5f157e1edbab6be",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": false,
+  "stageColor": "#DB6B25",
+  "vibes": [
+    "小而美",
+    "创意切入"
+  ],
+  "createdAt": "2026-01-27T03:31:02.597Z",
+  "updatedAt": "2026-04-11T18:46:59.028Z",
+  "publishedAt": "2026-01-27T03:31:02.597Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69783176a5f157e1edbab6be",
+    "author": "风却_薄肌男孩版",
+    "authorBio": "INFP，不要出卖自己的快快鸡",
+    "engagement": {
+      "likes": 4,
+      "comments": 1,
+      "shares": 0
+    },
+    "densityScore": {
+      "density": 5,
+      "heat": 0,
+      "timeliness": 3,
+      "association": 3,
+      "total": 11
+    },
+    "topComments": []
+  }
+}

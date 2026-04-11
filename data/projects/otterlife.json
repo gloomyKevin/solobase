@@ -1,0 +1,65 @@
+{
+  "id": "proj_otterlife",
+  "slug": "otterlife",
+  "status": "featured",
+  "name": "OtterLife",
+  "tagline": "游戏化健康管理 App，用水獭养成来记录喝水和运动",
+  "description": "【🚩内测招募】 两个多月前，OtterLife 推出了热量缺口和身体耗能表盘，受到了大家的喜爱，许多朋友反馈希望在App中增加食物记录功能。\n\n现在，OtterLife的热量管理功能即将上线！诚邀大家体验，与我们共同完善！\n\n内测反馈群：👉https://image-qiniu.jellow.site/FkdhJLT5gZly4Y7JUaRKJ60EWc0Y.jpg\n\n下载链接（无需穿戴设备即可体验）：   \n🔗iOS：https://testflight.apple.com/join/93bhZvkW \n🔗Android： https://android-release.jellow.site/otter-1.4.4-540-20241105200549.apk\n\n新功能亮点 ✨\n🏋️‍♂️ 体重管理模式：提供减脂和增肌两种模式，根据你的目标体重制定个性化计划\n🍽️ 丰富的食物库：首期支持超过 4000 种食物的记录，并允许自定义食物录入\n⏰ 智能三餐提醒：支持定时推送三餐记录提醒，提醒你在忙碌的生活中也能按时用餐\n📅 趋势分析与可视化：趋势模块提供卡路里摄入的趋势分析和热量缺口的日历视图",
+  "url": "https://image-qiniu.jellow.site/FkdhJLT5gZly4Y7JUaRKJ60EWc0Y.jpg",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/Fnahni47aJDV6JMX2_jiMoQtcaOqv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/Fs8c1lIcZw0QpTQlhSOJ6ApX8X4mv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/Fh0QsQp_D7FT0GefbBGDlkGTHCkXv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "revenue",
+  "tags": {
+    "track": [
+      "mobile-app"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/672b50c0c79063fd7bbc7dd7",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#3B9B8B",
+  "vibes": [
+    "设计感",
+    "小而美"
+  ],
+  "createdAt": "2024-11-06T11:19:28.350Z",
+  "updatedAt": "2026-04-11T18:46:59.017Z",
+  "publishedAt": "2024-11-06T11:19:28.350Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/672b50c0c79063fd7bbc7dd7",
+    "author": "OtterLife",
+    "authorBio": "一款游戏化健康管理App\nOtter Life，Better Life！",
+    "engagement": {
+      "likes": 168,
+      "comments": 53,
+      "shares": 57
+    },
+    "densityScore": {
+      "density": 9,
+      "heat": 10,
+      "timeliness": 0,
+      "association": 4,
+      "total": 23
+    },
+    "topComments": []
+  }
+}

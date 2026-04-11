@@ -46,27 +46,30 @@ const TYPES: Record<string, { name: string; desc: string; span: 1 | 3; compat: s
    Static data
    ============================================================ */
 
+// 从真实管道数据中提取的经验帖洞察
 const IDEAS = [
-  { text: "帮设计师自动标注设计稿，从 Figma 直接出文档", author: "张远", tags: ["设计", "AI"], saves: 12 },
-  { text: "播客自动转结构化笔记，按主题整理不只转录", author: "刘听", tags: ["AI", "效率"], saves: 28 },
-  { text: "独立开发者的轻量客服，不臃肿便宜好用就行", author: "陈默", tags: ["SaaS"], saves: 8 },
-  { text: "AI 生成小红书封面图，输入标题秒出", author: "赵雪", tags: ["AI", "内容"], saves: 19 },
+  { text: "出海前 1000 用户获取实操清单：Reddit 监控竞品关键词 + 各社群冷启动", author: "42要早睡早起", tags: ["出海", "增长"], saves: 12 },
+  { text: "独立开发 2 年，把 SEO 关键词直接做成产品功能页是核心获客策略", author: "Indie-Maker-Fox", tags: ["SEO", "SaaS"], saves: 389 },
+  { text: "MRR 破 1000 的两个关键：Reddit 监控品牌词 + 回复中只发产品名不贪心带链接", author: "我是恬恬酱", tags: ["变现", "出海"], saves: 38 },
+  { text: "翻石头挖需求找 PMF，分析 toolify 美区榜前 200 的产品趋势", author: "张翼Joey", tags: ["选品", "AI"], saves: 5 },
 ];
 
+// 真实创作者（来自即刻抓取数据）
 const CREATORS = [
-  { name: "李思", bio: "设计师转码 · 3创造", emoji: "🎨" },
-  { name: "王浩", bio: "全栈 · 出海", emoji: "🚀" },
-  { name: "赵敏", bio: "PM · 周末造物", emoji: "💡" },
-  { name: "陈默", bio: "非技术 · AI", emoji: "🤖" },
-  { name: "周洋", bio: "独立开发 · 2产品", emoji: "⚡" },
+  { name: "AGENT橘", bio: "ColaOS/MarsWave CEO · TypeNo", emoji: "🚀" },
+  { name: "西元Levy", bio: "FateTell · 玄学出海", emoji: "🔮" },
+  { name: "Alchian花生", bio: "Claude Code 橙皮书作者", emoji: "📙" },
+  { name: "歸藏", bio: "AI 设计师 · AIGC Weekly", emoji: "🎨" },
+  { name: "玉伯", bio: "YouMind · AI创作工具", emoji: "🌲" },
 ];
 
+// 真实数据驱动的分类
 const CATEGORIES = [
-  { emoji: "💰", label: "在赚钱的", sub: "6 个创造" },
-  { emoji: "🤖", label: "AI 做的", sub: "3 个创造" },
-  { emoji: "⚡", label: "轻量创造", sub: "4 个创造" },
-  { emoji: "🎯", label: "SEO 驱动", sub: "2 个创造" },
+  { emoji: "💰", label: "在赚钱的", sub: "2 个创造" },
+  { emoji: "🤖", label: "AI 相关", sub: "8 个创造" },
   { emoji: "🌏", label: "出海产品", sub: "3 个创造" },
+  { emoji: "🔧", label: "开发者工具", sub: "5 个创造" },
+  { emoji: "✨", label: "小而美", sub: "4 个创造" },
 ];
 
 const SN: Record<string, string> = { idea: "构思中", building: "开发中", launched: "已上线", revenue: "有收入", scaling: "增长中" };

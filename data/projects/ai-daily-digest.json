@@ -1,0 +1,61 @@
+{
+  "id": "proj_ai-daily-digest",
+  "slug": "ai-daily-digest",
+  "status": "featured",
+  "name": "AI Daily Digest",
+  "tagline": "开源的 AI 资讯自动摘要工具，每天帮你追最新动态",
+  "description": "大家装好了龙虾🦞，如果想获取一些最新的 AI 相关的资讯。可以试一试这个宝藏开源项目 ai-daily-digest 📰\n\nGitHub 👉 https://github.com/vigorX777/ai-daily-digest\n\n从AI大神 Karpathy 推荐的 90 个顶级技术博客抓取最新文章，AI 自动评分筛选 + 生成结构化日报，每天花 30 秒就能知道技术圈发生了什么。\n\n搭配 🦞 三步搞定，定期自动抓取推送，彻底告别二手 AI 资讯：\n\n1️⃣ 给龙虾发一句自动装好\n「安装 https://github.com/vigorX777/ai-daily-digest \n然后加个 cron 计时任务，每天早上7点推送到当前对话框里给我」\n2️⃣ 默认 Gemini 跑，但可以一句话切换成 DeepSeek 等国产模型\n「帮我把项日报模型切换如下API：\napi接口: https://api.deepseek.com/v1\napi key: sk-xxxxxxxxxxxxx\n模型名称: deepseek-chat」\n3️⃣ 测试一下生成日报是否可以运行，不行就让🦞修bug\n\n拒绝信息茧房，从一手源头读起 🤖",
+  "url": "https://github.com/vigorX777/ai-daily-digest",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FoNcwrs1zg5AYZ9sU0D1C7P0-0Jrv3.jpeg?imageMogr2/auto-orient/thumbnail/1500x2000%3E/interlace/1"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "ai-tools",
+      "open-source"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/6997edfbcf673a74dee2c2df",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2026-02-20T05:15:39.211Z",
+  "updatedAt": "2026-04-11T18:46:59.020Z",
+  "publishedAt": "2026-02-20T05:15:39.211Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/6997edfbcf673a74dee2c2df",
+    "author": "王老禅头",
+    "authorBio": "👋 97年〡INTP〡杭州\n💡 从实践中分享，从体验中感受\n👀 随想随发 欢迎吐槽",
+    "engagement": {
+      "likes": 235,
+      "comments": 22,
+      "shares": 165
+    },
+    "densityScore": {
+      "density": 7,
+      "heat": 8,
+      "timeliness": 3,
+      "association": 4,
+      "total": 22
+    },
+    "topComments": []
+  }
+}

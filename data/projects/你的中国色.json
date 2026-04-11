@@ -1,0 +1,64 @@
+{
+  "id": "proj_你的中国色",
+  "slug": "你的中国色",
+  "status": "basic",
+  "name": "你的中国色",
+  "tagline": "8 道直觉题测出你的专属中国传统色 + 穿搭配色方案",
+  "description": "在 MyVibe 上做了个小工具：你的人生节气\n\n输入生日，看看你的人生走到了二十四节气中的哪一个。用节气来定义人生阶段，每个年龄都有独特的美。\n\n之前做 color-dna 时发现大家喜欢\"跟自己有关\"的工具，这次换了个角度：不是冰冷的倒计时，而是用中国传统文化重新定义人生进度。\n纯 H5 页面，手机直接打开就能玩：\n\nhttps://www.myvibe.so/xiaoliang/life-solar-term-discover-your-season-of-life",
+  "url": "https://www.myvibe.so/xiaoliang/life-solar-term-discover-your-season-of-life",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/Fj3TUzxDpiWe6SWA6BWMSeWVSnBRv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/Fk-tnZZDEjQPrVElNjpAKPp1lNvav3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "design"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69a530319da8bfac836f9c49",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": false,
+  "stageColor": "#DB6B25",
+  "vibes": [
+    "创意切入",
+    "小而美"
+  ],
+  "createdAt": "2026-03-02T06:37:37.882Z",
+  "updatedAt": "2026-04-11T18:46:59.029Z",
+  "publishedAt": "2026-03-02T06:37:37.882Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69a530319da8bfac836f9c49",
+    "author": "半庄",
+    "authorBio": "终身学习，努力成为更好的自己。",
+    "engagement": {
+      "likes": 0,
+      "comments": 0,
+      "shares": 0
+    },
+    "densityScore": {
+      "density": 5,
+      "heat": 0,
+      "timeliness": 3,
+      "association": 3,
+      "total": 11
+    },
+    "topComments": []
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "proj_animcard",
+  "slug": "animcard",
+  "status": "basic",
+  "name": "AnimCard",
+  "tagline": "用动态卡片宣传你的产品，比枯燥文本更有传播力",
+  "description": "【免费】 - 产品没流量？ 用它\n接下来的几天 AnimCard完全免费，这是我花了三个月开发的网站，用于高质量宣传你的产品。相对于枯燥的文本,它能给你带来意想不到的流量，也就是说如果你需要 产品宣发 - 社媒宣传 - 功能介绍 等等，用它。\n\n【AnimCard 是做什么的?】\nAnimCard 是一个 Bento 风格的动画编辑器,使用它你可以导出 Bento 风格的视频动画来介绍你的产品。\n\n你可以为你的产品生成介绍视频，比如版本更新，价格折扣，用户评价，MRR，Trusted by 等等，就像官网视频那样。\n\n【有什么优势？】\n1. 苹果一直以来都是使用 Bento 风格的产品来介绍自家的产品,这种风格的特点就是你可以通过一张图来一览产品的全貌,连苹果都在用,那你有什么理由不去使用。\n2. 社交媒体的宣传需要流量，发布普通枯燥的文本很难带来流量，但是我发现【动画】很容易带来流量。\n\n【AnimCard 有什么优势?】\n你不需要会设计,通过简单的拖拽即可形成 Bento 风格的卡片动画并导出视频。\n\n【官网】\n\nhttps://www.animcard.com",
+  "url": "https://www.animcard.com",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FhSX49XgkLbWrowEXLjgbJPRzGczv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "design",
+      "productivity"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/693a673e16f00e009f2b6562",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": false,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2025-12-11T06:39:58.351Z",
+  "updatedAt": "2026-04-11T18:46:59.024Z",
+  "publishedAt": "2025-12-11T06:39:58.351Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/693a673e16f00e009f2b6562",
+    "author": "Lessimore",
+    "authorBio": "独立开发者:\nFolder Hub、I18n Studio、InputLock",
+    "engagement": {
+      "likes": 3,
+      "comments": 0,
+      "shares": 2
+    },
+    "densityScore": {
+      "density": 7,
+      "heat": 0,
+      "timeliness": 2,
+      "association": 3,
+      "total": 12
+    },
+    "topComments": []
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "proj_typeno",
+  "slug": "typeno",
+  "status": "featured",
+  "name": "TypeNo",
+  "tagline": "面向 macOS 的极简语音输入法，永远免费，永远开源",
+  "description": "大多数语音输入法都在变得越来越臃肿：\n要登录、要订阅、要联网、要加一堆新功能，要学习一堆新交互。\n\n世界，不应该这样。\n输入，就应该专注。\n于是我们做了 TypeNo。\n\nTypeNo 是一款面向 macOS 的极简语音输入法：\n- 永远免费，永远开源\n- 本地模型，保护隐私\n- 轻量模型，节省内存\n\n按下 Control，开始说话；\n再按一次，自动转录，自动粘贴到当前应用。\n一切极简，再无其他功能。\n\n没有账号。\n没有订阅。\n没有多余 UI。\n没有“为了 AI 而 AI”的复杂感。\n\nTypeless 每月 30 美金。\nTypeNo 免费。\n\n如果你愿意，欢迎试用，也欢迎给个 star：\n项目地址：https://github.com/marswaveai/TypeNo\n好记的官网网站： typeno.com",
+  "url": "https://github.com/marswaveai/TypeNo",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FgL81-Gakq1tHVsVJw2XxNglGeFdv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "open-source",
+      "productivity"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69c27125800201ac687ec472",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#DB6B25",
+  "vibes": [
+    "极简",
+    "开源"
+  ],
+  "createdAt": "2026-03-24T11:10:29.395Z",
+  "updatedAt": "2026-04-11T18:46:59.010Z",
+  "publishedAt": "2026-03-24T11:10:29.395Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69c27125800201ac687ec472",
+    "author": "AGENT橘",
+    "authorBio": "CEO of ColaOS/MarsWave",
+    "engagement": {
+      "likes": 246,
+      "comments": 47,
+      "shares": 85
+    },
+    "densityScore": {
+      "density": 7,
+      "heat": 8,
+      "timeliness": 5,
+      "association": 3,
+      "total": 23
+    },
+    "topComments": []
+  }
+}

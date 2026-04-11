@@ -1,0 +1,65 @@
+{
+  "id": "proj_拾刻",
+  "slug": "拾刻",
+  "status": "basic",
+  "name": "拾刻",
+  "tagline": "中学文学时钟 Chrome 插件，用课文里的时间描写当时钟",
+  "description": "分享一个最近做的和 AI 不太有关系的小插件「拾刻-中学文学时钟」：\n\n四年前看到一个外国项目，把文学作品里的时间描写做成了时钟——下午三点，屏幕上出现的是某本小说里写的\"It was three o'clock\"。\n\t\n当时就想：为什么没有中文版的？并在自己的头脑风暴文档里记下了这个想法。\n\t\n这个 idea 一放就是四年，上周的某一刻，我突然又翻出了这个想法。动手做了一个 Chrome 新标签页插件，叫「拾刻」。\n\t\n功能很简单，每次打开浏览器新标签页，会看到一句和当前时刻对应的中文文学引文。比如：\n\t\n🕐 凌晨 1 点——\"整个宇宙将为你闪烁。\" ——《三体》\n\t\n🕓 下午 3:30——\"下午三点半左右，阿廖沙在那条路上走着。\" ——《卡拉马佐夫兄弟》\n\t\n背景色也会跟着时间变化（HEX 十六进制色值），还做了一个「虫洞穿越」模式——按空格键，时间倒流，以引力加速度的动画在三分钟内快速闪回今天经过的每一分钟。\n\t\n目前我收录并校对了 967 条引文，覆盖余华、村上春树、刘慈欣、纳兰性德、苏轼、老舍等 200+ 位作家。每一条都有真实出处，不是 AI 编的。语料库是一个体力活，即便有AI，做这个事情也不轻松，后面我会持续再更新，欢迎感兴趣的朋友持续关注。\n\t\n如果对这个工具感兴趣，可以直接去 Chrome Web Store 搜「拾刻」就能装。目前仅支持 Chrome、Edge 等 Chrome 内核的浏览器（目前 AI 浏览器因为对于 newtabs 进行了改造，新标签页的插件都不支持，所以这类 AI 浏览器暂时都不支持，包括 Dia、Arc、Atlas 等）\n\t\n最后，希望在你无聊的工作间隙，也能从文学中拾取到一个有趣的时刻。\n\n「拾刻」插件链接：https://chromewebstore.google.com/detail/agoanicnncfnnilkk",
+  "url": "https://chromewebstore.google.com/detail/agoanicnncfnnilkkihplfkpkpkhdbac?utm_source=item-share-cb",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FgSnjHiLoGijbfliRSxDAuBqXGjvv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/FjbLRhEjGIxgBKL7BD2UgZCSvX9Wv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/FkBUwsoiA0Dcg0SMjkZUnyBU83-ov3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "chrome-extension"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69c3a80625bae56612ca9874",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": false,
+  "stageColor": "#DB6B25",
+  "vibes": [
+    "创意切入",
+    "小而美"
+  ],
+  "createdAt": "2026-03-25T09:16:54.635Z",
+  "updatedAt": "2026-04-11T18:46:59.023Z",
+  "publishedAt": "2026-03-25T09:16:54.635Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69c3a80625bae56612ca9874",
+    "author": "埃隆噗大可",
+    "authorBio": "🧩 AI 创业中，之前做过 AI 设计工具和在线教育\n🧑‍🚀 阅读、观察、研究、沉思、练习\n📣 公众号：豪大说",
+    "engagement": {
+      "likes": 37,
+      "comments": 7,
+      "shares": 5
+    },
+    "densityScore": {
+      "density": 6,
+      "heat": 4,
+      "timeliness": 5,
+      "association": 3,
+      "total": 18
+    },
+    "topComments": []
+  }
+}

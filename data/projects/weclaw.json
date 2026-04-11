@@ -1,0 +1,60 @@
+{
+  "id": "proj_weclaw",
+  "slug": "weclaw",
+  "status": "featured",
+  "name": "WeClaw",
+  "tagline": "让微信接入任意 AI Agent 的开源桥接工具",
+  "description": "我最近开源的五个 Claw 项目👇\n\n1. WeClaw -  在微信 ClawBot 连接多个 Agent 的桥接器\n\nhttps://github.com/fastclaw-ai/weclaw\n\n2. ClawHost - 基于集群的 OpenClaw 多租户部署面板\n\nhttps://github.com/fastclaw-ai/clawhost\n\n3. ChatClaw - Agent 团队版 OpenClaw Web UI\n\nhttps://github.com/fastclaw-ai/chatclaw\n\n4. FastClaw - 云原生部署友好的 OpenClaw 替代框架\n\nhttps://github.com/fastclaw-ai/fastclaw\n\n5. AnyClaw - 给 Agent 使用的互联网工具转接头\n\nhttps://github.com/fastclaw-ai/anyclaw\n\n------\n\n你在用哪个？你最看好哪个？🤔",
+  "url": "https://github.com/fastclaw-ai/weclaw",
+  "screenshots": [],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "ai-tools",
+      "open-source",
+      "devtools"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69c77907800201ac68f1924d",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2026-03-28T06:45:27.889Z",
+  "updatedAt": "2026-04-11T18:46:59.021Z",
+  "publishedAt": "2026-03-28T06:45:27.889Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69c77907800201ac68f1924d",
+    "author": "艾逗笔",
+    "authorBio": "keep building.",
+    "engagement": {
+      "likes": 87,
+      "comments": 14,
+      "shares": 22
+    },
+    "densityScore": {
+      "density": 7,
+      "heat": 5,
+      "timeliness": 5,
+      "association": 4,
+      "total": 21
+    },
+    "topComments": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "proj_colamd",
+  "slug": "colamd",
+  "status": "featured",
+  "name": "ColaMD",
+  "tagline": "Agent 友好的 Markdown 编辑器，文件改了自动刷新",
+  "description": "MarkDown 已经成为我的生活中最重要的文件格式了。\nTypora 虽然是非常好的 MD 编辑器，但是有个很大的痛点：\n每次 Agent 改完文件，都要手动关掉再打开才能看到变化。\n这个操作一天要重复几十次，很烦。\n\n今天决定自己解决这个问题，开发了一个新的编辑器 ColaMD：\nAgent 在后台改你的 .md 文件，你眼前的内容实时刷新。\n就像是在看 Agent 现场写作，体验彻底改变。\n\n相比其他编辑器的 区别？\n- Obsidian 功能强大但太重了，我只是想看一个 .md 文件，不需要打开一整个知识库。\n- Typora 是我用过体验最好的编辑器，但它不支持文件被外部修改后实时刷新\n- 其他付费软件，Markdown 是一个基础格式，免费的编辑器也应该更加普及。\n\n所以 ColaMD 的定位就是：\n一个轻量的、免费的、为 Agent 时代设计的 Markdown 编辑器。\n没有文件管理，没有知识库，没有插件系统，没有 AI 功能。\n\n对了，icon 设计了 20 版，最后选了一个极简的版本，希望你能喜欢。\n\nMIT 开源，免费，macOS / Windows / Linux 都能用。\n\nGitHub 地址：https://github.com/marswaveai/ColaMD\n\n好记的域名：https://ColaMD.com",
+  "url": "https://github.com/marswaveai/ColaMD",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/lqcGHYA8Crjjea2AwwOu-rVEBY1av3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+    "https://cdnv2.ruguoapp.com/FgpjyHe6h1tDJoTH77NqAQDSZvSUv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "devtools",
+      "open-source",
+      "vibe-coding"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69c900419f3cd84f65727e61",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2026-03-29T10:34:41.922Z",
+  "updatedAt": "2026-04-11T18:46:59.013Z",
+  "publishedAt": "2026-03-29T10:34:41.922Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69c900419f3cd84f65727e61",
+    "author": "AGENT橘",
+    "authorBio": "CEO of ColaOS/MarsWave",
+    "engagement": {
+      "likes": 110,
+      "comments": 15,
+      "shares": 23
+    },
+    "densityScore": {
+      "density": 9,
+      "heat": 6,
+      "timeliness": 5,
+      "association": 4,
+      "total": 24
+    },
+    "topComments": []
+  }
+}

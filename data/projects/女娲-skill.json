@@ -1,0 +1,62 @@
+{
+  "id": "proj_女娲-skill",
+  "slug": "女娲-skill",
+  "status": "featured",
+  "name": "女娲.skill",
+  "tagline": "把同事蒸馏成 AI Skill，一键生成专属技能包",
+  "description": "你的下一个员工，何必是同事。\n\n同事.skill这几天火了，把同事蒸馏成AI Skill。这个项目证明了一件事：蒸馏一个人的能力，是可行的。\n\n但我想问一个问题：既然我们已经有了蒸馏人的能力，为什么要蒸馏身边的同事？\n\n去蒸馏各领域最强的人。\n\n而且幸运的是，这些人留下了大量可以被蒸馏的材料。芒格有《穷查理宝典》和几十年的股东会演讲。费曼有全套讲义和自传。Naval有几百条推文和长篇播客。塔勒布有五本书和无数公开辩论。这些都是高纯度的思维原矿，等着被提炼。\n\n我之前就一直在干这件事。今天把方法论开源了，叫女娲。\n\n使用极其简单：输入一个名字就行。女娲自动启动6个Agent去找书、找播客、找推文、找批评者，自己调研、自己提炼、自己验证。你不需要准备任何材料。\n\n6个Agent并行采集著作、播客、社交媒体、批评者视角、决策记录、时间线。然后三重验证：一个观点要被收录为心智模型，必须跨2个以上领域出现过、能预测新问题立场、不是所有聪明人都会这么想。三条全过才留。\n\n决策前问芒格，写教程问费曼，评估风险问塔勒布。你想蒸馏谁就蒸馏谁。\n\nGitHub: https://github.com/alchaincyf/nuwa-skill\n安装: `npx skills add alchaincyf/nuwa-skill`\n\nMIT协议，随便用，随便改，随便造。",
+  "url": "https://github.com/alchaincyf/nuwa-skill",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FpO23PWRsi_HwMasrUSpvXrx4eVyv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "tech_to_product",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "ai-tools",
+      "open-source",
+      "vibe-coding"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69d1ea9d5effd6c397382949",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2026-04-05T04:52:45.259Z",
+  "updatedAt": "2026-04-11T18:46:59.019Z",
+  "publishedAt": "2026-04-05T04:52:45.259Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69d1ea9d5effd6c397382949",
+    "author": "Alchian花生",
+    "authorBio": "🤖AI Native Coder：「小猫补光灯」开发者\n📖写了本书：《一本书玩转DeepSeek》\n🎥油管/B站：AI进化论-花生",
+    "engagement": {
+      "likes": 360,
+      "comments": 40,
+      "shares": 195
+    },
+    "densityScore": {
+      "density": 6,
+      "heat": 8,
+      "timeliness": 5,
+      "association": 3,
+      "total": 22
+    },
+    "topComments": []
+  }
+}

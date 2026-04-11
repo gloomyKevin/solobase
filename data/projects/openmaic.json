@@ -1,0 +1,61 @@
+{
+  "id": "proj_openmaic",
+  "slug": "openmaic",
+  "status": "featured",
+  "name": "OpenMAIC",
+  "tagline": "清华团队开源的 AI 课堂，给话题就能生成完整互动课",
+  "description": "前两天清华团队开源了个好东西，一个 AI 课堂，名字叫 OpenMAIC。\n简单说，它是一个 AI 教学系统，有点像一个高级版的 NotebookLM。\n你给它一个话题或者丢给它任何学习材料，它就能自动生成一堂完整的 AI 互动课 。\n有 AI 老师给你讲，有 AI 同学跟你讨论，还能导出课件。\n现在清华团队把这个软件开源了，广大的学生老师群体都可以免费体验。\n\nOpenMAIC 免费体验：\nhttps://open.maic.chat\n\nOPenMAIC 开源项目地址：\nhttps://github.com/THU-MAIC/OpenMAIC",
+  "url": "https://open.maic.chat",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/Fuo3yhNscZOBVsRaqRXLzpXuR1Phv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "small_team",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "ai-tools",
+      "open-source"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/69b92a8b9f3cd84f650918a4",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": true,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2026-03-17T10:18:51.438Z",
+  "updatedAt": "2026-04-11T18:46:59.014Z",
+  "publishedAt": "2026-03-17T10:18:51.438Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/69b92a8b9f3cd84f650918a4",
+    "author": "AGENT橘",
+    "authorBio": "CEO of ColaOS/MarsWave",
+    "engagement": {
+      "likes": 526,
+      "comments": 43,
+      "shares": 332
+    },
+    "densityScore": {
+      "density": 6,
+      "heat": 8,
+      "timeliness": 5,
+      "association": 4,
+      "total": 23
+    },
+    "topComments": []
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "proj_claude-code-now",
+  "slug": "claude-code-now",
+  "status": "basic",
+  "name": "claude-code-now",
+  "tagline": "不会写代码的产品经理做的第一个 Mac App",
+  "description": "作为一个不会写代码的产品，我做了第一个 Mac App 🎉\nClaude Code Now —— 在系统的任何文件夹，一键点击，CC启动！\n\n设计理念：\nClaude Code 并非只是一个开发工具，而是一个广泛的通用型 Agent。\n它可以帮你分析文件、移动文件、整理文件。\n它可以基于你的 Obsidian 数据库进行分析、总结、提取洞察。\n但是启动 Claude Code 的过程还是太繁琐了，终端、cd、确认权限。\n我们的目标就是一键启动，丝滑享受，跳过输入和确认。\n\n于是我做了这款极简的 Claude Code 一键启动器，专为 macOS 设计，可以在任何文件夹快速启动 Claude Code。\n它用起来，甚至比 ChatWise 更方便，因为不需要把文件拖动进去啦。\n\n安装步骤：\n1. 下载项目\nhttps://github.com/orange2ai/claude-code-now\n在项目地址右侧找到 releases，下载 zip，解压\n\n2. 复制应用到 Applications\nClaude Code Now. app 拖动到系统的 /Applications/ 文件夹\n\n3. 拖动到 Finder 顶部\n开启两个 Finder 窗口，一个鼠标右键选择【自定义工作栏】，进入顶栏自定义模式，另一个找到Applications 中的 \"Claude Code Now\" ，把它拖到第一个Finder窗口的顶部。 \n\n开始使用吧！",
+  "url": "https://github.com/orange2ai/claude-code-now",
+  "screenshots": [
+    "https://cdnv2.ruguoapp.com/FhJh_X5KT0AsNfkmHdcEwHtMheMnv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E"
+  ],
+  "businessModel": "undetermined",
+  "buildEffort": "undetermined",
+  "growthChannel": "undetermined",
+  "founderType": "non_tech_ai",
+  "stage": "launched",
+  "tags": {
+    "track": [
+      "vibe-coding",
+      "productivity"
+    ],
+    "taskScenario": [],
+    "tools": [],
+    "techStack": [],
+    "market": [],
+    "platform": []
+  },
+  "metrics": {},
+  "buildStory": {},
+  "source": {
+    "type": "curated",
+    "originalSource": "jike",
+    "originalUrl": "https://web.okjike.com/originalPost/68d353303ea7571a78447a0a",
+    "claimedByFounder": false
+  },
+  "isEditorsPick": false,
+  "stageColor": "#DB6B25",
+  "vibes": [],
+  "createdAt": "2025-09-24T02:10:56.333Z",
+  "updatedAt": "2026-04-11T18:46:59.030Z",
+  "publishedAt": "2025-09-24T02:10:56.333Z",
+  "_pipeline": {
+    "source": "jike",
+    "sourceUrl": "https://web.okjike.com/originalPost/68d353303ea7571a78447a0a",
+    "author": "AGENT橘",
+    "authorBio": "CEO of ColaOS/MarsWave",
+    "engagement": {
+      "likes": 76,
+      "comments": 4,
+      "shares": 23
+    },
+    "densityScore": {
+      "density": 8,
+      "heat": 4,
+      "timeliness": 1,
+      "association": 3,
+      "total": 16
+    },
+    "topComments": []
+  }
+}
