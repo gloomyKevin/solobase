@@ -71,7 +71,7 @@ function main() {
 
   // BOM + UTF-8 确保飞书/Excel 正确识别中文
   const bom = '\uFEFF'
-  const csv = bom + [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
+  const csv = bom + [headers.join(','), ...rows.map((r: string[]) => r.join(','))].join('\n')
 
   const outPath = path.join(RAW_DIR, 'review.csv')
   fs.writeFileSync(outPath, csv, 'utf-8')

@@ -1,31 +1,10 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { ProjectCard } from "@/components/project/ProjectCard";
-import { TagBadge } from "@/components/common/TagBadge";
-import { SectionTitle } from "@/components/common/SectionTitle";
-import { ShareButton } from "@/components/project/ShareButton";
 import { getDataService } from "@/services/data";
-import { toCardData } from "@/lib/project-utils";
 import { generateProjectMetadata, generateProjectJsonLd } from "@/lib/seo";
-import {
-  getCategoryLabel,
-  businessModelOptions,
-  growthChannelOptions,
-  founderTypeOptions,
-  buildEffortOptions,
-  projectStageOptions,
-  stageColorMap,
-} from "@/config/categories";
-import {
-  ExternalLink,
-  AlertCircle,
-  ChevronRight,
-  Globe,
-} from "lucide-react";
+import { getCategoryLabel, projectStageOptions, stageColorMap } from "@/config/categories";
+import { ArrowUpRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { TagDimension } from "@/components/common/TagBadge";
 import type { Project } from "@/types";
 
 export async function generateMetadata({
@@ -39,104 +18,53 @@ export async function generateMetadata({
   return generateProjectMetadata(project);
 }
 
-function buildDisplayTags(project: Project) {
-  const tags: { label: string; dimension: TagDimension }[] = [];
-
-  if (project.businessModel && project.businessModel !== "undetermined") {
-    tags.push({
-      label: getCategoryLabel(businessModelOptions, project.businessModel),
-      dimension: "business",
-    });
-  }
-  if (project.growthChannel && project.growthChannel !== "undetermined") {
-    tags.push({
-      label: getCategoryLabel(growthChannelOptions, project.growthChannel),
-      dimension: "growth",
-    });
-  }
-  if (project.founderType && project.founderType !== "undetermined") {
-    tags.push({
-      label: getCategoryLabel(founderTypeOptions, project.founderType),
-      dimension: "founder",
-    });
-  }
-  if (project.buildEffort && project.buildEffort !== "undetermined") {
-    tags.push({
-      label: getCategoryLabel(buildEffortOptions, project.buildEffort),
-      dimension: "effort",
-    });
-  }
-
-  // Add track tags
-  for (const track of project.tags.track ?? []) {
-    tags.push({ label: track, dimension: "default" });
-  }
-
-  // Deduplicate
-  return tags.filter(
-    (tag, i, arr) => arr.findIndex((t) => t.label === tag.label) === i
-  );
-}
-
 function getMetrics(project: Project) {
-  const metrics: { label: string; value: string; source: string }[] = [];
+  const metrics: { k: string; v: string }[] = [];
 
-  if (project.metrics?.revenueRange) {
-    const rv = project.metrics.revenueRange.value;
-    const rangeLabels: Record<string, string> = {
-      pre_revenue: "尚无收入",
-      under_1k: "< $1k/月",
-      "1k_5k": "$1k - 5k/月",
-      "5k_10k": "$5k - 10k/月",
-      "10k_50k": "$10k - 50k/月",
-      "50k_plus": "$50k+/月",
-    };
-    metrics.push({
-      label: "收入区间",
-      value: rangeLabels[rv] ?? rv,
-      source: project.metrics.revenueRange.sourceType === "founder_submitted" ? "创始人提供" : "公开信息",
-    });
+  const rangeLabels: Record<string, string> = {
+    pre_revenue: "尚无收入", under_1k: "< $1k/月", "1k_5k": "$1k-5k/月",
+    "5k_10k": "$5k-10k/月", "10k_50k": "$10k-50k/月", "50k_plus": "$50k+/月",
+  };
+
+  if (project.metrics?.revenueRange?.value && project.metrics.revenueRange.value !== "pre_revenue") {
+    metrics.push({ k: "月收入", v: rangeLabels[project.metrics.revenueRange.value] ?? project.metrics.revenueRange.value });
+  }
+  if (project.metrics?.userCount?.value) {
+    metrics.push({ k: "用户", v: project.metrics.userCount.value });
+  }
+  if (project.metrics?.launchedDate?.value) {
+    metrics.push({ k: "上线", v: project.metrics.launchedDate.value });
+  }
+  if (project.metrics?.buildDuration?.value) {
+    metrics.push({ k: "构建", v: project.metrics.buildDuration.value });
   }
 
-  if (project.metrics?.userCount) {
-    metrics.push({
-      label: "用户量",
-      value: project.metrics.userCount.value,
-      source: "公开信息",
-    });
-  }
-
-  if (project.metrics?.launchedDate) {
-    metrics.push({
-      label: "上线时间",
-      value: project.metrics.launchedDate.value,
-      source: "公开信息",
-    });
-  }
-
-  metrics.push({
-    label: "产品阶段",
-    value: getCategoryLabel(projectStageOptions, project.stage),
-    source: "平台标注",
-  });
-
-  if (project.metrics?.buildDuration) {
-    metrics.push({
-      label: "构建耗时",
-      value: project.metrics.buildDuration.value,
-      source: project.metrics.buildDuration.sourceType === "founder_submitted" ? "创始人提供" : "公开信息",
-    });
-  }
-
-  if (project.growthChannel && project.growthChannel !== "undetermined") {
-    metrics.push({
-      label: "核心打法",
-      value: getCategoryLabel(growthChannelOptions, project.growthChannel),
-      source: "编辑总结",
-    });
-  }
+  // 产品阶段始终显示
+  metrics.push({ k: "阶段", v: getCategoryLabel(projectStageOptions, project.stage) });
 
   return metrics;
+}
+
+function getTimeline(project: Project) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pipeline = (project as any)._pipeline;
+  const events: { date: string; src?: string; text: string }[] = [];
+
+  // 从 top_comments 提取有时间感的评论
+  if (pipeline?.topComments?.length) {
+    for (const c of pipeline.topComments.slice(0, 2)) {
+      if (c.content && c.content.length > 10) {
+        events.push({ date: "", src: c.author, text: `"${c.content.slice(0, 80)}"` });
+      }
+    }
+  }
+
+  // 发布时间
+  if (project.publishedAt) {
+    events.push({ date: project.publishedAt.slice(0, 10), text: "内容发布" });
+  }
+
+  return events;
 }
 
 export default async function ProjectDetailPage({
@@ -145,260 +73,206 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const dataService = getDataService();
-  const project = await dataService.getProject(slug);
+  const ds = getDataService();
+  const project = await ds.getProject(slug);
+  if (!project) notFound();
 
-  if (!project) {
-    notFound();
-  }
-
-  const tags = buildDisplayTags(project);
-  const metrics = getMetrics(project);
   const stageLabel = getCategoryLabel(projectStageOptions, project.stage);
   const stageColor = project.stageColor ?? stageColorMap[project.stage] ?? "#9CA3AF";
-  const screenshot = project.screenshots[0] ?? "";
+  const screenshot = project.screenshots?.[0] ?? "";
+  const metrics = getMetrics(project);
+  const timeline = getTimeline(project);
+  const tags = [...(project.tags?.track ?? []), ...(project.tags?.platform ?? [])].filter(Boolean);
 
-  // Related projects
-  const relatedByTrack = await dataService.getRelatedProjects(slug, "track", 3);
-  const relatedByGrowth = await dataService.getRelatedProjects(slug, "growth", 3);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pipeline = (project as any)._pipeline;
+  const authorName = pipeline?.author || "";
+  const authorBio = pipeline?.authorBio || "";
+  const sourceLabel = pipeline?.source === "jike" ? "即刻" : pipeline?.source === "v2ex" ? "V2EX" : pipeline?.source || "";
 
-  // Founder
-  const founder = project.founderId
-    ? await dataService.getFounder(project.founderId)
-    : null;
+  // 相关项目
+  const related = await ds.getRelatedProjects(slug, "track", 3);
 
-  // Growth label for section title
-  const growthLabel = project.growthChannel !== "undetermined"
-    ? getCategoryLabel(growthChannelOptions, project.growthChannel)
-    : null;
-
-  // Track name
-  const trackName = project.tags.track?.[0] ?? "";
+  // vibes（品味标签）
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vibes: string[] = (project as any).vibes || [];
 
   const jsonLd = generateProjectJsonLd(project);
 
   return (
-    <div className="flex min-h-full flex-col">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Header />
+    <div className="min-h-screen bg-background">
+      <style>{`.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}`}</style>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <main className="flex-1">
-        <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6">
-          <nav className="mb-6 flex items-center gap-1.5 text-sm text-muted-foreground">
-            <Link href="/" className="transition-colors hover:text-foreground">
-              首页
-            </Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <Link href="/browse" className="transition-colors hover:text-foreground">
-              探索
-            </Link>
-            <ChevronRight className="h-3.5 w-3.5" />
-            <span className="text-foreground">{project.name}</span>
-          </nav>
+      {/* header */}
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10">
+        <div className="max-w-[860px] mx-auto px-4 sm:px-6 h-11 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-0.5 text-[12px] text-muted-foreground/50 hover:text-foreground transition-colors">
+            <ChevronLeft className="h-3.5 w-3.5" />返回
+          </Link>
+          <Link href="/" className="font-latin text-[14px] font-bold tracking-tight text-foreground/25">solobase</Link>
+          <div className="w-12" />
+        </div>
+      </header>
 
-          <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
-            <div className="space-y-10">
-              {/* Screenshot */}
-              <div className="overflow-hidden rounded-2xl bg-muted">
-                <div
-                  className="aspect-[16/10] w-full bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${screenshot})` }}
-                />
+      <main className="max-w-[860px] mx-auto px-4 sm:px-6 pt-5 pb-28">
+        {/* top: info + screenshot */}
+        <div className="md:grid md:grid-cols-[1fr_300px] md:gap-6 md:items-start">
+          {/* left: core info */}
+          <div>
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h1 className="text-[20px] font-bold leading-tight">{project.name}</h1>
+              <span className="text-[11px] px-2 py-0.5 rounded-full font-medium shrink-0" style={{ background: stageColor + "15", color: stageColor }}>
+                {stageLabel}
+              </span>
+              <a href={project.url} target="_blank" rel="noopener noreferrer" className="ml-auto hidden md:inline-flex items-center gap-1 text-[12px] text-primary font-medium hover:underline">
+                访问产品 <ArrowUpRight className="h-3 w-3" />
+              </a>
+            </div>
+            <p className="mt-1 text-[14px] text-muted-foreground/65 leading-relaxed">{project.tagline}</p>
+
+            {/* insight */}
+            {project.featuredInsight && (
+              <div className="mt-4 pl-3 border-l-[2.5px] border-primary/25">
+                <p className="text-[15px] font-semibold leading-[1.75] text-foreground/90">{project.featuredInsight}</p>
               </div>
+            )}
 
-              {/* Title + Tags */}
-              <div>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <h1 className="text-2xl font-bold sm:text-3xl">{project.name}</h1>
-                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">
-                      {project.tagline}
-                    </p>
-                  </div>
-                  <a
-                    href={project.url}
-                    className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-                  >
-                    访问
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
+            {/* vibes */}
+            {vibes.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {vibes.map((v) => (
+                  <span key={v} className="text-[10px] px-1.5 py-0.5 rounded-md bg-primary/8 text-primary/60 font-medium">{v}</span>
+                ))}
+              </div>
+            )}
+
+            {/* metrics */}
+            {metrics.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {metrics.map((m) => (
+                  <span key={m.k} className="inline-flex items-center gap-1.5 text-[12px] px-2.5 py-[5px] rounded-lg bg-muted/40">
+                    <span className="text-muted-foreground/45">{m.k}</span>
+                    <span className="font-semibold text-foreground/75">{m.v}</span>
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* creator */}
+            {authorName && (
+              <div className="mt-4 flex items-center gap-2.5">
+                <div className="h-7 w-7 rounded-full bg-muted/50 flex items-center justify-center text-[11px] text-muted-foreground/50 font-medium shrink-0">
+                  {authorName[0]}
                 </div>
+                <div className="min-w-0">
+                  <span className="text-[13px] font-medium">{authorName}</span>
+                  {authorBio && <span className="text-[11px] text-muted-foreground/45 ml-1.5">{authorBio.slice(0, 50)}</span>}
+                </div>
+              </div>
+            )}
+          </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  {tags.map((tag) => (
-                    <TagBadge key={tag.label} label={tag.label} dimension={tag.dimension} />
-                  ))}
-                  <span className="ml-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: stageColor }}
-                    />
-                    {stageLabel}
+          {/* right: screenshot */}
+          {screenshot ? (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="group block mt-4 md:mt-0 rounded-xl overflow-hidden bg-muted/20 border border-border/15 hover:border-border/30 transition-colors">
+              <div className="aspect-[16/10] bg-cover bg-center relative" style={{ backgroundImage: `url(${screenshot})` }}>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/8">
+                  <span className="bg-black/50 text-white text-[11px] px-3 py-1 rounded-full flex items-center gap-1">
+                    访问 <ArrowUpRight className="h-3 w-3" />
                   </span>
                 </div>
               </div>
-
-              {/* Metrics */}
-              {metrics.length > 0 && (
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">
-                  {metrics.map((metric) => (
-                    <div key={metric.label} className="rounded-xl border border-border/60 p-4">
-                      <p className="text-xs text-muted-foreground">{metric.label}</p>
-                      <p className="mt-1 text-lg font-bold">{metric.value}</p>
-                      <p className="mt-1 inline-flex items-center gap-1 text-[10px] text-muted-foreground/70">
-                        <span className="h-1 w-1 rounded-full bg-secondary/50" />
-                        {metric.source}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Description */}
-              {project.description && (
-                <div>
-                  <h2 className="mb-3 text-lg font-semibold">产品介绍</h2>
-                  <div className="article-copy text-foreground/90">
-                    {project.description.split("\n\n").map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Build Story */}
-              {project.buildStory && (
-                <div>
-                  <h2 className="mb-4 text-lg font-semibold">构建故事</h2>
-                  <div className="space-y-4">
-                    {[
-                      { q: "这个想法怎么来的？", a: project.buildStory.origin },
-                      { q: "用了什么工具和技术栈？", a: project.buildStory.toolsUsed },
-                      { q: "从 idea 到上线花了多久？", a: project.buildStory.timeline },
-                      { q: "遇到的最大坑是什么？", a: project.buildStory.challenges },
-                      { q: "怎么获取的前 100 个用户？", a: project.buildStory.acquisition },
-                      { q: "目前状态和下一步计划？", a: project.buildStory.currentStatus },
-                    ]
-                      .filter((item) => item.a)
-                      .map((item) => (
-                        <div key={item.q} className="rounded-xl border border-border/60 p-4">
-                          <p className="text-sm font-medium text-primary">{item.q}</p>
-                          <p className="mt-2 text-sm leading-relaxed text-foreground/80">
-                            {item.a}
-                          </p>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Related by Track */}
-              {relatedByTrack.length > 0 && (
-                <div>
-                  <SectionTitle
-                    title="同赛道的其他项目"
-                    subtitle={trackName}
-                    action={{ label: "查看全部", href: "/browse" }}
-                  />
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    {relatedByTrack.map((item) => (
-                      <ProjectCard key={item.slug} project={toCardData(item)} variant="compact" />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Related by Growth */}
-              {relatedByGrowth.length > 0 && growthLabel && (
-                <div>
-                  <SectionTitle
-                    title={`同样用 ${growthLabel} 增长的项目`}
-                    action={{ label: "查看全部", href: "/browse" }}
-                  />
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    {relatedByGrowth.map((item) => (
-                      <ProjectCard key={item.slug} project={toCardData(item)} variant="compact" />
-                    ))}
-                  </div>
-                </div>
-              )}
+            </a>
+          ) : (
+            <div className="mt-4 md:mt-0 aspect-[16/10] rounded-xl bg-muted/20 border border-border/15 flex items-center justify-center">
+              <span className="text-[11px] text-muted-foreground/30">暂无截图</span>
             </div>
+          )}
+        </div>
 
-            {/* Sidebar */}
-            <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
-              {/* Founder Card */}
-              {founder && (
-                <div className="rounded-2xl border border-border/60 bg-card p-5">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="h-12 w-12 rounded-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${founder.avatar ?? ""})` }}
-                    />
-                    <div>
-                      <p className="font-semibold">{founder.name}</p>
-                      <p className="text-xs text-muted-foreground">{founder.bio}</p>
-                    </div>
-                  </div>
-                  {founder.socialLinks && (
-                    <div className="mt-4 flex gap-3">
-                      {founder.socialLinks.jike && (
-                        <a
-                          href={founder.socialLinks.jike}
-                          className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                          即刻
-                        </a>
-                      )}
-                      {founder.socialLinks.twitter && (
-                        <a
-                          href={founder.socialLinks.twitter}
-                          className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                          <Globe className="h-3 w-3" />
-                          Twitter
-                        </a>
-                      )}
-                      {founder.socialLinks.github && (
-                        <a
-                          href={founder.socialLinks.github}
-                          className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                          <Globe className="h-3 w-3" />
-                          GitHub
-                        </a>
-                      )}
+        <div className="mt-6 border-t border-border/12" />
+
+        {/* narrative */}
+        <article className="mt-5 space-y-3">
+          {project.description.split("\n\n").filter(Boolean).slice(0, 3).map((paragraph, i) => (
+            <p key={i} className="text-[14px] leading-[1.85] text-foreground/70">{paragraph.slice(0, 300)}</p>
+          ))}
+          {sourceLabel && (
+            <p className="text-[11px] text-muted-foreground/30">内容来源：{sourceLabel}</p>
+          )}
+        </article>
+
+        {/* timeline */}
+        {timeline.length > 0 && (
+          <div className="mt-7">
+            <h3 className="text-[12px] font-medium text-muted-foreground/35 mb-3">动态</h3>
+            {timeline.map((ev, i) => (
+              <div key={i} className="flex gap-3">
+                <div className="flex flex-col items-center pt-[7px]">
+                  <div className="h-[5px] w-[5px] rounded-full bg-muted-foreground/20 shrink-0" />
+                  {i < timeline.length - 1 && <div className="w-px flex-1 bg-border/15 my-0.5" />}
+                </div>
+                <div className="pb-3 min-w-0">
+                  <p className="text-[11px] text-muted-foreground/35">
+                    {ev.date}
+                    {ev.src && <span className="ml-1 text-muted-foreground/25">· {ev.src}</span>}
+                  </p>
+                  <p className="text-[13px] text-foreground/60 leading-relaxed mt-0.5">{ev.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* tags */}
+        {tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {tags.map((t) => (
+              <span key={t} className="text-[11px] px-2 py-0.5 rounded-md bg-muted/30 text-muted-foreground/40">{t}</span>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-6 border-t border-border/12" />
+
+        {/* related */}
+        {related.length > 0 && (
+          <div className="mt-5">
+            <h3 className="text-[12px] font-medium text-muted-foreground/35 mb-3">相关产品</h3>
+            <div className="flex gap-3 overflow-x-auto no-scrollbar -mx-4 px-4 sm:-mx-6 sm:px-6">
+              {related.map((r) => (
+                <Link key={r.slug} href={`/project/${r.slug}`} className="shrink-0 w-[180px] rounded-xl border border-border/15 bg-card overflow-hidden hover:border-border/30 transition-colors">
+                  {r.screenshots?.[0] ? (
+                    <div className="aspect-[16/10] bg-cover bg-center" style={{ backgroundImage: `url(${r.screenshots[0]})` }} />
+                  ) : (
+                    <div className="aspect-[16/10] bg-muted/20 flex items-center justify-center">
+                      <span className="text-[11px] text-muted-foreground/20">{r.name[0]}</span>
                     </div>
                   )}
-                </div>
-              )}
-
-              {/* Actions */}
-              <div className="space-y-3 rounded-2xl border border-border/60 bg-card p-5">
-                <ShareButton slug={project.slug} name={project.name} />
-                <button className="inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
-                  <AlertCircle className="h-4 w-4" />
-                  信息有误？反馈纠错
-                </button>
-              </div>
-
-              {/* Tags */}
-              <div className="rounded-2xl border border-border/60 bg-card p-5">
-                <p className="mb-3 text-sm font-semibold">标签</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {tags.map((tag) => (
-                    <TagBadge key={tag.label} label={tag.label} dimension={tag.dimension} />
-                  ))}
-                </div>
-              </div>
-            </aside>
+                  <div className="px-2.5 py-2">
+                    <p className="text-[13px] font-medium leading-tight">{r.name}</p>
+                    <p className="text-[11px] text-muted-foreground/45 mt-0.5">{r.tagline?.slice(0, 25)}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </main>
 
-      <Footer />
+      {/* floating CTA (mobile) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
+        <div className="bg-background/90 backdrop-blur-md border-t border-border/10 px-4 py-2.5 flex items-center gap-3 max-w-[860px] mx-auto">
+          <div className="flex-1 min-w-0">
+            <p className="text-[13px] font-bold truncate">{project.name}</p>
+            <p className="text-[11px] text-muted-foreground/45 truncate">{project.tagline}</p>
+          </div>
+          <a href={project.url} target="_blank" rel="noopener noreferrer" className="shrink-0 px-4 py-1.5 rounded-full bg-primary text-primary-foreground text-[12px] font-medium hover:bg-primary/90 transition-colors">
+            访问 →
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

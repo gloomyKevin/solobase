@@ -58,7 +58,7 @@ interface TopicBrief {
   category_id: number
 }
 
-function fetchCategoryPage(categoryId: number, page: number): Promise<{ topics: TopicBrief[]; more: boolean }> {
+function fetchCategoryPage(categoryId: number, page: number): { topics: TopicBrief[]; more: boolean } {
   const data = fetchJSON(`/latest.json?category=${categoryId}&page=${page}`)
   const topics: TopicBrief[] = (data.topic_list?.topics || []).map((t: any) => ({
     id: t.id,
@@ -74,7 +74,7 @@ function fetchCategoryPage(categoryId: number, page: number): Promise<{ topics: 
   return { topics, more }
 }
 
-function fetchTagPage(tag: string, page: number): Promise<{ topics: TopicBrief[]; more: boolean }> {
+function fetchTagPage(tag: string, page: number): { topics: TopicBrief[]; more: boolean } {
   const data = fetchJSON(`/tag/${tag}.json?page=${page}`)
   const topics: TopicBrief[] = (data.topic_list?.topics || []).map((t: any) => ({
     id: t.id,
@@ -92,7 +92,7 @@ function fetchTagPage(tag: string, page: number): Promise<{ topics: TopicBrief[]
 
 // ─── 帖子详情 ──────────────────────────────────────────────────
 
-function fetchTopicDetail(topicId: number): Promise<any> {
+function fetchTopicDetail(topicId: number): any {
   try {
     const data = fetchJSON(`/t/topic/${topicId}.json`)
     const post = data.post_stream?.posts?.[0]
@@ -126,7 +126,7 @@ function fetchTopicDetail(topicId: number): Promise<any> {
 
 // ─── Probe ──────────────────────────────────────────────────────
 
-function probe(config: LinuxdoConfig): Promise<boolean> {
+function probe(config: LinuxdoConfig): boolean {
   console.log('验证 Linux.do...')
   try {
     const { topics } = fetchCategoryPage(4, 0) // 开发调优
@@ -145,10 +145,10 @@ function probe(config: LinuxdoConfig): Promise<boolean> {
 
 function crawlSource(
   label: string,
-  fetchPage: (page: number) => Promise<{ topics: TopicBrief[]; more: boolean }>,
+  fetchPage: (page: number) => { topics: TopicBrief[]; more: boolean },
   maxPages: number,
   config: LinuxdoConfig
-): Promise<any[]> {
+): any[] {
   console.log(`\n[${label}]`)
   const seenIds = new Set<number>()
   const allTopics: TopicBrief[] = []

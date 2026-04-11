@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { Heart, TrendingUp, Plus, ArrowRight, LayoutGrid, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 /* ============================================================
    Types
@@ -319,7 +320,7 @@ function RenderContainer({ item, projects, seqIdx }: {
     case "A": {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[0];
       return (
-        <article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
+        <Link href={`/project/${p.slug}`} className="block h-full"><article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
           <div className="relative md:w-[55%] shrink-0 aspect-[16/9] md:aspect-auto md:min-h-[200px] overflow-hidden bg-muted">
             <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/30 via-transparent to-transparent" />
@@ -335,7 +336,7 @@ function RenderContainer({ item, projects, seqIdx }: {
               <Heart className="ml-auto h-3.5 w-3.5 text-muted-foreground/20" />
             </div>
           </div>
-        </article>
+        </article></Link>
       );
     }
 
@@ -363,7 +364,7 @@ function RenderContainer({ item, projects, seqIdx }: {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[seqIdx % projects.length];
       const badge = p.revenue ? { label: `💰 ${p.revenue}`, cls: "bg-secondary/10 text-secondary" } : p.founderType === "non_tech_ai" ? { label: "🤖 AI 做的", cls: "bg-primary/10 text-primary" } : null;
       return (
-        <article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">
+        <Link href={`/project/${p.slug}`} className="block h-full"><article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">
           <div className="relative aspect-[16/10] overflow-hidden bg-muted shrink-0">
             <div className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
             {badge && <span className={`absolute top-2 left-2 rounded-full px-2 py-0.5 text-[9px] font-semibold backdrop-blur-sm ${badge.cls}`}>{badge.label}</span>}
@@ -377,34 +378,38 @@ function RenderContainer({ item, projects, seqIdx }: {
               <Heart className="ml-auto h-3 w-3 text-muted-foreground/20" />
             </div>
           </div>
-        </article>
+        </article></Link>
       );
     }
 
     /* ─── C: Compact row — full-width, 3 items side by side ─── */
     case "C": {
-      const list = item.dataSrc === "想法"
-        ? IDEAS.slice(0, 3).map(i => ({ title: i.text.slice(0, 20) + "...", sub: i.author, img: "", dot: "#F59E0B", meta: "想法" }))
-        : ps.slice(0, 3).map(p => ({ title: p.name, sub: p.tagline, img: p.screenshot, dot: p.stageColor, meta: SN[p.stage] }));
+      const isIdea = item.dataSrc === "想法";
+      const list = isIdea
+        ? IDEAS.slice(0, 3).map(i => ({ slug: "", title: i.text.slice(0, 20) + "...", sub: i.author, img: "", dot: "#F59E0B", meta: "想法" }))
+        : ps.slice(0, 3).map(p => ({ slug: p.slug, title: p.name, sub: p.tagline, img: p.screenshot, dot: p.stageColor, meta: SN[p.stage] }));
       return (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 h-full">
-          {list.map((c, i) => (
-            <article key={i} className="flex gap-3 rounded-xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all p-2.5 cursor-pointer">
-              {c.img ? (
-                <div className="shrink-0 h-11 w-11 rounded-lg bg-muted overflow-hidden"><div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${c.img})` }} /></div>
-              ) : (
-                <div className="shrink-0 h-11 w-11 rounded-lg bg-accent/10 flex items-center justify-center text-base">💡</div>
-              )}
-              <div className="min-w-0 flex-1 flex flex-col justify-center">
-                <h3 className="text-[12px] font-semibold truncate">{c.title}</h3>
-                <p className="text-[10px] text-muted-foreground truncate">{c.sub}</p>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="h-[3px] w-[3px] rounded-full" style={{ backgroundColor: c.dot }} />
-                  <span className="text-[9px] text-muted-foreground">{c.meta}</span>
+          {list.map((c, i) => {
+            const inner = (
+              <article className="flex gap-3 rounded-xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all p-2.5 cursor-pointer h-full">
+                {c.img ? (
+                  <div className="shrink-0 h-11 w-11 rounded-lg bg-muted overflow-hidden"><div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${c.img})` }} /></div>
+                ) : (
+                  <div className="shrink-0 h-11 w-11 rounded-lg bg-accent/10 flex items-center justify-center text-base">💡</div>
+                )}
+                <div className="min-w-0 flex-1 flex flex-col justify-center">
+                  <h3 className="text-[12px] font-semibold truncate">{c.title}</h3>
+                  <p className="text-[10px] text-muted-foreground truncate">{c.sub}</p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="h-[3px] w-[3px] rounded-full" style={{ backgroundColor: c.dot }} />
+                    <span className="text-[9px] text-muted-foreground">{c.meta}</span>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+            return c.slug ? <Link key={i} href={`/project/${c.slug}`}>{inner}</Link> : <div key={i}>{inner}</div>;
+          })}
         </div>
       );
     }
@@ -485,7 +490,7 @@ function RenderContainer({ item, projects, seqIdx }: {
           </div>
           <div className="flex-1 space-y-px">
             {list.map((p, i) => (
-              <div key={p.slug} className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 hover:bg-muted/30 transition-colors cursor-pointer">
+              <Link key={p.slug} href={`/project/${p.slug}`} className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 hover:bg-muted/30 transition-colors cursor-pointer">
                 <span className="font-latin text-[13px] font-bold text-muted-foreground/20 w-4 text-right shrink-0">{i + 1}</span>
                 <div className="shrink-0 h-8 w-8 rounded-md bg-muted overflow-hidden"><div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${p.screenshot})` }} /></div>
                 <div className="min-w-0 flex-1">
@@ -493,7 +498,7 @@ function RenderContainer({ item, projects, seqIdx }: {
                   <p className="text-[9px] text-muted-foreground/50 truncate">{p.tagline}</p>
                 </div>
                 {p.revenue && <span className="shrink-0 text-[8px] font-medium text-secondary bg-secondary/10 rounded-full px-1.5 py-0.5">{p.revenue}</span>}
-              </div>
+              </Link>
             ))}
           </div>
         </article>
@@ -508,7 +513,7 @@ function RenderContainer({ item, projects, seqIdx }: {
           <h3 className="text-[13px] font-semibold mb-3">{item.dataSrc}</h3>
           <div className="flex gap-2.5 overflow-x-auto no-scrollbar -mr-4 pr-4 flex-1">
             {list.map(p => (
-              <div key={p.slug} className="shrink-0 w-[45%] sm:w-[28%] cursor-pointer group/inner">
+              <Link key={p.slug} href={`/project/${p.slug}`} className="shrink-0 w-[45%] sm:w-[28%] cursor-pointer group/inner">
                 <div className="aspect-[16/10] rounded-lg bg-muted overflow-hidden mb-2">
                   <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover/inner:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
                 </div>
@@ -518,7 +523,7 @@ function RenderContainer({ item, projects, seqIdx }: {
                   <span className="h-[3px] w-[3px] rounded-full" style={{ backgroundColor: p.stageColor }} />
                   <span className="text-[9px] text-muted-foreground">{SN[p.stage]}</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </article>
