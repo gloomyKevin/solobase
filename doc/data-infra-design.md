@@ -1,225 +1,258 @@
 # Solobase 数据基础设施设计
 
 > 类型：权威设计文档（supersedes `pipeline-redesign.md`）
-> 状态：设计定稿（2026-04-12）
+> 版本：v2（2026-04-12，修订：修复状态机、M:M schema、幂等性、推断历史、去重策略）
 > 前置：`doc/data system design.md`（概念模型）·`doc/pipeline-redesign.md`（现状诊断）
 
 ---
 
-## 一、核心认知升级
+## 一、核心认知
 
-### 1.1 从"管道"到"知识图谱"
+### 1.1 目标：可靠的 canonical store，而非"知识图谱"
 
-这是本次重设计最根本的思维转变。
+第一阶段目标是建立一个**可靠的 canonical store**：稳定入库、可回写编辑决策、可发布到前台、有完整的操作追溯。
 
-**旧思维（管道）**：数据单向流动。爬取 → 处理 → 存文件 → 构建。每次重跑，从头再来。没有记忆，没有关系，没有学习能力。
+"知识图谱"是这个 store 未来演进的方向，不是当前的技术主张。在 M:M 实体关系正确、实体身份识别可靠、向量召回经过验证之前，不使用这个标签。
 
-**新思维（知识图谱）**：实体持续存在，关系随时间积累。Maker、Project、Post 是有生命的节点，不是处理过的文本。每次新内容到来，是在已有知识上叠加，而不是重新计算。
+### 1.2 三条一阶原则
 
-| 维度 | 管道 | 知识图谱 |
-|------|------|---------|
-| 核心资产 | 处理后的文件 | 实体与关系 |
-| 更新方式 | 重跑全量 | 增量更新 |
-| 去重能力 | URL 字符串匹配 | 语义相似度 |
-| 编辑品味 | 规则硬编码 | 向量化后可学习 |
-| 扩展性 | 加新源需改管道 | 加 adapter 即可 |
-| 未来用途 | 驱动网站 | 网站 + API + MCP |
+**原则一：LLM 只做排序，不做裁决**  
+LLM 的置信度分数是未校准的、会随 prompt 漂移的代理信号。任何内容的最终归宿（发布/拒绝/归档）由人决定，LLM 只影响你看到内容的先后顺序。  
+例外：**确定性规则**（招聘/抽奖等关键词）可以直接归档，这是规则确定性，不是 LLM 置信度。
 
-### 1.2 数据系统的终态定位
+**原则二：approved ≠ published**  
+审核通过（review_status=approved）和对外发布（publish_status=published）是两个独立状态，分开管理。feed 只包含 published 内容。这给你留了"通过但暂不公开"的空间，也防止补图/修字段触发 feed 重排。
 
-Solobase 的数据系统不是"网站的后端"，是**中文独立开发者生态的知识基础设施**。
+**原则三：推断历史 append-only，事实层不可变**  
+`content_items` 的事实字段（原文、作者、互动数、来源 ID）写入后不可改。LLM 的每次推断输出单独存一行 `inference_runs`，当前最新摘要冗余一份在 `content_items` 里方便查询，但原始推断历史永远可回放。
 
-网站是消费入口之一。未来的消费入口还有：
-- **API** — 第三方工具查询 Solobase 的结构化知识
-- **MCP Server** — 任何 AI 助手都能调用 Solobase 回答关于中文独立开发者的问题
-- **Newsletter/摘要** — 定期推送高密度策展内容
+### 1.3 数据系统的终态定位
 
-数据本身是资产，不依附于任何展示形式。数据的时间深度和编辑质量，是无法被竞争对手快速复制的护城河。
+Solobase 的数据系统是**中文独立开发者生态的知识基础设施**。当前阶段的网站是第一个消费入口。未来的消费入口还有 API、MCP Server、Newsletter 等。数据本身是资产，不依附于任何展示形式。
 
 ---
 
-## 二、系统架构全图
+## 二、设计原则（实施层）
+
+在 `data system design.md` 六条原则之上，本文档追加以下实施约束：
+
+| # | 原则 | 含义 |
+|---|------|------|
+| P1 | 幂等入库 | `(source, source_id)` 唯一索引，任何重跑都不产生重复 |
+| P2 | 状态三分 | review_status / publish_status / entity_status 互相独立 |
+| P3 | 推断可回放 | inference_runs append-only，可重跑对比，不丢失历史 |
+| P4 | 关系真实 | M:M 用 junction table，不压扁成单值外键 |
+| P5 | 去重两阶段 | 先 deterministic keys，再 LLM/embedding 候选，merge 可回退 |
+| P6 | 发布显式 | feed 内容由 publish_status 控制，不由 review_status 直接驱动 |
+| P7 | 可观测 | 核心指标可查询，不盲飞 |
+
+---
+
+## 三、系统架构全图
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        SOURCE LAYER                              │
-│                                                                   │
-│  即刻  ·  V2EX  ·  Linux.do  ·  Product Hunt  ·  sspai  ·  ...  │
-│  (定时 Agent 拉取，每 12-24h)          Native Submit (表单)       │
+│  即刻 · V2EX · Linux.do · Product Hunt · sspai · Native Submit  │
 └────────────────────────┬────────────────────────────────────────┘
-                         │ 全量存储，仅过滤明确噪声
+                         │ 全量，仅过滤确定性噪声（规则）
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                       RAW STORE                                  │
-│  data/raw/{source}/*.json  —  不可变，append-only，永久保留       │
+│  RAW STORE  data/raw/{source}/*.json — 不可变，永久保留          │
 └────────────────────────┬────────────────────────────────────────┘
-                         │ 触发：新内容到达
+                         │ upsert on (source, source_id)
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                   ENRICHMENT AGENT  ← 核心                       │
-│                                                                   │
-│  ① LLM 分类提取（Haiku）                                         │
-│     content_type · 产品名/URL · maker · 核心指标 · 推荐理由       │
-│                                                                   │
-│  ② 语义向量化（text-embedding-3-small）                          │
-│     生成 1536-dim embedding，写入 sqlite-vec                      │
-│                                                                   │
-│  ③ 相似度检测（Dedup）                                           │
-│     cos_sim > 0.92 → 标记为已知产品的新提及                       │
-│                                                                   │
-│  ④ 媒体富化（Microlink）                                         │
-│     有 URL → 抓 OG image + title + description                    │
-│                                                                   │
-│  ⑤ 编辑摘要（Sonnet，仅对 include/review 内容）                   │
-│     给编辑看的 2-3 句话 + 推荐理由                                │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-           ┌─────────────┼──────────────┐
-           ▼             ▼              ▼
-      高置信度        中置信度         低置信度
-    (conf ≥ 0.85)   (0.5-0.85)     (conf < 0.5)
-    auto_approved  → review queue  auto_archived
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   EDITORIAL INTERFACE                            │
-│                                                                   │
-│  飞书 Interactive Card Bot（短期）                               │
-│  → Next.js /admin（中期）                                        │
-│                                                                   │
-│  每天 10-15 分钟：看 AI 摘要，点通过/跳过                         │
-│  决策实时写回 canonical store                                     │
-└────────────────────────┬────────────────────────────────────────┘
-                         │ editorial_status → approved
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   CANONICAL STORE                                │
-│                                                                   │
-│  Turso (remote SQLite) + sqlite-vec                              │
-│  Drizzle ORM（TypeScript 类型安全）                              │
-│                                                                   │
-│  tables: content_items · projects · makers                       │
-│           embeddings · editorial_actions · media_cache           │
-└──────────┬──────────────┬───────────────┬────────────────────────┘
-           ▼              ▼               ▼
-    ┌──────────┐   ┌───────────┐   ┌──────────────┐
-    │  BUILD   │   │  SEARCH   │   │  MCP SERVER  │
-    │ feed.json│   │(vector)   │   │(未来知识 API)│
-    │ 增量更新 │   │语义发现   │   │AI 助手可调用 │
-    └──────────┘   └───────────┘   └──────────────┘
-         ▼
-    Frontend (Next.js)
+│  CANONICAL STORE  Turso (libSQL) + sqlite-vec                   │
+│  content_items · projects · makers · junction tables            │
+│  inference_runs · editorial_actions · media_cache               │
+└──────┬────────────────────────┬───────────────────────┬─────────┘
+       │                        │                        │
+       ▼                        ▼                        ▼
+┌─────────────┐    ┌────────────────────┐    ┌──────────────────┐
+│  ENRICHMENT │    │  EDITORIAL QUEUE   │    │   BUILD LAYER    │
+│  AGENT      │    │                    │    │                  │
+│             │    │ 飞书 Card Bot      │    │ publish_status   │
+│ LLM 分类    │    │ (短期)             │    │ = published      │
+│ 向量化      │    │ → Next.js /admin   │    │ → feed.json      │
+│ 媒体富化    │    │ (中期)             │    │ → ISR rebuild    │
+│ 去重候选    │    │                    │    │                  │
+│ 编辑摘要    │    │ 每天 10-15 分钟    │    │ 增量，不全量重跑  │
+└─────────────┘    └────────────────────┘    └──────────────────┘
+                                                      ▼
+                                               Frontend (Next.js)
 ```
 
 ---
 
-## 三、技术栈决策
-
-### 3.1 最终选型
+## 四、技术栈
 
 | 层 | 技术 | 理由 |
 |----|------|------|
 | **数据库** | Turso (libSQL/SQLite) | 零运维，远程可访问，免费额度充足 |
-| **向量存储** | sqlite-vec（内置于 Turso） | 不引入独立向量 DB，一个依赖解决两件事 |
+| **向量存储** | sqlite-vec（内置于 Turso） | 不引入独立向量 DB，一个依赖两件事 |
 | **ORM** | Drizzle ORM | TypeScript 原生，类型安全，迁移简单 |
-| **Embedding 模型** | `text-embedding-3-small` (OpenAI) | 通过 one-api 中转，$0.02/1M tokens |
-| **分类 LLM** | Claude Haiku (via one-api) | 快速+便宜，批量处理 |
-| **摘要 LLM** | Claude Sonnet (via one-api) | 质量高，仅对 review 内容调用 |
+| **Embedding** | `text-embedding-3-small` (OpenAI via one-api) | $0.02/1M tokens，几乎免费 |
+| **分类 LLM** | Claude Haiku (via one-api) | 快速便宜，批量处理 |
+| **摘要 LLM** | Claude Sonnet (via one-api) | 质量高，只对 review 内容调用 |
 | **媒体富化** | Microlink API | OG image + metadata，一行调用 |
-| **页面内容提取** | Jina Reader (r.jina.ai) | 免费，把任意 URL 转 markdown |
+| **页面内容** | Jina Reader (r.jina.ai) | 免费，任意 URL → clean markdown |
 | **调度** | Claude Code CronCreate | 原生集成，有上下文理解能力 |
 | **审核 UI（短期）** | 飞书 Interactive Card Bot | 零新工具，手机可操作 |
 | **审核 UI（中期）** | Next.js /admin | 同 repo，共享 DB，键盘流 |
 | **MCP Server** | @modelcontextprotocol/sdk | 官方 Node.js SDK |
 
-### 3.2 成本估算
+**成本估算：**
 
 | 项目 | 场景 | 成本 |
 |------|------|------|
-| 冷启动全量处理 | 4188 条 × 分类+embedding | ~¥80 一次性 |
+| 冷启动全量处理 | 4188 条分类 + embedding | ~¥80 一次性 |
 | 日常运营 | ~100 条新内容/天 | ~¥3/天 |
 | Turso | 500MB + 1B rows/月 | 免费 |
-| Microlink | 500 req/月免费，后 $29/月 | 初期免费 |
-| Jina Reader | 完全免费 | 免费 |
-| **合计（稳定后）** | | **~¥90/月** |
+| Microlink | 500 req/月免费，后续 $29/月 | 初期免费 |
 
 ---
 
-## 四、数据库 Schema（Drizzle）
+## 五、数据库 Schema
 
-### 4.1 完整 Schema
+### 5.1 状态机定义
+
+每个 content_item 有三个独立的状态维度：
+
+```
+review_status   —— 审核流转
+  pending       → 尚未人工审核
+  approved      → 审核通过（不等于对外发布）
+  rejected      → 审核拒绝（保留记录，不展示）
+  archived      → 确定性规则归档（招聘/抽奖等）
+
+publish_status  —— 发布控制（只有 review_status=approved 才可设置）
+  unpublished   → 通过但暂不公开
+  published     → 对外展示（进入 feed）
+  featured      → 编辑精选（在 feed 中置顶/高亮）
+
+entity_status   —— 实体生命周期
+  active        → 正常状态
+  deprecated    → 内容已过期/产品已停止，降低权重
+  withdrawn     → 作者要求删除，立即从前台移除
+```
+
+Project 和 Maker 实体同样有 `entity_status`（active / deprecated / withdrawn）。
+
+### 5.2 完整 Schema
 
 ```typescript
 // db/schema.ts
-import { sqliteTable, text, integer, real, blob } from 'drizzle-orm/sqlite-core'
+import {
+  sqliteTable, text, integer, real, blob, index, uniqueIndex
+} from 'drizzle-orm/sqlite-core'
 
-// ── Content Items ─────────────────────────────────────────────────
+// ── Content Items ──────────────────────────────────────────────────
+// 事实层字段写入后不可修改
+// 推断层字段为当前最新推断的摘要冗余（全历史在 inference_runs）
+// 编辑层字段由人工操作写入
+
 export const contentItems = sqliteTable('content_items', {
-  id:           text('id').primaryKey(),          // UUID
-  
-  // 事实层（不可变）
-  source:       text('source').notNull(),         // jike|v2ex|linuxdo|ph|native
+  id:           text('id').primaryKey(),   // UUID
+
+  // ── 事实层（不可变） ──
+  source:       text('source').notNull(),
+  // jike | v2ex | linuxdo | producthunt | native
   sourceId:     text('source_id').notNull(),
   sourceUrl:    text('source_url').notNull(),
-  body:         text('body').notNull(),            // 完整原文，不截断
+  body:         text('body').notNull(),    // 完整原文，不截断
   authorName:   text('author_name').notNull(),
   authorId:     text('author_id'),
   authorBio:    text('author_bio'),
   likesCount:   integer('likes_count').default(0),
   commentsCount:integer('comments_count').default(0),
   sharesCount:  integer('shares_count').default(0),
-  topComments:  text('top_comments', { mode: 'json' }).$type<Comment[]>(),
+  topComments:  text('top_comments', { mode: 'json' })
+                  .$type<{ author: string; content: string; likes: number }[]>(),
   mediaRaw:     text('media_raw', { mode: 'json' }).$type<string[]>(),
   externalLinks:text('external_links', { mode: 'json' }).$type<string[]>(),
   publishedAt:  integer('published_at', { mode: 'timestamp' }),
   crawledAt:    integer('crawled_at', { mode: 'timestamp' }).notNull(),
-  sourceExtra:  text('source_extra', { mode: 'json' }),   // 源特有字段，不丢弃
+  sourceExtra:  text('source_extra', { mode: 'json' }),
 
-  // 推断层（LLM 产出，可重跑）
-  contentType:  text('content_type'),             // product_launch|experience_share|...
-  confidence:   real('confidence'),               // 0.0-1.0
+  // ── 推断层（当前最新快照，全历史见 inference_runs） ──
+  contentType:  text('content_type'),
+  // product_launch | experience_share | build_log | revenue_report |
+  // failure_postmortem | tutorial | tool_recommendation |
+  // market_observation | resource_collection | discussion | noise
+  confidence:   real('confidence'),
   isIndieMaker: integer('is_indie_maker', { mode: 'boolean' }),
-  productName:  text('product_name'),
-  productUrl:   text('product_url'),
-  productOneLiner: text('product_one_liner'),
-  productStage: text('product_stage'),            // building|launched|revenue
-  makerName:    text('maker_name'),
+  // 产品信息（LLM 提取，非确定）
+  inferredProductName:   text('inferred_product_name'),
+  inferredProductUrl:    text('inferred_product_url'),
+  inferredProductOneLiner: text('inferred_product_one_liner'),
+  inferredProductStage:  text('inferred_product_stage'),
+  inferredMakerName:     text('inferred_maker_name'),
   keyMetrics:   text('key_metrics', { mode: 'json' }).$type<string[]>(),
   topics:       text('topics', { mode: 'json' }).$type<string[]>(),
-  hasPersonalStory:      integer('has_personal_story', { mode: 'boolean' }),
-  hasSpecificNumbers:    integer('has_specific_numbers', { mode: 'boolean' }),
-  hasGenuineInsight:     integer('has_genuine_insight', { mode: 'boolean' }),
-  contentDepth: text('content_depth'),            // shallow|medium|deep
-  editorialRec: text('editorial_rec'),            // include|review|exclude
+  contentDepth: text('content_depth'),   // shallow | medium | deep
+  hasPersonalStory:     integer('has_personal_story', { mode: 'boolean' }),
+  hasSpecificNumbers:   integer('has_specific_numbers', { mode: 'boolean' }),
+  hasGenuineInsight:    integer('has_genuine_insight', { mode: 'boolean' }),
+  editorialRec: text('editorial_rec'),   // include | review | exclude
   recReason:    text('rec_reason'),
-  editorialSummary:  text('editorial_summary'),
-  collectionAngle:   text('collection_angle'),
+  editorialSummary: text('editorial_summary'),
+  collectionAngle:  text('collection_angle'),
   concerns:     text('concerns', { mode: 'json' }).$type<string[]>(),
-  media:        text('media'),                    // 富化后的图片 URL
-  mediaSource:  text('media_source'),             // og_image|post_image|screenshot
+  // 媒体
+  media:        text('media'),           // 富化后的图片 URL（null = 无图，用文字卡片）
+  mediaSource:  text('media_source'),    // og_image | post_image | screenshot
+  // 推断元信息
+  currentInferenceRunId: text('current_inference_run_id'),
   llmProcessedAt: integer('llm_processed_at', { mode: 'timestamp' }),
-  llmModel:     text('llm_model'),
-  llmPromptVersion: text('llm_prompt_version'),  // 便于批量重处理
 
-  // 编辑层（人工决策）
-  editorialStatus: text('editorial_status').default('pending'),
-  // pending|approved|rejected|archived|withdrawn
-  trustLevel:   text('trust_level').default('scraped'),
-  // scraped|feishu_approved|native_submitted|maker_verified
-  reviewedAt:   integer('reviewed_at', { mode: 'timestamp' }),
-  reviewedBy:   text('reviewed_by'),              // auto|jiexiang|wangyuxuan
-  editorNotes:  text('editor_notes'),
-  editorTags:   text('editor_tags', { mode: 'json' }).$type<string[]>(),
-  overrideReason: text('override_reason'),        // 为什么覆盖 AI 推荐
+  // ── 编辑层 ──
+  reviewStatus:   text('review_status').default('pending').notNull(),
+  publishStatus:  text('publish_status').default('unpublished').notNull(),
+  entityStatus:   text('entity_status').default('active').notNull(),
+  trustLevel:     text('trust_level').default('scraped').notNull(),
+  // scraped | feishu_approved | native_submitted | maker_verified
+  reviewedAt:     integer('reviewed_at', { mode: 'timestamp' }),
+  reviewedBy:     text('reviewed_by'),   // jiexiang | wangyuxuan | auto_rule
+  publishedAt_editorial: integer('published_at_editorial', { mode: 'timestamp' }),
+  editorNotes:    text('editor_notes'),
+  editorTags:     text('editor_tags', { mode: 'json' }).$type<string[]>(),
+  overrideReason: text('override_reason'),  // 推翻 AI 建议时填写
+  archiveReason:  text('archive_reason'),   // 规则归档时记录触发规则
 
-  // 关联
-  projectId:    text('project_id').references(() => projects.id),
-  makerId:      text('maker_id').references(() => makers.id),
-  
-  updatedAt:    integer('updated_at', { mode: 'timestamp' }).notNull(),
-})
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  // 幂等性约束：同一来源的同一条内容只能入库一次
+  uniqSourceItem: uniqueIndex('uq_source_item').on(t.source, t.sourceId),
+  idxReviewStatus: index('idx_review_status').on(t.reviewStatus),
+  idxPublishStatus: index('idx_publish_status').on(t.publishStatus),
+  idxLlmProcessed: index('idx_llm_processed').on(t.llmProcessedAt),
+  idxPublishedAt: index('idx_published_at').on(t.publishedAt),
+}))
 
-// ── Projects（产品实体） ──────────────────────────────────────────
+// ── Inference Runs（推断历史，append-only）─────────────────────────
+// 每次 LLM 处理产生一行，永不修改，永不删除
+// content_items.currentInferenceRunId 指向最新一行
+
+export const inferenceRuns = sqliteTable('inference_runs', {
+  id:              text('id').primaryKey(),
+  contentItemId:   text('content_item_id').notNull()
+                     .references(() => contentItems.id),
+  promptVersion:   text('prompt_version').notNull(),  // e.g. "classify-v3"
+  model:           text('model').notNull(),
+  inputTokens:     integer('input_tokens'),
+  outputTokens:    integer('output_tokens'),
+  rawOutput:       text('raw_output', { mode: 'json' }), // 完整 LLM 输出
+  parsedOk:        integer('parsed_ok', { mode: 'boolean' }).notNull(),
+  parseError:      text('parse_error'),
+  createdAt:       integer('created_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  idxItem: index('idx_inf_item').on(t.contentItemId),
+  idxPromptVer: index('idx_inf_prompt').on(t.promptVersion),
+}))
+
+// ── Projects（产品/工具实体）──────────────────────────────────────
+
 export const projects = sqliteTable('projects', {
   id:           text('id').primaryKey(),
   slug:         text('slug').notNull().unique(),
@@ -227,30 +260,28 @@ export const projects = sqliteTable('projects', {
   tagline:      text('tagline'),
   description:  text('description'),
   url:          text('url').notNull(),
-  screenshot:   text('screenshot'),               // OG image or null
-  stage:        text('stage'),                    // building|launched|revenue
+  screenshot:   text('screenshot'),     // null = 无截图，前端用文字卡片
+  stage:        text('stage'),          // building | launched | revenue
   topics:       text('topics', { mode: 'json' }).$type<string[]>(),
-  
-  // 来源追踪
-  sourceContentIds: text('source_content_ids', { mode: 'json' }).$type<string[]>(),
-  primarySourceId:  text('primary_source_id'),
-  trustLevel:   text('trust_level').default('scraped'),
-  
+  trustLevel:   text('trust_level').default('scraped').notNull(),
+  entityStatus: text('entity_status').default('active').notNull(),
   // 编辑
-  editorialStatus: text('editorial_status').default('pending'),
+  reviewStatus:    text('review_status').default('pending').notNull(),
+  publishStatus:   text('publish_status').default('unpublished').notNull(),
   isEditorsPick:   integer('is_editors_pick', { mode: 'boolean' }).default(false),
-  featuredInsight: text('featured_insight'),      // 编辑提炼的一句话亮点
-  vibes:        text('vibes', { mode: 'json' }).$type<string[]>(),
-  // 小而美|设计感|技术硬核|创意切入|出海标杆|冷门有价值
-  
-  // 关联
-  makerId:      text('maker_id').references(() => makers.id),
-  
+  featuredInsight: text('featured_insight'),
+  vibes:           text('vibes', { mode: 'json' }).$type<string[]>(),
+  // 小而美 | 设计感 | 技术硬核 | 创意切入 | 出海标杆 | 冷门有价值
+  editorNotes:     text('editor_notes'),
   createdAt:    integer('created_at', { mode: 'timestamp' }).notNull(),
   updatedAt:    integer('updated_at', { mode: 'timestamp' }).notNull(),
-})
+}, (t) => ({
+  idxUrl: index('idx_project_url').on(t.url),
+  idxPublish: index('idx_project_publish').on(t.publishStatus),
+}))
 
-// ── Makers（创作者实体） ─────────────────────────────────────────
+// ── Makers（创作者实体）──────────────────────────────────────────
+
 export const makers = sqliteTable('makers', {
   id:           text('id').primaryKey(),
   slug:         text('slug').notNull().unique(),
@@ -263,32 +294,120 @@ export const makers = sqliteTable('makers', {
   website:      text('website'),
   verified:     integer('verified', { mode: 'boolean' }).default(false),
   claimed:      integer('claimed', { mode: 'boolean' }).default(false),
+  entityStatus: text('entity_status').default('active').notNull(),
   createdAt:    integer('created_at', { mode: 'timestamp' }).notNull(),
   updatedAt:    integer('updated_at', { mode: 'timestamp' }).notNull(),
 })
 
-// ── Embeddings（向量表，sqlite-vec） ────────────────────────────
-export const embeddings = sqliteTable('embeddings', {
-  entityType:   text('entity_type').notNull(),    // content_item|project|maker
-  entityId:     text('entity_id').notNull(),
-  embedding:    blob('embedding').notNull(),       // Float32Array，1536 维
-  model:        text('model').notNull(),           // text-embedding-3-small
-  createdAt:    integer('created_at', { mode: 'timestamp' }).notNull(),
-})
+// ── Junction Tables（M:M 关系）────────────────────────────────────
 
-// ── Editorial Actions（审核历史，append-only） ──────────────────
-export const editorialActions = sqliteTable('editorial_actions', {
+// 帖子 ↔ 产品：一篇复盘可以提到多个产品
+export const contentProjectLinks = sqliteTable('content_project_links', {
+  contentItemId: text('content_item_id').notNull()
+                   .references(() => contentItems.id),
+  projectId:     text('project_id').notNull()
+                   .references(() => projects.id),
+  linkType:      text('link_type').notNull(),
+  // primary | mentioned | compared | related
+  confidence:    real('confidence'),   // LLM 提取的置信度
+  isPrimary:     integer('is_primary', { mode: 'boolean' }).default(false),
+  createdAt:     integer('created_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  pk: uniqueIndex('pk_cp').on(t.contentItemId, t.projectId),
+}))
+
+// 帖子 ↔ Maker：一篇帖子可以提到多个 maker
+export const contentMakerLinks = sqliteTable('content_maker_links', {
+  contentItemId: text('content_item_id').notNull()
+                   .references(() => contentItems.id),
+  makerId:       text('maker_id').notNull()
+                   .references(() => makers.id),
+  linkType:      text('link_type').notNull(),
+  // author | mentioned | interviewed
+  isPrimary:     integer('is_primary', { mode: 'boolean' }).default(false),
+  createdAt:     integer('created_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  pk: uniqueIndex('pk_cm').on(t.contentItemId, t.makerId),
+}))
+
+// 产品 ↔ Maker：联合创始人、多 maker 协作
+export const projectMakerLinks = sqliteTable('project_maker_links', {
+  projectId:  text('project_id').notNull().references(() => projects.id),
+  makerId:    text('maker_id').notNull().references(() => makers.id),
+  role:       text('role'),   // founder | co_founder | contributor
+  createdAt:  integer('created_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  pk: uniqueIndex('pk_pm').on(t.projectId, t.makerId),
+}))
+
+// 产品来源追踪：canonical project 聚合了哪些 source content
+export const projectSources = sqliteTable('project_sources', {
+  projectId:     text('project_id').notNull().references(() => projects.id),
+  contentItemId: text('content_item_id').notNull()
+                   .references(() => contentItems.id),
+  sourceType:    text('source_type').notNull(),
+  // primary_mention | update_post | related_post | native_submission
+  addedAt:       integer('added_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  pk: uniqueIndex('pk_ps').on(t.projectId, t.contentItemId),
+}))
+
+// ── Embeddings（向量，sqlite-vec）────────────────────────────────
+// 只负责语义召回候选，不做身份判断
+
+export const embeddings = sqliteTable('embeddings', {
+  entityType: text('entity_type').notNull(),  // content_item | project | maker
+  entityId:   text('entity_id').notNull(),
+  embedding:  blob('embedding').notNull(),    // Float32Array，1536 维
+  model:      text('model').notNull(),
+  inputText:  text('input_text'),             // 用于 embedding 的原始文本（调试用）
+  createdAt:  integer('created_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  pk: uniqueIndex('pk_emb').on(t.entityType, t.entityId),
+}))
+
+// ── Dedup Candidates（去重候选，两阶段去重的中间产物）────────────
+// Phase 1 (deterministic) 或 Phase 2 (embedding) 生成候选对
+// merge/split 操作由编辑确认，可回退
+
+export const dedupCandidates = sqliteTable('dedup_candidates', {
   id:           text('id').primaryKey(),
-  contentItemId: text('content_item_id').notNull(),
-  action:       text('action').notNull(),         // approve|reject|archive|edit
-  prevStatus:   text('prev_status'),
-  newStatus:    text('new_status'),
-  actor:        text('actor').notNull(),           // auto|jiexiang|wangyuxuan
-  notes:        text('notes'),
+  itemAId:      text('item_a_id').notNull(),
+  itemBId:      text('item_b_id').notNull(),
+  detectionMethod: text('detection_method').notNull(),
+  // url_match | name_match | embedding_similarity
+  similarity:   real('similarity'),
+  suggestedAction: text('suggested_action'),  // merge | link_related | dismiss
+  llmReasoning: text('llm_reasoning'),
+  status:       text('status').default('pending'),
+  // pending | merged | dismissed | split（merge 后可回退）
+  resolvedBy:   text('resolved_by'),
+  resolvedAt:   integer('resolved_at', { mode: 'timestamp' }),
   createdAt:    integer('created_at', { mode: 'timestamp' }).notNull(),
-})
+}, (t) => ({
+  uniqPair: uniqueIndex('uq_dedup_pair').on(t.itemAId, t.itemBId),
+}))
+
+// ── Editorial Actions（审核历史，append-only）────────────────────
+
+export const editorialActions = sqliteTable('editorial_actions', {
+  id:            text('id').primaryKey(),
+  entityType:    text('entity_type').notNull(), // content_item | project | maker
+  entityId:      text('entity_id').notNull(),
+  action:        text('action').notNull(),
+  // approve | reject | publish | unpublish | feature | archive |
+  // edit_note | merge | split | withdraw
+  prevState:     text('prev_state', { mode: 'json' }),
+  newState:      text('new_state', { mode: 'json' }),
+  actor:         text('actor').notNull(),       // jiexiang | wangyuxuan | auto_rule
+  notes:         text('notes'),
+  createdAt:     integer('created_at', { mode: 'timestamp' }).notNull(),
+}, (t) => ({
+  idxEntity: index('idx_ea_entity').on(t.entityType, t.entityId),
+}))
 
 // ── Media Cache ────────────────────────────────────────────────
+
 export const mediaCache = sqliteTable('media_cache', {
   url:          text('url').primaryKey(),
   ogImage:      text('og_image'),
@@ -296,652 +415,631 @@ export const mediaCache = sqliteTable('media_cache', {
   ogDescription: text('og_description'),
   fetchedAt:    integer('fetched_at', { mode: 'timestamp' }).notNull(),
   valid:        integer('valid', { mode: 'boolean' }).notNull(),
+  errorReason:  text('error_reason'),
 })
 ```
 
 ---
 
-## 五、Enrichment Agent 设计
+## 六、Enrichment Agent 设计
 
-这是整个系统最核心的组件。每当有新内容进入 Raw Store，触发此 Agent。
+### 6.1 流程与分流逻辑
 
-### 5.1 入口与触发
-
-```typescript
-// scripts/agents/enrich.ts
-// 触发方式：
-//   1. 定时（crawl 结束后自动调用）
-//   2. 手动：npx tsx scripts/agents/enrich.ts
-//   3. 单条：npx tsx scripts/agents/enrich.ts --id <source_id>
-//
-// 处理逻辑：从 DB 找所有 llm_processed_at = null 的条目，按队列处理
 ```
-
-### 5.2 LLM 调用设计
-
-**Pass 1：分类 + 提取（Haiku，~$0.0003/条）**
-
-```typescript
-const CLASSIFY_SYSTEM = `
-你是 Solobase 的内容分析助手。
-Solobase 是中文独立开发者生态的知识基础设施，收录：
-- 独立 maker 的产品发布（app/工具/Chrome 扩展/SaaS/小程序）
-- 高密度经验分享（开发复盘/出海经验/PMF 探索/失败反思）
-- 有价值的工具推荐和市场观察
-
-"独立 maker"指个人或 2-5 人小团队，自主产品化，有商业化尝试或开源贡献。
-不包括：大公司项目、纯求职/招聘内容、无实质内容的情绪帖。
-`
-
-const CLASSIFY_SCHEMA = z.object({
-  content_type: z.enum([
-    'product_launch',    // 产品/工具发布或重大更新
-    'build_log',         // 开发过程记录
-    'revenue_report',    // 收入/用户数里程碑
-    'experience_share',  // 经验复盘，信息密度高
-    'failure_postmortem',// 失败反思
-    'tutorial',          // 操作教程
-    'tool_recommendation',// 工具推荐
-    'market_observation',// 市场/趋势观察
-    'resource_collection',// 资源汇总
-    'discussion',        // 讨论，价值一般
-    'noise',             // 噪声，直接排除
-  ]),
-  confidence: z.number().min(0).max(1),
-  is_indie_maker_content: z.boolean(),
-  product: z.object({
-    name: z.string(),
-    url: z.string().optional(),
-    one_liner: z.string(),
-    stage: z.enum(['building', 'launched', 'revenue']),
-  }).optional(),
-  maker_name: z.string().optional(),
-  key_metrics: z.array(z.string()),   // ["MRR $3k", "2000 用户"]
-  topics: z.array(z.string()).max(3), // 最多 3 个
-  quality: z.object({
-    has_personal_story: z.boolean(),
-    has_specific_numbers: z.boolean(),
-    has_genuine_insight: z.boolean(),
-    depth: z.enum(['shallow', 'medium', 'deep']),
-  }),
-  editorial_rec: z.enum(['include', 'review', 'exclude']),
-  rec_reason: z.string().max(100),
-})
-```
-
-**Pass 2：编辑摘要（Sonnet，仅对 include/review，~$0.002/条）**
-
-```typescript
-const SUMMARY_SYSTEM = `
-你是 Solobase 的编辑助手。为编辑生成简洁的审核摘要。
-
-Solobase 的品味标准：
-✓ 有真实个人故事和洞察的内容
-✓ 小而美、有创意的产品（不要求规模）
-✓ 出海实战经验，有具体数字
-✓ 设计感和审美有辨识度的产品
-✗ 跟风无差异化的产品
-✗ 理念一般的知名产品（不需要重复收录）
-✗ 没有实质内容的流量帖
-`
-
-const SUMMARY_SCHEMA = z.object({
-  summary: z.string().max(150),         // 给编辑看的一句话
-  collection_angle: z.string().max(100), // 从哪个角度切入有价值
-  concerns: z.array(z.string()),        // 顾虑点
-})
-```
-
-### 5.3 Embedding 生成
-
-```typescript
-async function generateEmbedding(text: string): Promise<Float32Array> {
-  // 通过 one-api 中转调用 OpenAI text-embedding-3-small
-  const response = await openai.embeddings.create({
-    model: 'text-embedding-3-small',
-    input: text.slice(0, 8000),   // 截断到模型上限
-    dimensions: 1536,
-  })
-  return new Float32Array(response.data[0].embedding)
-}
-
-// 用于 embedding 的文本构造：
-function buildEmbeddingText(item: ContentItem): string {
-  // 组合关键信息，不只是 body
-  return [
-    item.productName ? `产品：${item.productName}` : '',
-    item.productOneLiner ?? '',
-    item.body.slice(0, 500),
-    item.topics?.join(' ') ?? '',
-    item.keyMetrics?.join(' ') ?? '',
-  ].filter(Boolean).join('\n')
-}
-```
-
-### 5.4 相似度检测（去重）
-
-```typescript
-async function findSimilarItems(
-  embedding: Float32Array,
-  threshold = 0.92
-): Promise<ContentItem[]> {
-  // sqlite-vec 的向量相似度查询
-  const results = await db.all(sql`
-    SELECT c.*, vec_distance_cosine(e.embedding, ${embedding}) as similarity
-    FROM content_items c
-    JOIN embeddings e ON e.entity_id = c.id AND e.entity_type = 'content_item'
-    WHERE vec_distance_cosine(e.embedding, ${embedding}) < ${1 - threshold}
-    ORDER BY similarity ASC
-    LIMIT 5
-  `)
-  return results
-}
-
-// 处理逻辑：
-// cos_sim > 0.95 + 同 URL → 确定重复，标记 duplicate，link 到已有条目
-// cos_sim > 0.92 + 不同 URL → 可能是同一产品的不同帖子，标记 related
-// cos_sim 0.85-0.92 → 相关内容，用于推荐
-```
-
-### 5.5 媒体富化
-
-```typescript
-async function enrichMedia(url: string): Promise<MediaResult | null> {
-  // 先查缓存
-  const cached = await db.query.mediaCache.findFirst({
-    where: eq(mediaCache.url, url)
-  })
-  if (cached && cached.valid) return cached
-
-  // Microlink API
-  try {
-    const res = await fetch(
-      `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=false`
-    )
-    const data = await res.json()
-    if (data.status === 'success') {
-      const result = {
-        url,
-        ogImage: data.data.image?.url ?? null,
-        ogTitle: data.data.title ?? null,
-        ogDescription: data.data.description ?? null,
-        fetchedAt: new Date(),
-        valid: true,
-      }
-      await db.insert(mediaCache).values(result).onConflictDoUpdate(...)
-      return result
-    }
-  } catch {}
-
-  // Fallback: Jina Reader 抓页面，从 markdown 提取图片
-  try {
-    const res = await fetch(`https://r.jina.ai/${url}`)
-    const markdown = await res.text()
-    const imgMatch = markdown.match(/!\[.*?\]\((https?:\/\/[^\)]+)\)/)
-    if (imgMatch) return { url, ogImage: imgMatch[1], valid: true, ... }
-  } catch {}
-
-  // 完全失败：记录但不阻塞
-  await db.insert(mediaCache).values({ url, valid: false, fetchedAt: new Date() })
-  return null
-}
-```
-
----
-
-## 六、Editorial Interface 设计
-
-### 6.1 飞书 Interactive Card Bot（短期，优先实现）
-
-每天早上 7:00，Editorial Digest Agent 生成当天的待审核卡片批次，通过飞书 Bot 发送。
-
-**卡片设计：**
-
-```json
-{
-  "type": "card",
-  "elements": [
-    {
-      "tag": "markdown",
-      "content": "**{{product_name}}**  ·  {{content_type_label}}  ·  {{source}} {{likes}}赞\n\n{{editorial_summary}}\n\n> 💡 {{collection_angle}}\n{{#concerns}}⚠️ {{.}}{{/concerns}}"
-    },
-    {
-      "tag": "img",
-      "img_key": "{{og_image}}",
-      "alt": { "tag": "plain_text", "content": "产品截图" }
-    },
-    {
-      "tag": "action",
-      "actions": [
-        {
-          "tag": "button",
-          "text": { "tag": "plain_text", "content": "✓ 收录" },
-          "type": "primary",
-          "value": { "action": "approve", "id": "{{item_id}}" }
-        },
-        {
-          "tag": "button", 
-          "text": { "tag": "plain_text", "content": "✗ 跳过" },
-          "type": "default",
-          "value": { "action": "reject", "id": "{{item_id}}" }
-        },
-        {
-          "tag": "button",
-          "text": { "tag": "plain_text", "content": "→ 原帖" },
-          "type": "default",
-          "url": "{{source_url}}"
-        }
-      ]
-    }
-  ]
-}
-```
-
-**回调处理：**
-```typescript
-// 飞书 Bot 的 webhook 接收按钮点击
-// POST /api/feishu-webhook
-export async function POST(req: Request) {
-  const { action, id } = await req.json()
+新内容入 canonical store（review_status=pending）
+  ↓
+Step 1: 确定性噪声过滤（规则，不走 LLM）
+  命中 NOISE_RULES（招聘/抽奖/转发等关键词） → archive_reason 记录 → review_status=archived
+  ↓
+Step 2: LLM Pass 1 — 分类 + 提取（Haiku）
+  输出：content_type, confidence, 产品信息, 质量信号, editorial_rec, rec_reason
+  写入：inference_runs（新行）+ content_items（当前快照更新）
+  ↓
+Step 3: LLM Pass 2 — 编辑摘要（Sonnet，仅对 rec=include/review 的内容）
+  输出：editorial_summary, collection_angle, concerns
+  写入：同一 inference_run 更新
+  ↓
+Step 4: 向量化（text-embedding-3-small）
+  写入 embeddings 表
+  ↓
+Step 5: 去重候选检测
+  Phase 1 (deterministic): 检查 inferredProductUrl 是否命中已有 project.url
+    → 命中: 写 dedup_candidates (url_match, status=pending)
+  Phase 2 (embedding): 查 sqlite-vec 找 cos_sim > 0.90 的候选
+    → 找到: 写 dedup_candidates (embedding_similarity, status=pending)
+    → 注意: 这只是候选，不自动合并
+  ↓
+Step 6: 媒体富化（Microlink，异步，不阻塞主流程）
+  有 inferredProductUrl → 尝试抓 OG image
+  写入 media_cache → 更新 content_items.media
+  ↓
+分流到 Editorial Queue（按 editorial_rec 排序，不做自动裁决）：
+  rec=include, conf≥0.85 → 显示在队列最前（深绿标记）
+  rec=include, conf<0.85  → 正常队列（浅绿标记）
+  rec=review              → 正常队列（黄色标记）
+  rec=exclude, conf≥0.85 → 显示在队列最后（灰色，可折叠）
+  rec=exclude, conf<0.85  → 队列末尾（灰色）
   
-  if (action === 'approve') {
-    await approveItem(id)    // 写回 DB，触发 Publisher Agent
-    await sendFeishuAck(id, '已收录 ✓')
-  } else if (action === 'reject') {
-    await rejectItem(id)
-    await sendFeishuAck(id, '已跳过')
+  ⚠️ 所有 rec=exclude 的内容仍然可见，仍然可以被通过
+  ⚠️ 没有任何内容因 LLM 置信度被静默归档（只有规则触发归档）
+```
+
+### 6.2 LLM 调用设计
+
+**Pass 1：分类 + 提取（Haiku）**
+
+```typescript
+// 关键设计：工具调用模式（tool_use），强制 JSON 输出
+const result = await anthropic.messages.create({
+  model: 'claude-haiku-4-5-20251001',
+  max_tokens: 1024,
+  tools: [{
+    name: 'analyze_content',
+    description: '分析帖子内容，提取结构化信息',
+    input_schema: {
+      type: 'object',
+      properties: {
+        content_type: {
+          type: 'string',
+          enum: [
+            'product_launch', 'build_log', 'revenue_report',
+            'experience_share', 'failure_postmortem', 'tutorial',
+            'tool_recommendation', 'market_observation',
+            'resource_collection', 'discussion', 'noise'
+          ]
+        },
+        confidence: { type: 'number', minimum: 0, maximum: 1 },
+        is_indie_maker_content: { type: 'boolean' },
+        product: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            url: { type: 'string' },
+            one_liner: { type: 'string' },
+            stage: { type: 'string', enum: ['building', 'launched', 'revenue'] }
+          }
+        },
+        maker_name: { type: 'string' },
+        key_metrics: { type: 'array', items: { type: 'string' } },
+        topics: { type: 'array', items: { type: 'string' }, maxItems: 3 },
+        quality: {
+          type: 'object',
+          properties: {
+            has_personal_story: { type: 'boolean' },
+            has_specific_numbers: { type: 'boolean' },
+            has_genuine_insight: { type: 'boolean' },
+            depth: { type: 'string', enum: ['shallow', 'medium', 'deep'] }
+          },
+          required: ['has_personal_story', 'has_specific_numbers',
+                     'has_genuine_insight', 'depth']
+        },
+        editorial_rec: {
+          type: 'string',
+          enum: ['include', 'review', 'exclude']
+        },
+        rec_reason: { type: 'string', maxLength: 100 }
+      },
+      required: ['content_type', 'confidence', 'is_indie_maker_content',
+                 'quality', 'editorial_rec', 'rec_reason']
+    }
+  }],
+  tool_choice: { type: 'tool', name: 'analyze_content' },
+  messages: [{ role: 'user', content: buildClassifyPrompt(item) }],
+  system: CLASSIFY_SYSTEM,
+})
+```
+
+**Pass 2：编辑摘要（Sonnet，仅对 include/review）**
+
+```typescript
+const SUMMARY_SCHEMA = z.object({
+  summary: z.string().max(150),          // 给编辑看的一句话
+  collection_angle: z.string().max(100), // 从哪个角度收录最有价值
+  concerns: z.array(z.string()),         // 顾虑点（0-3 条）
+})
+```
+
+### 6.3 去重两阶段设计
+
+**Phase 1：Deterministic Blocking（精确匹配）**
+
+```typescript
+async function deterministicDedup(item: ContentItem): Promise<void> {
+  const url = item.inferredProductUrl
+  if (!url) return
+
+  // 归一化 URL（去掉 trailing slash, query params, UTM 等）
+  const normalizedUrl = normalizeUrl(url)
+
+  // 查找是否已有 project 用同一 URL
+  const existing = await db.query.projects.findFirst({
+    where: eq(projects.url, normalizedUrl)
+  })
+
+  if (existing) {
+    // 同 URL = 同产品，写候选对（高置信度，人工确认）
+    await db.insert(dedupCandidates).values({
+      id: uuid(),
+      itemAId: item.id,
+      itemBId: existing.id,
+      detectionMethod: 'url_match',
+      similarity: 1.0,
+      suggestedAction: 'merge',
+      status: 'pending',
+      createdAt: new Date(),
+    }).onConflictDoNothing()
   }
 }
 ```
 
-**每日 Digest 格式：**
+**Phase 2：Embedding Candidates（语义候选，不直接合并）**
+
+```typescript
+async function embeddingDedup(
+  itemId: string,
+  embedding: Float32Array
+): Promise<void> {
+  // sqlite-vec 查询，threshold = 0.90（召回候选，不是判断边界）
+  const candidates = await db.all(sql`
+    SELECT e.entity_id, vec_distance_cosine(e.embedding, ${embedding}) as dist
+    FROM embeddings e
+    WHERE e.entity_type = 'content_item'
+      AND e.entity_id != ${itemId}
+      AND vec_distance_cosine(e.embedding, ${embedding}) < 0.10
+    ORDER BY dist ASC
+    LIMIT 5
+  `)
+
+  for (const candidate of candidates) {
+    // 写入候选对，不做任何自动合并
+    // LLM 可以后续判断这对候选是否真的是同一实体
+    await db.insert(dedupCandidates).values({
+      id: uuid(),
+      itemAId: itemId,
+      itemBId: candidate.entity_id,
+      detectionMethod: 'embedding_similarity',
+      similarity: 1 - candidate.dist,
+      suggestedAction: null,  // 等 LLM 二次判断后再填
+      status: 'pending',
+      createdAt: new Date(),
+    }).onConflictDoNothing()
+  }
+}
+
+// 注意：embedding 候选只是"可能相关"，需要额外的 LLM 判断
+// 才能确定是否是同一产品（同赛道的不同产品相似度也可能 >0.90）
+// merge 操作一律需要编辑确认，且可回退
+```
+
+---
+
+## 七、Editorial Interface
+
+### 7.1 队列展示逻辑
+
+Editorial Queue 不是"待审核列表"，是**按 AI 推荐排序的优先级队列**：
+
+```
+队列顺序：
+  1. [深绿] include + conf≥0.85  → AI 强烈建议收录，你大概率直接通过
+  2. [浅绿] include + conf<0.85  → AI 建议收录但不确定，需要你判断
+  3. [黄色] review               → AI 不确定，需要你判断
+  4. [灰色] exclude + conf<0.85  → AI 建议不收录但不确定
+  5. [深灰] exclude + conf≥0.85  → AI 强烈建议不收录（可折叠，但不消失）
+
+重要：第 4、5 类内容你必须能看到，不会被自动隐藏或归档
+你可以随时通过任何一条，包括 AI 强烈建议排除的内容
+```
+
+### 7.2 飞书 Interactive Card Bot
+
+每天早上 7:00 发送日报 + 卡片批次：
+
 ```
 Solobase 内容日报 · 4月12日
 
 今日处理：47 条新内容
-  ✓ 自动收录：12 条（置信度 ≥ 0.85）
-  📋 待你审核：8 条
-  ✗ 自动归档：27 条
+  📋 进入审核队列：40 条（需你处理：约 15 分钟）
+  🗂 规则归档：7 条（招聘/抽奖等确定性噪声）
 
-今日 Top 3（已自动收录）：
-1. ColaMD - 极简 Markdown 编辑器（product_launch · 0.91）
-2. 出海第一年复盘 · $8k MRR（experience_share · 0.88）
-3. 我用 Claude Code 做了个..."（build_log · 0.86）
+AI 强烈建议收录（深绿，建议快速过一遍）：12 条 ↓
+AI 建议审核（黄色）：19 条 ↓
+AI 建议排除（灰色，可跳过）：9 条 ↓
 
-[点击审核今日队列 →]（8 张卡片将在下方发送）
+[今日新增的去重候选：3 对，需你确认合并]
 ```
 
-### 6.2 Next.js /admin 页面（中期，1-2 天实现）
+**卡片格式：**
 
-路由：`/admin`，password 保护（环境变量）。
+```
+┌────────────────────────────────────────────┐
+│ 🟢 product_launch · 即刻 · conf 0.91       │
+│                                            │
+│ ColaMD - 极简 Markdown 编辑器              │
+│                                            │
+│ AI：作者3周独立开发，分享了从0到付费用户的  │
+│ 完整决策路径。设计感强，定位清晰。          │
+│ 收录角度：产品发布 + 设计叙事               │
+│                                            │
+│ 89赞 · 12评论 · 原帖链接                  │
+├────────────────────────────────────────────┤
+│  [✓ 收录+发布]  [✓ 收录不发布]  [✗ 跳过] │
+└────────────────────────────────────────────┘
+```
 
-**核心交互：**
-- Inbox 风格，每条是一张卡片
-- 键盘快捷键：`j/k` 翻，`y` 通过，`n` 跳过，`e` 编辑
-- 实时更新：通过一条后，下一条自动出现
-- 过滤器：按 source / content_type / date 过滤
-- Override 理由：跳过时可选填（积累训练信号）
+注意：卡片有两个通过按钮：**收录+发布**（review=approved, publish=published）和**收录不发布**（review=approved, publish=unpublished）。这实现了 approved ≠ published 的状态分离。
 
-**为什么最终要从飞书迁移到 /admin：**
-- 飞书卡片对富文本展示有限制
-- 批量操作（一次跳过 20 条 noise）在飞书很难做
-- 键盘流操作在飞书不支持
-- /admin 可以展示"今日 override rate"和 AI 偏差统计
+### 7.3 Next.js /admin（中期，1-2 天实现）
+
+- 路由：`/admin`，环境变量密码保护
+- Inbox 风格，键盘快捷键（j/k 翻，y 收录发布，u 收录不发布，n 跳过，e 编辑）
+- 过滤器：按 source / content_type / editorial_rec / date
+- 去重候选单独区域（不混进主队列）
+- Override reason 输入框（积累训练信号）
+- 可观测面板（见第九章）
 
 ---
 
-## 七、Agent 调度设计
+## 八、Build Layer
 
-### 7.1 Agent 职责划分
+### 8.1 Feed 构建条件
+
+```typescript
+// scripts/build-feed.ts
+
+// 产品入选：publish_status=published（不是 review_status=approved）
+const publishedProjects = await db.query.projects.findMany({
+  where: and(
+    eq(projects.publishStatus, 'published'),
+    eq(projects.entityStatus, 'active'),
+  ),
+  // 排序用显式 published_at_editorial，不用 updated_at
+  // 防止补图/修字段触发 feed 重排
+  orderBy: [desc(projects.publishedAt_editorial)],
+  limit: 500,
+})
+
+// 帖子入选：publish_status=published + worthy content_type
+const WORTHY_POST_TYPES = new Set([
+  'experience_share', 'build_log', 'revenue_report',
+  'failure_postmortem', 'tutorial', 'tool_recommendation',
+  'market_observation', 'resource_collection'
+])
+
+const publishedPosts = await db.query.contentItems.findMany({
+  where: and(
+    eq(contentItems.publishStatus, 'published'),
+    eq(contentItems.entityStatus, 'active'),
+    inArray(contentItems.contentType, [...WORTHY_POST_TYPES]),
+  ),
+  orderBy: [desc(contentItems.publishedAt_editorial)],
+  limit: Math.max(Math.floor(publishedProjects.length / 3), 10),
+})
+```
+
+### 8.2 无图产品的展示处理
+
+screenshot 为 null 不影响产品进入 feed，前端用 TextProjectCard 组件：
+
+```tsx
+// src/components/ProjectCard.tsx
+export function ProjectCard({ project }: { project: FeedProject }) {
+  if (!project.screenshot) {
+    return <TextProjectCard project={project} />
+  }
+  return <ImageProjectCard project={project} />
+}
+```
+
+### 8.3 Publisher Agent 触发时机
+
+Build 不再是定时全量重跑，而是事件触发的增量更新：
 
 ```
-Crawler Agents（每 12-24h，或手动触发）
-├── jike-crawler       → data/raw/jike/*.json
-├── v2ex-crawler       → data/raw/v2ex/*.json
-├── linuxdo-crawler    → data/raw/linuxdo/*.json
-└── ph-crawler         → data/raw/producthunt/*.json（每周一次）
+editorial_status 变更为 published → 触发 Publisher Agent
+  → 增量更新 feed.json（只更新变化的部分）
+  → 调用 Next.js revalidatePath('/')
+  → 发飞书确认消息："ColaMD 已发布 ✓"
+```
 
-Enrichment Agent（每次 crawl 结束后触发）
-└── 处理所有 llm_processed_at = null 的条目
-    → 分类 + 向量化 + 去重 + 媒体富化 + 编辑摘要
+---
 
-Editorial Digest Agent（每天 07:00）
-└── 汇总待审核内容
-    → 生成飞书 Interactive Card 批次
-    → 发送日报摘要
+## 九、可观测指标
 
-Publisher Agent（editorial_status 变为 approved 时触发）
-└── 更新 feed.json（增量，不全量重跑）
-    → 触发 Next.js ISR 重新生成
-    → 发送飞书确认消息
+**系统不能盲飞。以下指标必须可查询，推荐做成 weekly digest 的一部分。**
+
+### 9.1 必须追踪的核心指标
+
+```typescript
+// scripts/agents/metrics.ts
+
+interface WeeklyMetrics {
+  // 入库质量
+  ingested_total: number           // 各源入库数
+  ingested_by_source: Record<string, number>
+  dedup_caught: number             // 幂等去重拦截数（验证系统正常）
+
+  // 过滤漏斗
+  archived_by_rule: number         // 规则归档数
+  archived_by_rule_breakdown: Record<string, number>  // 按触发规则
+  queue_total: number              // 进入审核队列总数
+  queue_backlog: number            // 当前积压未审核数
+
+  // 编辑效率
+  reviewed_count: number           // 本周审核条数
+  approved_rate: number            // 通过率
+  published_rate: number           // 通过后直接发布率
+  avg_review_time_minutes: number  // 平均审核时间（需前端记录）
+
+  // AI 准确性（最重要的调优信号）
+  override_rate: number            // AI 推荐 exclude，你通过的比率（越低越好）
+  false_positive_rate: number      // AI 推荐 include，你拒绝的比率
+  override_by_content_type: Record<string, number>  // 哪类内容 AI 最不准
+
+  // 去重健康度
+  dedup_candidates_pending: number // 待确认的去重候选数
+  dedup_merged_this_week: number   // 本周合并数
+  dedup_split_this_week: number    // 本周回退合并数（越高说明误合并多）
+
+  // Feed 健康度
+  feed_project_count: number       // 当前 feed 中产品数
+  feed_post_count: number          // 当前 feed 中帖子数
+  feed_changes_this_week: number   // 本周 feed 变更次数（排版稳定性）
+  sources_coverage: Record<string, number>  // 各源贡献百分比
+}
+```
+
+### 9.2 AI 准确性校准
+
+**override_rate** 是最重要的信号：你推翻 AI 建议的比率反映了 prompt 的准确性。
+
+```
+override_rate < 10%   → AI 阈值可以上调，减少人工负担
+override_rate 10-20%  → 当前状态合理
+override_rate > 25%   → prompt 需要优化，本周的 override_reason 要仔细看
+
+每月做一次 prompt 优化：
+  取出所有 override_reason，找最常见的错误模式
+  加入 Pass 1 system prompt 的 few-shot examples
+  重跑上个月的边界案例验证改进效果
+```
+
+---
+
+## 十、爬虫层改造规范
+
+### 10.1 统一 Adapter 输出格式（修复 media 字段）
+
+所有 standardize 函数**必须**区分 media 和 external_links：
+
+```typescript
+interface StandardizedItem {
+  source: SourceType
+  source_id: string
+  source_url: string
+  body: string              // 完整原文，不截断
+  author_name: string
+  author_id: string
+  author_bio: string
+  engagement: { likes: number; comments: number; shares?: number }
+  top_comments: Comment[]
+  media: string[]           // ← 仅图片 URL（帖子内的图片）
+  external_links: string[]  // ← 仅真实外链（产品/文章 URL）
+  published_at: string
+  crawled_at: string
+  source_extra: Record<string, any>
+}
+
+// V2EX 和 Linux.do 的修复重点：
+// body 中的 ![...](url) 或 <img src="url"> → media
+// body 中的 [text](url) 或 <a href="url"> → external_links（如果是真实外链）
+// okjike.com / v2ex.com / linux.do 本身的链接不算 external_links
+```
+
+### 10.2 入库语义（幂等 upsert）
+
+```typescript
+// 所有来源统一使用 upsert 语义入库
+await db.insert(contentItems)
+  .values(item)
+  .onConflictDoUpdate({
+    target: [contentItems.source, contentItems.sourceId],
+    set: {
+      // 只更新可能变化的字段（互动数等），不覆盖事实内容
+      likesCount: item.likesCount,
+      commentsCount: item.commentsCount,
+      topComments: item.topComments,
+      updatedAt: new Date(),
+    }
+  })
+```
+
+### 10.3 各源改造清单
+
+**V2EX（优先级：高）**
+- [ ] 修 media 字段：markdown 图片 → media，外链 → external_links
+- [ ] 扩展节点：`create` + `programmer` + `indie` + `share`
+- [ ] 移除 minReplies 爬取阶段过滤
+
+**Linux.do（优先级：高）**
+- [ ] 修 media 字段：HTML img → media，a href → external_links  
+- [ ] 移除 minLikes 爬取阶段过滤
+- [ ] 保留 category/board 信息（source_extra 字段）
+
+**Jike（优先级：中）**
+- [ ] 移除 filter-jike.ts 的"无链接+无图直接丢弃"硬过滤
+- [ ] 核查 config.json topics 配置，移除非独立开发相关圈子
+- [ ] 补充搜索关键词：`复盘` `失败了` `方法论` `PMF` `一年了` `产品思考`
+
+**Product Hunt（优先级：低）**
+- [ ] 移除 minVotes 爬取阶段过滤
+- [ ] 加中国 maker 识别标记（source_extra.is_chinese_maker_signal）
+
+---
+
+## 十一、Agent 调度
+
+### 11.1 Agent 职责
+
+```
+Crawler Agents（每 12-24h）
+├── jike-crawler, v2ex-crawler, linuxdo-crawler
+└── ph-crawler（每周一次）
+
+Enrichment Agent（crawl 结束后自动触发）
+└── 处理 llm_processed_at=null 的条目
+    → Step 1-6（见第六章）
+
+Editorial Digest Agent（每天 07:00，北京时间）
+└── 汇总待审核内容 → 生成飞书卡片批次 + 日报摘要
+
+Publisher Agent（review/publish status 变更时触发）
+└── 增量更新 feed.json → ISR 重建 → 飞书确认
+
+Dedup Review Agent（每天 07:00，随日报发出）
+└── 汇总 dedup_candidates(status=pending) → 发飞书卡片
 
 Weekly Review Agent（每周一 09:00）
-└── 统计过去一周：
-    - Override rate（你推翻 AI 建议的比率）
-    - 漏掉的高质量内容（被自动排除但你后来找到的）
-    - Prompt 优化建议
-    → 飞书周报
+└── 计算 WeeklyMetrics → 发飞书周报
+    → 如 override_rate > 25%，附带 prompt 优化建议
 ```
 
-### 7.2 Claude Code CronCreate 配置
+### 11.2 Claude Code CronCreate 配置
 
-```typescript
-// 主调度入口：scripts/agents/scheduler.ts
-// 通过 Claude Code 的 CronCreate 工具设置
+```
+# 每日管道（UTC 22:00 = 北京 06:00）
+0 22 * * *  →  npm run pipeline:daily
 
-// Cron 1：每日内容拉取 + 处理（UTC 22:00 = 北京 06:00）
-// 0 22 * * *
-// 执行：npx tsx scripts/agents/daily-pipeline.ts
+# 编辑摘要（UTC 23:00 = 北京 07:00）
+0 23 * * *  →  npm run agents:editorial-digest
 
-// Cron 2：每日编辑摘要（UTC 23:00 = 北京 07:00）
-// 0 23 * * *  
-// 执行：npx tsx scripts/agents/editorial-digest.ts
-
-// Cron 3：每周 review（UTC 01:00 每周一 = 北京周一 09:00）
-// 0 1 * * 1
-// 执行：npx tsx scripts/agents/weekly-review.ts
+# 每周复盘（UTC 01:00 周一 = 北京周一 09:00）
+0 1 * * 1   →  npm run agents:weekly-review
 ```
 
-### 7.3 日常管道入口
+### 11.3 命令行入口
 
 ```bash
-# 完整日常管道（脚本化，cron 调用）
-npm run pipeline:daily
-# = crawl:all → enrich → digest → build:feed
+# 日常管道（cron 调用）
+npm run pipeline:daily       # crawl:all → enrich → build:feed
 
-# 单步调试
+# 调试单步
 npm run crawl:jike
 npm run crawl:v2ex
-npm run enrich              # 处理未处理条目
-npm run enrich -- --limit 50  # 只处理 50 条
-npm run build:feed          # 增量重建 feed.json
+npm run enrich               # 处理所有未处理条目
+npm run enrich -- --limit 50
+npm run enrich -- --item-id <source_id>
+npm run build:feed           # 增量重建 feed.json
 
-# 冷启动迁移
-npm run migrate:json-to-db  # 把现有 pipeline_output.json 导入 Turso
-npm run enrich -- --reprocess-all  # 全量 LLM 处理（冷启动一次性）
+# 冷启动迁移（一次性）
+npm run migrate:json-to-db   # pipeline_output.json → Turso
+npm run enrich -- --reprocess-all  # 全量 LLM 处理
+
+# 可观测
+npm run metrics:today        # 今日漏斗数据
+npm run metrics:week         # 本周摘要
+npm run dedup:pending        # 查看待确认的去重候选
 ```
 
 ---
 
-## 八、MCP Server 设计
+## 十二、MCP Server
 
-### 8.1 定位
-
-**Solobase MCP Server** 让任何集成了 MCP 协议的 AI 工具（Claude、Cursor 等）都能查询 Solobase 的结构化知识。
-
-使用场景：
-```
-用户向 Claude 提问：
-  "有没有做播客工具的中国独立开发者？"
-  "最近有哪些值得关注的出海 SaaS 案例？"
-  "有没有类似 Notion 但更小更专注的工具？"
-
-Claude 调用 Solobase MCP → 返回结构化结果 → 综合回答
-```
-
-### 8.2 暴露的工具（Tools）
+数据质量稳定后实现。让任何集成 MCP 的 AI 工具都能查询 Solobase 的结构化知识。
 
 ```typescript
-// src/mcp/server.ts
-
+// 暴露的工具
 const tools = {
-  // 搜索产品
-  search_projects: {
-    description: '语义搜索 Solobase 收录的独立开发者产品',
-    parameters: {
-      query: string,        // 自然语言查询
-      topics?: string[],    // 过滤主题
-      stage?: string,       // building|launched|revenue
-      limit?: number,       // 默认 10
-    }
-  },
-
-  // 搜索内容
-  search_content: {
-    description: '搜索高价值内容（经验帖/复盘/教程）',
-    parameters: {
-      query: string,
-      content_type?: string,
-      limit?: number,
-    }
-  },
-
-  // 获取 maker 档案
-  get_maker: {
-    description: '获取独立开发者的档案和产品列表',
-    parameters: { name: string }
-  },
-
-  // 相关内容
-  get_related: {
-    description: '获取与某产品语义相关的内容',
-    parameters: { project_id: string, limit?: number }
-  },
-
-  // 趋势话题
-  get_trending_topics: {
-    description: '获取最近涌现的热点主题（基于内容聚类）',
-    parameters: { days?: number }
-  },
-
-  // 最新收录
-  get_recent: {
-    description: '获取最近收录的产品和内容',
-    parameters: {
-      type?: 'projects' | 'posts' | 'all',
-      limit?: number,
-    }
-  },
+  search_projects: '语义搜索独立开发者产品（向量 + 关键词混合）',
+  search_content:  '搜索高价值内容（经验帖/复盘/教程）',
+  get_maker:       '获取 maker 档案和产品列表',
+  get_related:     '获取与某产品语义相关的内容',
+  get_trending:    '最近涌现的热点主题（基于内容聚类）',
+  get_recent:      '最近收录的产品和内容',
 }
-```
-
-### 8.3 实现路径
-
-```typescript
-// 基于 @modelcontextprotocol/sdk
-import { Server } from '@modelcontextprotocol/sdk/server/index.js'
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
-
-// 向量搜索实现：
-async function semanticSearch(query: string, limit: number) {
-  const queryEmbedding = await generateEmbedding(query)
-  return db.all(sql`
-    SELECT p.*, vec_distance_cosine(e.embedding, ${queryEmbedding}) as score
-    FROM projects p
-    JOIN embeddings e ON e.entity_id = p.id
-    WHERE p.editorial_status = 'approved'
-    ORDER BY score ASC
-    LIMIT ${limit}
-  `)
-}
-```
-
-**MCP Server 的部署**：可以作为本地工具供 Claude Desktop/Claude Code 调用，也可以部署为 HTTP 服务供外部访问。初期作为本地工具即可。
-
----
-
-## 九、Build Layer 简化
-
-从"复杂的推断机器"变成"简单的组装器"。
-
-```typescript
-// scripts/build-feed.ts（重写后）
-
-async function buildFeed() {
-  const db = getDB()
-
-  // 产品：editorial_status=approved + 有产品 URL
-  const approvedProjects = await db.query.projects.findMany({
-    where: and(
-      eq(projects.editorialStatus, 'approved'),
-      isNotNull(projects.url)
-    ),
-    orderBy: [desc(projects.updatedAt)],
-    limit: 500,
-  })
-
-  // 帖子：editorial_status=approved + worthy content_type
-  const approvedPosts = await db.query.contentItems.findMany({
-    where: and(
-      eq(contentItems.editorialStatus, 'approved'),
-      inArray(contentItems.contentType, WORTHY_POST_TYPES),
-      isNull(contentItems.projectId),  // 非产品关联帖
-    ),
-    orderBy: [desc(contentItems.publishedAt)],
-    limit: Math.max(Math.floor(approvedProjects.length / 3), 10),
-  })
-
-  // 无图产品：使用文字卡片样式（不再因无图排除）
-  const feed = {
-    projects: approvedProjects.map(toFeedProject),
-    posts: approvedPosts.map(toFeedPost),
-    meta: { builtAt: new Date().toISOString(), version: '2.0' }
-  }
-
-  writeFileSync('data/feed.json', JSON.stringify(feed, null, 2))
-  
-  // 触发 Next.js ISR（如果配置了）
-  await revalidatePath('/')
-}
-
-// 无图产品：feed 中 screenshot=null，前端用 TextProjectCard 组件
-// 不再因为没有截图就排除产品
 ```
 
 ---
 
-## 十、实施路线图
+## 十三、实施路线图
 
 ### Phase 0：止血（1-2 天）
 
-**目标：修复当前最严重的流失，不改架构。**
+修复最严重的流失，不改架构。
 
-- [ ] **修 V2EX/Linux.do media 字段**：`standardizeV2EX()`/`standardizeLinuxdo()` 里识别图片 URL，存入 `media` 而非 `external_links`。重跑 pipeline，预计新增 200-400 产品候选。
-- [ ] **移除 filter-jike 硬过滤**（无链接+无图直接丢弃），把 893 条回归管道
-- [ ] **Feishu 双向同步脚本**：`scripts/sync-feishu.ts`，把飞书已审核状态写回 `editorial_status`
-- [ ] **无图产品不再排除**：build-feed 增加 TextProjectCard fallback，screenshot=null 的产品用文字卡片
+- [ ] 修 V2EX/Linux.do media 字段（图片 URL 分离）
+- [ ] 修 build-feed：无图产品用 TextProjectCard，不再因无图排除
+- [ ] Feishu 双向同步：飞书已审核状态 → editorial 字段写回 DB
 
-**预期收益：网站产品数 129 → 350+，帖子数 23 → 80+**
+**预期：网站产品数 129 → 350+，V2EX/Linux.do 开始贡献产品**
 
-### Phase 1：接入 LLM 处理层（3-5 天）
+### Phase 1：数据库迁移（3-5 天）
 
-**目标：替换正则打分，建立 AI 驱动的质量判断。**
+- [ ] Turso 初始化 + Drizzle schema（含幂等约束、junction tables、inference_runs）
+- [ ] 迁移脚本：pipeline_output.json → Turso（upsert 语义）
+- [ ] 新增 `source + source_id` 唯一索引
+- [ ] 更新 build-feed.ts：从 DB 读，用 publish_status 过滤
 
-- [ ] **AI 配置文件**：`scripts/config/ai.ts`（one-api base URL + key，gitignore）
-- [ ] **LLM 处理脚本**：`scripts/agents/enrich.ts`（Pass 1 分类 + Pass 2 摘要）
-- [ ] **Zod schema 验证**：所有 LLM 输出用 Zod 验证，错误重试
-- [ ] **冷启动全量处理**：对 4188 条运行 Haiku Pass 1（估计 2-3 小时，成本 ~¥20）
-- [ ] **飞书 Bot 审核卡片**：把 AI 摘要作为卡片内容，替换原来的原始帖子展示
+### Phase 2：LLM 处理层（3-5 天）
 
-### Phase 2：迁移到 Turso + 向量化（1 周）
+- [ ] `scripts/config/ai.ts`（one-api 配置）
+- [ ] `scripts/agents/enrich.ts`（Pass 1 + Pass 2，tool_use 模式，Zod 验证）
+- [ ] 冷启动全量处理（4188 条，~2-3 小时，成本 ~¥80）
+- [ ] 确定性噪声过滤规则（替换原来的关键词硬过滤）
+- [ ] 基础去重检测（url_match + embedding 候选，写 dedup_candidates）
 
-**目标：建立真正的知识库，而非文件系统。**
+### Phase 3：Editorial Workflow（3-5 天）
 
-- [ ] **Turso 初始化**：创建 database，配置连接
-- [ ] **Drizzle schema**：创建所有表（见第四章）
-- [ ] **迁移脚本**：`npm run migrate:json-to-db`，把 pipeline_output.json 导入 Turso
-- [ ] **Embedding 管道**：对所有 approved 内容生成向量，存入 sqlite-vec
-- [ ] **相似度去重**：在 enrich.ts 中加入相似度检测逻辑
-- [ ] **媒体富化**：集成 Microlink，异步补全 OG image
+- [ ] 飞书 Interactive Card Bot（含收录/收录不发布/跳过三个按钮）
+- [ ] Publisher Agent（状态变更触发增量 build）
+- [ ] Editorial Digest Agent（每日摘要 + 去重候选推送）
+- [ ] override_reason 字段（飞书卡片点击跳过时弹出选项）
 
-### Phase 3：自动化调度（3-5 天）
+### Phase 4：可观测 + 自动化（1 周）
 
-**目标：每天早上自动跑完，你只需要看飞书消息。**
+- [ ] WeeklyMetrics 实现（见第九章）
+- [ ] Weekly Review Agent（每周 AI 准确性报告 + prompt 优化建议）
+- [ ] Claude Code CronCreate 配置三个 cron job
+- [ ] Next.js /admin（键盘流审核 + 指标仪表盘）
 
-- [ ] **Claude Code CronCreate**：配置三个 cron job（daily pipeline / editorial digest / weekly review）
-- [ ] **Publisher Agent**：editorial_status 变更时触发增量 feed 更新
-- [ ] **Daily pipeline 入口**：`npm run pipeline:daily`（一键跑完整流程）
-- [ ] **Override rate 追踪**：weekly review agent 统计你的决策 vs AI 建议偏差
+### Phase 5：向量富化（数据量稳定后）
 
-### Phase 4：Next.js /admin（1-2 天）
+- [ ] 全量 embedding 生成（approved 内容）
+- [ ] 语义去重候选检测上线
+- [ ] LLM 二次实体判断（embedding 候选 → merge/split 建议）
 
-**目标：比飞书更好的审核体验。**
+### Phase 6：MCP Server（内容质量够好后）
 
-- [ ] `/admin` 路由（password 保护）
-- [ ] Inbox 风格列表，键盘导航
-- [ ] Override 理由输入（积累训练信号）
-- [ ] 偏差统计仪表盘（override rate, AI accuracy by content type）
+### Phase 7：原生数据通道（平台上线后）
 
-### Phase 5：MCP Server（3-5 天，在数据质量够好之后）
-
-- [ ] `src/mcp/server.ts`（基于 @modelcontextprotocol/sdk）
-- [ ] 向量搜索工具
-- [ ] 本地 MCP 配置（Claude Desktop / Claude Code）
-- [ ] 可选：部署为 HTTP 服务
-
-### Phase 6：原生数据通道（平台上线后）
-
-- [ ] 原生提交表单（/submit）：产品 URL + maker 故事
-- [ ] trust_level=native_submitted，编辑审核即上线
-- [ ] Maker 认领机制（认领已收录产品）
-- [ ] 爬取数据渐进降级（被认领的产品，爬取版本降为 source_ref）
+- [ ] 原生提交表单（/submit）
+- [ ] trust_level=native_submitted
+- [ ] Maker 认领机制
+- [ ] 爬取数据渐进降级
 
 ---
 
-## 十一、各 Phase 的 KPI
+## 附录 A：各 Phase KPI
 
 | Phase | 完成标志 |
 |-------|---------|
 | 0 | 网站产品数 > 300，V2EX/Linux.do 有产品入选 |
-| 1 | 每条待审核内容有 AI 摘要，inferred_type 准确率 > 80% |
-| 2 | 所有数据在 Turso，JSON pipeline 文件可删除 |
-| 3 | 你不需要手动跑任何脚本，只看飞书消息 + 点按钮 |
-| 4 | 审核时间 < 10 分钟/天，override rate 稳定在 15-25% |
-| 5 | Claude 能用 Solobase 数据回答中文独立开发者相关问题 |
-| 6 | 第一个 maker 认领了自己的产品 |
+| 1 | 所有数据在 Turso，(source, source_id) 唯一约束验证通过 |
+| 2 | inferred_type 覆盖率 100%，override_rate 可计算 |
+| 3 | 飞书卡片驱动日常审核，editorial 决策写回 DB 正常 |
+| 4 | override_rate 稳定在 10-25%，每周收到 metrics 报告 |
+| 5 | 去重误合并率 < 5%（由 split 操作数量衡量） |
+| 6 | Claude 能用 Solobase 数据回答中文独立开发者相关问题 |
+| 7 | 第一个 maker 认领了自己的产品 |
 
----
+## 附录 B：明确不做的事
 
-## 附录 A：one-api 配置规范
-
-```typescript
-// scripts/config/ai.ts（gitignore）
-export const AI_CONFIG = {
-  baseUrl: process.env.ONE_API_BASE_URL!,
-  apiKey: process.env.ONE_API_KEY!,
-
-  models: {
-    classify: 'claude-haiku-4-5-20251001',
-    summarize: 'claude-sonnet-4-6',
-    embed: 'text-embedding-3-small',   // OpenAI，通过 one-api 中转
-  },
-
-  // 并发控制
-  concurrency: {
-    classify: 20,     // 20 并发 Haiku 调用
-    summarize: 5,     // 5 并发 Sonnet 调用
-    embed: 50,        // 50 并发 embedding 调用
-  },
-
-  // 成本保护
-  dailyBudget: {
-    classify_max_items: 500,   // 单次最多处理 500 条分类
-    summarize_max_items: 100,  // 单次最多处理 100 条摘要
-  }
-}
-```
-
-## 附录 B：前端无图适配（TextProjectCard）
-
-当 `screenshot = null` 时，前端使用文字卡片：
-
-```tsx
-// 检测是否有图
-if (!project.screenshot) {
-  return <TextProjectCard project={project} />  // 纯文字样式
-}
-return <ProjectCard project={project} />  // 原有带图样式
-```
-
-这是 Phase 0 的一个重要改动——**产品不再因为没截图而无法上线**。
-
-## 附录 C：不做什么
-
-在 Phase 0-3 期间，明确不做：
+Phase 0-4 期间：
 
 - 不加新爬取源（先把现有数据质量提上去）
 - 不做前台 UI 改版
-- 不做向量搜索的前端入口（数据体量不够）
-- 不做用户注册/登录（原生提交用 email 验证即可）
-- 不引入 Postgres / Supabase（Turso 够用，减少运维）
+- 不做向量搜索的前台入口（等 Phase 5）
+- 不做用户注册/登录
+- 不引入 Postgres / Supabase（Turso 够用）
 - 不做 n8n 工作流（TypeScript 脚本更易维护）
+- 不用 LLM 置信度做自动归档（只用确定性规则归档）
