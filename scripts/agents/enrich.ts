@@ -139,6 +139,7 @@ ${item.body.slice(0, 3000)}`
         model:      AI_CONFIG.models.haiku,
         max_tokens: 1024,
         system:     PASS1_SYSTEM,
+        messages:   [{ role: 'user', content: prompt }],
         tools: [{
           name:        'extract_content_info',
           description: '提取内容分类和产品信息',
@@ -151,11 +152,11 @@ ${item.body.slice(0, 3000)}`
               hasPersonalStory:        { type: 'boolean' },
               hasSpecificNumbers:      { type: 'boolean' },
               hasGenuineInsight:       { type: 'boolean' },
-              inferredProductName:     { type: ['string', 'null'] },
-              inferredProductUrl:      { type: ['string', 'null'] },
-              inferredProductOneLiner: { type: ['string', 'null'] },
-              inferredProductStage:    { type: ['string', 'null'], enum: ['idea','building','launched','revenue','paused','shutdown', null] },
-              inferredMakerName:       { type: ['string', 'null'] },
+              inferredProductName:     { anyOf: [{ type: 'string' }, { type: 'null' }] },
+              inferredProductUrl:      { anyOf: [{ type: 'string' }, { type: 'null' }] },
+              inferredProductOneLiner: { anyOf: [{ type: 'string' }, { type: 'null' }] },
+              inferredProductStage:    { anyOf: [{ type: 'string', enum: ['idea','building','launched','revenue','paused','shutdown'] }, { type: 'null' }] },
+              inferredMakerName:       { anyOf: [{ type: 'string' }, { type: 'null' }] },
               keyMetrics:              { type: 'array', items: { type: 'string' } },
               topics:                  { type: 'array', items: { type: 'string' } },
               editorialRec:            { type: 'string', enum: ['include','review','exclude'] },
@@ -175,7 +176,10 @@ ${item.body.slice(0, 3000)}`
       return Pass1Schema.parse(toolUse.input)
 
     } catch (err) {
-      if (attempt === AI_CONFIG.retry.maxAttempts) return null
+      if (attempt === AI_CONFIG.retry.maxAttempts) {
+        console.error(`\n[Pass1 fail] item=${item.id}:`, (err as Error).message?.slice(0, 200))
+        return null
+      }
       await new Promise(r => setTimeout(r, AI_CONFIG.retry.baseDelayMs * Math.pow(2, attempt - 1)))
     }
   }
