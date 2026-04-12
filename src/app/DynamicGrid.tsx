@@ -314,6 +314,7 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
     /* ─── A: Hero — full-width horizontal layout ─── */
     case "A": {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[0];
+      if (!p) return null;
       return (
         <a href={`/project/${p.slug}`} target="_blank" className="block h-full"><article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
           <div className="relative md:w-[55%] shrink-0 aspect-[16/9] md:aspect-auto md:min-h-[200px] overflow-hidden bg-muted">
@@ -356,7 +357,8 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
           </article>
         );
       }
-      const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[seqIdx % projects.length];
+      const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[seqIdx % Math.max(projects.length, 1)];
+      if (!p) return null;
       const badge = p.revenue ? { label: `💰 ${p.revenue}`, cls: "bg-secondary/10 text-secondary" } : p.founderType === "non_tech_ai" ? { label: "🤖 AI 做的", cls: "bg-primary/10 text-primary" } : null;
       return (
         <a href={`/project/${p.slug}`} target="_blank" className="block h-full"><article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">

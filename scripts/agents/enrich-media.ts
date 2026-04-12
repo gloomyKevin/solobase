@@ -11,14 +11,6 @@
  *       npx tsx scripts/agents/enrich-media.ts --dry-run    只统计不写入
  */
 
-import { readFileSync } from 'fs'
-try {
-  for (const line of readFileSync('.env.local', 'utf8').split('\n')) {
-    const m = line.match(/^([^#\s][^=]*)=(.*)$/)
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim()
-  }
-} catch {}
-
 import { createClient } from '@libsql/client'
 import { drizzle } from 'drizzle-orm/libsql'
 import { isNull, isNotNull, eq, and } from 'drizzle-orm'
@@ -30,6 +22,20 @@ const client = createClient({
   authToken: process.env.DATABASE_AUTH_TOKEN,
 })
 const db = drizzle(client, { schema })
+
+// ── SQLITE_BUSY 重试 ─────────────────────────────────────────────
+
+async function withRetry<T>(fn: () => Promise<T>, maxRetries = 3): Promise<T> {
+  for (let i = 0; i < maxRetries; i++) {
+    try { return await fn() }
+    catch (err: unknown) {
+      const isBusy = err instanceof Error && (err.message.includes('SQLITE_BUSY') || err.message.includes('database is locked'))
+      if (!isBusy || i === maxRetries - 1) throw err
+      await new Promise(r => setTimeout(r, 200 * (i + 1))) // 200ms, 400ms, 600ms
+    }
+  }
+  throw new Error('unreachable')
+}
 
 // ── OG Image 抓取 ──────────────────────────────────────────────────
 
@@ -74,7 +80,7 @@ async function fetchMicrolinkScreenshot(url: string): Promise<string | null> {
 // ── 写 media_cache ──────────────────────────────────────────────────
 
 async function upsertMediaCache(url: string, ogImage: string | null, error?: string) {
-  await client.execute({
+  await withRetry(() => client.execute({
     sql: `INSERT INTO media_cache (url, og_image, fetched_at, valid, error_reason)
           VALUES (?, ?, ?, ?, ?)
           ON CONFLICT(url) DO UPDATE SET
@@ -83,7 +89,7 @@ async function upsertMediaCache(url: string, ogImage: string | null, error?: str
             valid = excluded.valid,
             error_reason = excluded.error_reason`,
     args: [url, ogImage, Math.floor(Date.now() / 1000), ogImage ? 1 : 0, error ?? null],
-  })
+  }))
 }
 
 // ── 主流程 ──────────────────────────────────────────────────────────
@@ -94,12 +100,23 @@ async function enrichMediaForItem(
 ): Promise<'post_image' | 'og_image' | 'screenshot' | 'no_image'> {
 
   // 优先级 1：帖子原图
-  const rawMedia: string[] = JSON.parse((item.mediaRaw as unknown as string) ?? '[]')
+  const rawMediaRaw = item.mediaRaw
+  let rawMedia: string[] = []
+  if (typeof rawMediaRaw === 'string') {
+    try {
+      const parsed = JSON.parse(rawMediaRaw)
+      rawMedia = Array.isArray(parsed) ? parsed : (typeof parsed === 'string' ? [parsed] : [])
+    } catch {
+      if (rawMediaRaw.startsWith('http')) rawMedia = [rawMediaRaw]
+    }
+  } else if (Array.isArray(rawMediaRaw)) {
+    rawMedia = rawMediaRaw as string[]
+  }
   if (rawMedia.length > 0) {
     if (!dryRun) {
-      await db.update(schema.contentItems)
+      await withRetry(() => db.update(schema.contentItems)
         .set({ media: rawMedia[0], mediaSource: 'post_image' })
-        .where(eq(schema.contentItems.id, item.id))
+        .where(eq(schema.contentItems.id, item.id)))
     }
     return 'post_image'
   }
@@ -123,9 +140,9 @@ async function enrichMediaForItem(
 
     if (ogImage) {
       if (!dryRun) {
-        await db.update(schema.contentItems)
+        await withRetry(() => db.update(schema.contentItems)
           .set({ media: ogImage, mediaSource: 'og_image' })
-          .where(eq(schema.contentItems.id, item.id))
+          .where(eq(schema.contentItems.id, item.id)))
       }
       return 'og_image'
     }
@@ -135,9 +152,9 @@ async function enrichMediaForItem(
       const screenshot = await fetchMicrolinkScreenshot(productUrl)
       if (screenshot) {
         if (!dryRun) {
-          await db.update(schema.contentItems)
+          await withRetry(() => db.update(schema.contentItems)
             .set({ media: screenshot, mediaSource: 'screenshot' })
-            .where(eq(schema.contentItems.id, item.id))
+            .where(eq(schema.contentItems.id, item.id)))
           await upsertMediaCache(productUrl, screenshot)
         }
         return 'screenshot'
