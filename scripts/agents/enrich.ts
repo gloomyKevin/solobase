@@ -393,4 +393,8 @@ async function main() {
   process.exit(0)
 }
 
-main().catch(err => { console.error(err); process.exit(1) })
+// 只在直接运行时执行（不在被 import 时触发）
+import { fileURLToPath } from 'url'
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  main().catch(err => { console.error(err); process.exit(1) })
+}
