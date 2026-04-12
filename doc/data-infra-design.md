@@ -135,29 +135,38 @@ Solobase 的数据是**中文独立开发者生态的知识基础设施**。网�
 | 层 | 技术 | 理由 |
 |----|------|------|
 | **数据库** | Turso (libSQL/SQLite) | 零运维，远程访问，免费额度充足 |
-| **向量存储** | sqlite-vec（Turso 内置）| 不引入独立向量 DB |
+| **向量存储** | sqlite-vec（Phase 8 再决定）| Phase 1-7 不需要；届时验证 Turso 对 sqlite-vec 的支持状态 |
 | **ORM** | Drizzle ORM | TypeScript 原生，类型安全 |
 | **Embedding** | `text-embedding-3-small`（OpenAI via one-api）| $0.02/1M tokens |
 | **分类 LLM** | Claude Haiku（via one-api）| 批量处理 |
 | **摘要/Intake LLM** | Claude Sonnet（via one-api）| 给人看的内容用更好的模型 |
-| **媒体富化** | Microlink API | OG image + metadata |
-| **页面内容提取** | Jina Reader（r.jina.ai）| 免费，URL → clean markdown |
-| **调度** | Claude Code CronCreate | 原生集成，有上下文理解 |
-| **审核 UI（短期）** | 飞书 Interactive Card Bot | 手机可操作 |
+| **媒体富化** | Microlink API | OG image + metadata，免费 500 req/月 |
+| **页面内容提取** | Jina Reader（r.jina.ai）| 免费，URL → clean markdown；中文页面/需登录页面成功率有限 |
+| **本地调度** | macOS launchd（plist）| 替代 crontab，Mac 上更稳定，开机自动启动 |
+| **云端调度** | Vercel Cron Jobs | Next.js 原生支持，用于定时触发 API route |
+| **审核 UI（短期）** | 飞书 Interactive Card Bot | 手机可操作；Bot callback 需要 Vercel 已部署的公开 HTTPS 端点 |
 | **审核 UI（中期）** | Next.js /admin | 同 repo，共享 DB，键盘流 |
 | **认领链接** | Next.js /claim/[slug] | token 参数，无需独立服务 |
 | **Maker Auth** | Magic Link（邮件）| 最轻量，无密码 |
 | **MCP Server** | @modelcontextprotocol/sdk | 未来知识 API |
 
-**成本估算：**
+> **Turso 写入策略**：pipeline 在本地 Mac 批量运行，**不逐行实时写 Turso**（网络延迟不可接受）。正确模式：pipeline 写本地 SQLite → 批处理完成后一次性同步到 Turso（`turso db sync` 或迁移脚本）。网站从 Turso 读。原始 JSON 文件（`data/raw/`）永久保留作灾难恢复基线。
+
+**成本估算（推导过程）：**
+
+冷启动全量（4188 条）：
+- Pass 1 Haiku：4188 × (800 in + 200 out) tokens → ~3.4M in ($0.85) + ~0.84M out ($1.05) ≈ **¥14**
+- Pass 2 Sonnet（约 30% 入选 rec=include，~1256 条）：× (1500 in + 400 out) tokens → ~1.9M in ($5.65) + ~0.5M out ($7.55) ≈ **¥96**
+- Embedding：4188 × 300 tokens → 1.26M tokens × $0.02/1M ≈ **¥0.2**
+- **冷启动合计：~¥110（含 one-api 中转溢价，按实际价格可能 ¥80-130）**
 
 | 项目 | 场景 | 成本 |
 |------|------|------|
-| 冷启动全量 LLM 处理 | 4188 条 | ~¥80 一次性 |
-| 日常爬取处理 | ~100 条/天 | ~¥3/天 |
+| 冷启动全量 LLM 处理 | 4188 条（推导见上）| ~¥110 一次性 |
+| 日常爬取处理 | ~100 条/天 | ~¥3-5/天 |
 | 原生提交 Intake | ~10 条/天（早期）| ~¥0.5/天 |
-| Turso | 500MB + 1B rows/月 | 免费 |
-| Microlink | 500 req/月免费 | 初期免费 |
+| Turso | 500MB + 1B rows/月 | 免费（Embedding 占大头：1536 floats×4B×10万条≈600MB，逼近限额） |
+| Microlink | 500 req/月免费 | 初期免费；超出后 $9/月 |
 
 ---
 
@@ -413,6 +422,9 @@ export const submissions = sqliteTable('submissions', {
   id:           text('id').primaryKey(),
   type:         text('type').notNull(),
   // product_submit | post_write | quick_update | claim_request
+  claimPath:    text('claim_path'),
+  // null（非认领）| 'editor_invite'（Path A）| 'self_service'（Path B）
+  // 不依赖"是否有 claimInviteToken"来区分路径，显式字段更安全
 
   // 提交者（可能还没有完整 maker 账号）
   submitterEmail: text('submitter_email'),
@@ -586,11 +598,42 @@ Step 6：媒体富化（Microlink，异步，不阻塞）
 
 Pass 1 使用 Claude Haiku + tool_use 模式，完全避免 JSON 解析错误。Zod 验证所有输出字段。详见 `scripts/agents/enrich.ts`。
 
-### 6.3 去重两阶段
+### 6.3 容错与降级策略
+
+LLM 调用失败不是边缘情况，是运行时常态。每一步都需要明确的失败处理：
+
+```
+LLM Pass 1 失败（rate limit / timeout / Zod 校验失败）：
+  → 指数退避重试 3 次（1s → 2s → 4s）
+  → 第 3 次仍失败：content_items.llmProcessedAt 置 null，记录 inference_runs.parsedOk=false
+  → 不阻塞后续条目；该条目进入"待重处理"队列，下次 Enrichment Agent 运行时优先处理
+  → 永远不丢弃：失败的条目仍在 review_status=pending，编辑可见
+
+LLM Pass 2 失败（Sonnet，编辑摘要）：
+  → 降级：跳过 Pass 2，用 Pass 1 输出的 recReason 代替
+  → editorialSummary 置 null，卡片显示"AI 摘要不可用"
+  → 不影响 editorial_rec 和队列排序
+
+Microlink 媒体富化失败（超出 500 req/月免费额度）：
+  → screenshot 置 null，前端用 TextProjectCard 降级渲染
+  → 记录 mediaCache.errorReason，不反复请求同一 URL（设 7 天冷却期）
+
+Jina Reader 失败（中文页面 / 需登录 / 超时）：
+  → 降级：跳过 URL 内容提取，Pass 1 仅用 body + title 文本
+  → Intake Engine 中：Jina 失败时 prefill 字段部分留空，让 maker 自己填写
+  → 不向 maker 暴露技术错误，用"暂无法自动提取，请手动填写"提示
+
+所有失败都写入 inference_runs：parsedOk=false，parseError 记录原因。
+WeeklyMetrics 中 llm_error_rate 可追踪失败趋势。
+```
+
+### 6.4 去重两阶段
 
 **Phase 1（Deterministic blocking）**：URL 精确匹配 → 高置信候选，写 `dedup_candidates`。
 
 **Phase 2（Embedding candidates）**：`cos_sim > 0.90` → 候选对写入，**不自动合并**。同赛道不同产品的相似度可能同样很高，必须由编辑确认后才执行 merge，且 merge 操作可回退（split action）。
+
+> **Embedding 在 Phase 8 才启用**。Phase 1-7 期间只做 Phase 1（URL 精确匹配）。
 
 ---
 
@@ -1020,29 +1063,62 @@ async function checkPendingVerifications() {
   const pending = await db.query.submissions.findMany({
     where: and(
       eq(submissions.type, 'claim_request'),
+      eq(submissions.claimPath, 'self_service'),
       eq(submissions.verifyPassed, false),
       isNotNull(submissions.verifyToken),
     )
   })
 
   for (const sub of pending) {
+    // 检查是否已有其他 confirmed 认领（竞争条件防护）
+    const existingClaim = await db.query.submissions.findFirst({
+      where: and(
+        eq(submissions.targetProjectId, sub.targetProjectId!),
+        eq(submissions.type, 'claim_request'),
+        eq(submissions.status, 'confirmed'),
+        ne(submissions.id, sub.id),
+      )
+    })
+    if (existingClaim) {
+      // 已有其他认领在处理中，跳过并通知
+      await notifyFeishu(`⚠️ 重复认领：${sub.targetProjectId} 已有待审批认领，新申请 ${sub.id} 暂停`)
+      continue
+    }
+
+    // 从 DB 拿项目 URL 用于域名提取（targetProjectId 是 UUID，不是域名）
+    const project = await db.query.projects.findFirst({
+      where: eq(projects.id, sub.targetProjectId!),
+      columns: { url: true, id: true },
+    })
+    if (!project?.url) continue
+    const projectDomain = new URL(project.url).hostname.replace('www.', '')
+
     let passed = false
 
     switch (sub.verifyMethod) {
       case 'domain_txt': {
-        const records = await resolveTxt(getDomain(sub.targetProjectId!))
+        // dns.promises.resolveTxt 返回 string[][]
+        const { resolveTxt } = await import('node:dns/promises')
+        const records = await resolveTxt(projectDomain).catch(() => [] as string[][])
         passed = records.flat().includes(`solobase-verify=${sub.verifyToken}`)
         break
       }
       case 'github_file': {
-        const url = `https://raw.githubusercontent.com/${sub.githubRepo}/main/.solobase-verify`
-        const text = await fetchText(url).catch(() => '')
+        // sub 需要包含 githubRepo 字段（存储在 rawInput.githubRepo）
+        const githubRepo = (sub.rawInput as any)?.githubRepo
+        if (!githubRepo) break
+        const url = `https://raw.githubusercontent.com/${githubRepo}/main/.solobase-verify`
+        const text = await fetch(url).then(r => r.ok ? r.text() : '').catch(() => '')
         passed = text.trim() === sub.verifyToken
         break
       }
       case 'jike_bio': {
-        const profile = await fetchJikeProfile(sub.jikeHandle!)
-        passed = profile.bio?.includes(`[sv:${sub.verifyToken}]`) ?? false
+        const jikeHandle = (sub.rawInput as any)?.jikeHandle
+        if (!jikeHandle) break
+        // 即刻 profile 是公开 HTML，抓取 bio 字段
+        const html = await fetch(`https://web.okjike.com/u/${jikeHandle}`)
+          .then(r => r.text()).catch(() => '')
+        passed = html.includes(`[sv:${sub.verifyToken}]`)
         break
       }
     }
@@ -1055,10 +1131,12 @@ async function checkPendingVerifications() {
         updatedAt: new Date(),
       }).where(eq(submissions.id, sub.id))
 
-      // 更新 trust_level + 通知编辑
-      await db.update(projects).set({ trustLevel: 'native_submitted' })
+      // trust_level 升到 native_submitted（不是 maker_verified，等编辑轻审批）
+      await db.update(projects)
+        .set({ trustLevel: 'native_submitted', updatedAt: new Date() })
         .where(eq(projects.id, sub.targetProjectId!))
-      await notifyFeishu(`🔍 待审批认领：${sub.targetProjectId}，验证方式：${sub.verifyMethod} ✓`)
+
+      await notifyFeishu(`🔍 待审批认领：${project.id}，验证方式：${sub.verifyMethod} ✓，请在 /admin/claims 确认`)
     }
   }
 }
@@ -1167,7 +1245,7 @@ const publishedPosts = await db.query.contentItems.findMany({
 
 **无图产品**：screenshot=null 不影响发布，前端用 TextProjectCard。
 
-**Publisher Agent**：editorial/publish status 变更时事件触发，增量更新 feed.json，不全量重跑。
+**Publisher Agent**：每次编辑操作（飞书按钮点击 / /admin 操作）完成后**同步调用**（非事件队列），增量更新 feed.json，不全量重跑。Turso/SQLite 无原生 DB-level trigger 机制，"事件触发"的实现是：editorial action API route 在写完 DB 后直接 `await runPublisher()`。
 
 ---
 
@@ -1194,13 +1272,36 @@ Weekly Review Agent（每周一 09:00）
   → override_rate > 25% 时附带 prompt 优化建议
 ```
 
-**Claude Code CronCreate 配置：**
+**调度配置：macOS launchd（本地）+ Vercel Cron（云端）**
 
+本地 Mac（pipeline 批处理）用 launchd plist：
+```xml
+<!-- ~/Library/LaunchAgents/co.solobase.pipeline.plist -->
+<key>StartCalendarInterval</key>
+<dict>
+  <key>Hour</key><integer>22</integer>
+  <key>Minute</key><integer>0</integer>
+</dict>
+<key>ProgramArguments</key>
+<array>
+  <string>/usr/local/bin/npm</string>
+  <string>run</string>
+  <string>pipeline:daily</string>
+</array>
 ```
-0 22 * * *    npm run pipeline:daily        # 爬取 + 处理
-0 23 * * *    npm run agents:digest         # 编辑日报
-0  1 * * 1    npm run agents:weekly-review  # 周报
+加载：`launchctl load ~/Library/LaunchAgents/co.solobase.pipeline.plist`
+
+Vercel 云端（Digest / Weekly Review 发飞书）用 `vercel.json`：
+```json
+{
+  "crons": [
+    { "path": "/api/cron/digest",        "schedule": "0 23 * * *"   },
+    { "path": "/api/cron/weekly-review", "schedule": "0 1 * * MON" }
+  ]
+}
 ```
+
+> **不使用 Claude Code CronCreate**：CronCreate 依赖活跃的交互式 Claude Code 会话，无法在后台独立持续运行，不适合生产调度。
 
 ---
 
@@ -1210,10 +1311,18 @@ Weekly Review Agent（每周一 09:00）
 interface WeeklyMetrics {
   // 入库
   ingested_total: number
-  ingested_by_source: Record<string, number>
+  ingested_by_source: Record<string, number>  // 含 v2ex / linuxdo 分项
   native_submissions: number          // 原生提交数
-  claims_completed: number            // 认领完成数
+  claims_completed: number            // 认领完成数（Path A + B 合计）
   claims_pending: number              // 发出邀请但未响应
+  // 认领路径拆分
+  claims_path_a_invited: number       // 本周编辑发出邀请数
+  claims_path_b_started: number       // 本周自助申请发起数
+  claims_path_b_verify_method: Record<'domain_txt'|'github_file'|'jike_bio'|'email', number>
+  claims_path_b_verify_pass_rate: number   // 验证通过率（核心：哪种方式可用）
+  // LLM 健康
+  llm_error_rate: number              // Pass 1 失败率（prompt 质量信号）
+  llm_parse_fail_by_model: Record<string, number>
 
   // 过滤漏斗
   archived_by_rule: number
@@ -1269,19 +1378,26 @@ const tools = {
 
 ## 十四、实施路线图
 
-### Phase 0：止血（1-2 天）
+### Phase 0：止血 ✅ 已完成
 
-- [ ] 修 V2EX/Linux.do media 字段（图片 URL 分离）
-- [ ] 修 build-feed：无图产品用 TextProjectCard
-- [ ] 飞书双向同步：审核状态写回 editorial 字段
+- [x] 修 V2EX/Linux.do media 字段（`<img src>` / Markdown 图片提取）
+- [x] 修 build-feed：无图产品用 TextProjectCard（移除 `images.length===0` 硬门槛）
+- [x] filter-jike：纯文字长帖保留（< 100 字才丢弃）
+- [ ] 飞书双向同步：审核状态写回 editorial 字段（待 Phase 3 实现）
 
-**预期：网站产品数 129 → 350+**
+**实际效果：重新跑 pipeline 后观察产品数变化（预期 129 → 300+）**
 
 ### Phase 1：数据库迁移（3-5 天）
 
-- [ ] Turso 初始化 + Drizzle schema（含幂等约束、junction tables、inference_runs）
-- [ ] 迁移脚本：pipeline_output.json → Turso（upsert 语义）
-- [ ] build-feed.ts 从 DB 读，用 publish_status 过滤
+- [ ] Turso 初始化（确认 Turso 版本 + libSQL driver 版本）
+- [ ] Drizzle schema 全量建表（**包含 submissions + makerAuth**，一次迁移完，避免后续 schema 分裂）
+  - content_items · projects · makers · junction tables · inference_runs · editorial_actions
+  - submissions · makerAuth · productUpdates（不要等 Phase 4）
+  - media_cache · dedup_candidates · embeddings（建表，Phase 8 前不写数据）
+- [ ] 幂等约束验证：`UNIQUE ON (source, source_id)` 重复运行不产生重复记录
+- [ ] 迁移脚本：`pipeline_output.json` → Turso（批量 upsert，非逐行写入）
+- [ ] build-feed.ts 切换：从 DB 的 `publish_status=published` 过滤，而非 JSON 文件
+- [ ] launchd plist 配置，替代手动触发 pipeline
 
 ### Phase 2：LLM 处理层（3-5 天）
 
@@ -1298,11 +1414,13 @@ const tools = {
 
 ### Phase 4：原生输入层（1 周）
 
+> 前置：Phase 1 已完成（submissions / makerAuth 表已存在）
+
 - [ ] `/submit` 路由：产品提交流（URL + 故事，AI 预填充）
 - [ ] `/submit/post` 路由：经验帖写作（AI 协作写作体验）
-- [ ] AI Intake Engine（`src/api/intake/route.ts`）
+- [ ] AI Intake Engine（`src/api/intake/route.ts`）：Jina + Microlink + LLM 提取
 - [ ] 轻审核逻辑（native_submitted 自动发布）
-- [ ] Submissions + MakerAuth schema 上线
+- [ ] Vercel Cron 配置：digest + weekly-review 触发
 
 ### Phase 5：认领流（3-5 天）
 
@@ -1322,10 +1440,10 @@ Path B（自助申请，可与 Path A 并行开发）：
 
 ### Phase 6：可观测 + 自动化（1 周）
 
-- [ ] WeeklyMetrics 实现
-- [ ] Weekly Review Agent
-- [ ] Claude Code CronCreate 三个 cron job
+- [ ] WeeklyMetrics 实现（含认领路径拆分、LLM 错误率、V2EX/Linux.do 分源分布）
+- [ ] Weekly Review Agent（override_rate > 25% 时触发 prompt 优化建议）
 - [ ] Next.js /admin（键盘流 + 指标面板 + 认领管理 + 去重确认）
+- [ ] validateImageSync 改为异步 fetch（当前 execSync curl 会阻塞线程）
 
 ### Phase 7：产品快速更新（Phase 5 后）
 
