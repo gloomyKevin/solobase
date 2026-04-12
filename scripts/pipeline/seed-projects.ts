@@ -1,7 +1,14 @@
 /**
- * 从管道数据 + 飞书审核结果生成真实 Project JSON
+ * 从管道数据自动提取 Project — 全自动，不依赖硬编码列表
  *
- * 策略：以审核确认的真实产品为基础，从管道数据中提取完整信息
+ * 提取条件（全部满足）：
+ * 1. 有产品级 URL（自有域名/App Store/Chrome Store/GitHub 仓库）
+ * 2. 有图片（feed 卡片必须有视觉）
+ * 3. 质量分 >= 阈值
+ * 4. 有自创信号（排除推荐/讨论别人的产品）
+ *
+ * 没有图的高质量内容标记为 draft，保留但不进 feed
+ *
  * 使用: npx tsx scripts/pipeline/seed-projects.ts
  */
 
@@ -16,197 +23,193 @@ const stageColorMap: Record<string, string> = {
   revenue: '#3B9B8B', scaling: '#6C4FD6',
 }
 
-// ─── 已确认的真实产品列表（来自飞书审核 + 管道交叉验证） ─────────
-// 每个条目：在管道数据中的匹配关键词 → 正确的产品信息
+// ═══════════════════════════════════════════════════════════════
+// 1. 产品 URL 识别 — 区分"产品链接"和"内容链接"
+// ═══════════════════════════════════════════════════════════════
 
-const KNOWN_PRODUCTS: {
-  match: string           // 在 body 中搜索的关键词
-  name: string
-  tagline: string
-  stage: string
-  topics: string[]
-  founderType: string
-  vibes?: string[]
-}[] = [
-  {
-    match: 'TypeNo',
-    name: 'TypeNo',
-    tagline: '面向 macOS 的极简语音输入法，永远免费，永远开源',
-    stage: 'launched',
-    topics: ['open-source', 'productivity'],
-    founderType: 'tech_to_product',
-    vibes: ['极简', '开源'],
-  },
-  {
-    match: 'FateTell',
-    name: 'FateTell',
-    tagline: '玄学出海 AI 产品，用东方智慧做自我探索',
-    stage: 'revenue',
-    topics: ['ai-tools', 'going-global', 'mobile-app'],
-    founderType: 'tech_to_product',
-    vibes: ['出海标杆', '创意切入'],
-  },
-  {
-    match: 'ColaMD',
-    name: 'ColaMD',
-    tagline: 'Agent 友好的 Markdown 编辑器，文件改了自动刷新',
-    stage: 'launched',
-    topics: ['devtools', 'open-source', 'vibe-coding'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: 'OpenMAIC',
-    name: 'OpenMAIC',
-    tagline: '清华团队开源的 AI 课堂，给话题就能生成完整互动课',
-    stage: 'launched',
-    topics: ['ai-tools', 'open-source'],
-    founderType: 'small_team',
-  },
-  {
-    match: 'agentboard',
-    name: 'Agentboard',
-    tagline: 'Coding 的微信运动排行榜，看你写了多少代码',
-    stage: 'launched',
-    topics: ['devtools', 'vibe-coding'],
-    founderType: 'tech_to_product',
-    vibes: ['创意切入'],
-  },
-  {
-    match: 'OtterLife',
-    name: 'OtterLife',
-    tagline: '游戏化健康管理 App，用水獭养成来记录喝水和运动',
-    stage: 'revenue',
-    topics: ['mobile-app'],
-    founderType: 'tech_to_product',
-    vibes: ['设计感', '小而美'],
-  },
-  {
-    match: 'nuwa-skill',
-    name: '女娲.skill',
-    tagline: '把同事蒸馏成 AI Skill，一键生成专属技能包',
-    stage: 'launched',
-    topics: ['ai-tools', 'open-source', 'vibe-coding'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: 'ai-daily-digest',
-    name: 'AI Daily Digest',
-    tagline: '开源的 AI 资讯自动摘要工具，每天帮你追最新动态',
-    stage: 'launched',
-    topics: ['ai-tools', 'open-source'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: 'WeClaw',
-    name: 'WeClaw',
-    tagline: '让微信接入任意 AI Agent 的开源桥接工具',
-    stage: 'launched',
-    topics: ['ai-tools', 'open-source', 'devtools'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: 'YouMind',
-    name: 'YouMind',
-    tagline: '为知识学习者和内容创作者打造的 AI Creation Studio',
-    stage: 'launched',
-    topics: ['ai-tools', 'productivity'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: '拾刻',
-    name: '拾刻',
-    tagline: '中学文学时钟 Chrome 插件，用课文里的时间描写当时钟',
-    stage: 'launched',
-    topics: ['chrome-extension'],
-    founderType: 'tech_to_product',
-    vibes: ['创意切入', '小而美'],
-  },
-  {
-    match: 'AnimCard',
-    name: 'AnimCard',
-    tagline: '用动态卡片宣传你的产品，比枯燥文本更有传播力',
-    stage: 'launched',
-    topics: ['design', 'productivity'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: '好事发生',
-    name: '好事发生',
-    tagline: '一个专门记录好消息的 App，留住生活中的每个好事',
-    stage: 'launched',
-    topics: ['mobile-app'],
-    founderType: 'tech_to_product',
-    vibes: ['小而美', '有温度'],
-  },
-  {
-    match: 'profitsearcher',
-    name: 'ProfitSearcher',
-    tagline: '每天自动追踪海外高增长软件产品，帮你判断哪些值得做',
-    stage: 'building',
-    topics: ['saas', 'going-global'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: 'Eimi',
-    name: 'Eimi',
-    tagline: '不要求学习和坚持，只把关心的事拆成每天的小卡片',
-    stage: 'launched',
-    topics: ['mobile-app', 'ai-tools'],
-    founderType: 'tech_to_product',
-    vibes: ['小而美', '设计感'],
-  },
-  {
-    match: 'agent-form',
-    name: 'AgentForm',
-    tagline: '专为出海开发者打造的外链申请表 Agent Chrome 扩展',
-    stage: 'launched',
-    topics: ['chrome-extension', 'going-global'],
-    founderType: 'tech_to_product',
-  },
-  {
-    match: '比比怪',
-    name: '比比怪',
-    tagline: '截图识别店名，跳转美团/京东比价，帮你省外卖钱',
-    stage: 'launched',
-    topics: ['mobile-app'],
-    founderType: 'tech_to_product',
-    vibes: ['小而美', '创意切入'],
-  },
-  {
-    match: 'myvibe.so',
-    name: '你的中国色',
-    tagline: '8 道直觉题测出你的专属中国传统色 + 穿搭配色方案',
-    stage: 'launched',
-    topics: ['design'],
-    founderType: 'tech_to_product',
-    vibes: ['创意切入', '小而美'],
-  },
-  {
-    match: 'claude-code-now',
-    name: 'claude-code-now',
-    tagline: '不会写代码的产品经理做的第一个 Mac App',
-    stage: 'launched',
-    topics: ['vibe-coding', 'productivity'],
-    founderType: 'non_tech_ai',
-  },
-  {
-    match: 'MkDollar',
-    name: 'MkDollar',
-    tagline: '独立开发者收入追踪和项目展示平台',
-    stage: 'launched',
-    topics: ['saas', 'side-project'],
-    founderType: 'tech_to_product',
-  },
+// 非产品平台 — 这些 URL 上的内容是文章/帖子/视频，不是产品本身
+const CONTENT_PLATFORMS = new Set([
+  'twitter.com', 'x.com', 'youtube.com', 'youtu.be', 'bilibili.com',
+  'mp.weixin.qq.com', 'weixin.qq.com', 'xiaoyuzhoufm.com',
+  'linux.do', 'v2ex.com', 'okjike.com', 'm.okjike.com',
+  'web.okjike.com', 'jike.city',
+  'wired.com', 'sspai.com', 'zhihu.com', 'juejin.cn',
+  'medium.com', 'substack.com', 'feishu.cn', 'my.feishu.cn',
+  'image-qiniu.jellow.site', 'testflight.apple.com',
+  'arxiv.org', 'reddit.com', 'hackernoon.com',
+])
+
+// 产品分发平台 — 这些 URL 说明有真实产品
+const PRODUCT_STORES = [
+  'apps.apple.com',
+  'play.google.com',
+  'chromewebstore.google.com',
+  'chrome.google.com/webstore',
+  'addons.mozilla.org',
 ]
 
-// ─── 从管道数据中匹配并构建 Project ─────────────────────────────
+interface ProductUrl {
+  url: string
+  type: 'own_domain' | 'github_repo' | 'app_store' | 'chrome_store' | 'other_store'
+  name: string  // 从 URL 提取的产品名
+}
+
+function identifyProductUrl(url: string): ProductUrl | null {
+  try {
+    const u = new URL(url)
+    const host = u.hostname.replace('www.', '').toLowerCase()
+
+    // 跳过内容平台
+    if ([...CONTENT_PLATFORMS].some(p => host.includes(p))) return null
+
+    // App Store
+    if (host.includes('apps.apple.com')) {
+      const nameMatch = u.pathname.match(/\/app\/([^/]+)/)
+      return { url, type: 'app_store', name: nameMatch?.[1]?.replace(/-/g, ' ') ?? 'App' }
+    }
+
+    // Chrome Web Store
+    if (host.includes('chromewebstore.google.com') || host.includes('chrome.google.com')) {
+      return { url, type: 'chrome_store', name: 'Chrome Extension' }
+    }
+
+    // GitHub 仓库（不是 github.com 首页或 profile）
+    if (host === 'github.com') {
+      const parts = u.pathname.split('/').filter(Boolean)
+      if (parts.length >= 2) {
+        return { url, type: 'github_repo', name: parts[1] }
+      }
+      return null
+    }
+
+    // 自有域名
+    const domain = host.split('.').slice(-2).join('.')
+    const name = host.split('.')[0]
+    if (name.length >= 2 && name.length <= 25) {
+      return { url, type: 'own_domain', name: name.charAt(0).toUpperCase() + name.slice(1) }
+    }
+
+    return null
+  } catch {
+    return null
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 2. 自创信号 — 区分"我做的"和"推荐别人的"
+// ═══════════════════════════════════════════════════════════════
+
+function hasSelfCreationSignal(body: string): boolean {
+  // 强信号：明确的第一人称创作
+  if (/(?:我|我们)(?:做了|开发了|发布了|上线了|开源了|推出了|构建了|写了)/.test(body)) return true
+  if (/做了\s*(?:一个|一款)/.test(body)) return true
+  if (/正式.*(?:发布|上线|开源)/.test(body)) return true
+  if (/v?\d+\.\d+.*(?:发布|更新|上线)/.test(body)) return true
+  if (/内测.*招募/.test(body)) return true
+  // 弱但常见
+  if (/(?:终于|历时|花了.*时间).*(?:上线|发布|完成)/.test(body)) return true
+  return false
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 3. 产品名提取 — 从 body 中精确提取
+// ═══════════════════════════════════════════════════════════════
+
+// 不是产品名的常见词
+const BAD_NAMES = new Set([
+  'chrome', 'android', 'ios', 'web', 'app', 'api', 'blog', 'docs', 'cdn',
+  'schema', 'project', 'release', 'update', 'version', 'beta', 'alpha',
+  'http', 'https', 'www', 'url', 'link', 'page', 'site', 'demo',
+  'easy', 'fast', 'pro', 'plus', 'new', 'old', 'test', 'dev', 'raw',
+  'fragments', 'status', 'db', 'yb', 'lxx', 'cnfeat',
+  'chatgpt', 'gpt', 'claude', 'gemini', 'openai', 'deepseek', 'llama',
+  'copilot', 'cursor', 'anthropic', 'google', 'microsoft', 'apple',
+  'amazon', 'meta', 'facebook', 'twitter', 'notion', 'figma',
+  'android-release', 'image-qiniu',
+  'producthunt', 'coagents', 'ant-design', 'vibe',
+  'johnedchristensen', 'side-by-side', 'vho90ww6',
+  'pp', '2025app', 'drawppt', 'happinessnetlify',
+  'monica', 'nexty', 'insigh', 'network-memo',
+])
+
+function isValidName(name: string): boolean {
+  if (!name || name.length < 2 || name.length > 30) return false
+  if (BAD_NAMES.has(name.toLowerCase())) return false
+  // URL 编码的名字
+  if (name.includes('%')) return false
+  // 纯数字或单字母
+  if (/^\d+$/.test(name) || /^[a-z]$/i.test(name)) return false
+  return true
+}
+
+// 排除"别人发布的产品"的新闻帖
+function isOthersProduct(body: string): boolean {
+  // 大厂/机构发布的产品新闻
+  if (/(?:百度|谷歌|Google|OpenAI|Anthropic|Meta|微软|字节|腾讯|阿里|Apple|清华|北大|智谱|Ant Design)(?:.*(?:发布|开源|推出|上线))/.test(body)) return true
+  // 明确是推荐别人的（推特用户@xxx做了）
+  if (/(?:推特|Twitter).*(?:用户|@).*做了/.test(body)) return true
+  // PH/HN 日报
+  if (/Product Hunt.*每日|Hacker News.*早报/i.test(body)) return true
+  return false
+}
+
+function extractNameFromBody(body: string): string | null {
+  const patterns = [
+    /(?:做了|发布了?|上线了?|开源了?|推出了?)\s*(?:一个|一款)?\s*([A-Za-z][\w.-]{2,25})/,
+    /(?:做了|发布了?|上线了?|开源了?|推出了?)\s*(?:一个|一款)?\s*[「【《]([^」】》\n]{2,20})[」】》]/,
+    /^([A-Za-z][\w.-]{3,25})\s*[，,—\-:：|]/m,
+  ]
+  for (const p of patterns) {
+    const m = body.match(p)
+    if (m?.[1] && isValidName(m[1].trim())) return m[1].trim()
+  }
+  return null
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 4. 构建 Project
+// ═══════════════════════════════════════════════════════════════
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '').slice(0, 50)
 }
 
+function inferStage(body: string): string {
+  if (/mrr|收入|营收|月入|付费用户/i.test(body)) return 'revenue'
+  if (/上线|发布|launch|ship|正式版/i.test(body)) return 'launched'
+  if (/开发中|building|beta|内测/i.test(body)) return 'building'
+  return 'launched'
+}
+
+function inferTopics(body: string): string[] {
+  const b = body.toLowerCase()
+  const t: string[] = []
+  if (/\bai\b|人工智能|gpt|claude|模型/.test(b)) t.push('ai')
+  if (/出海|global|海外/.test(b)) t.push('going-global')
+  if (/开发者|devtool|github|开源/.test(b)) t.push('devtools')
+  if (/效率|productivity|workflow/.test(b)) t.push('productivity')
+  if (/设计|design|figma/.test(b)) t.push('design')
+  if (/chrome|扩展|extension|插件/.test(b)) t.push('chrome-extension')
+  if (/ios|app store|移动/.test(b)) t.push('mobile-app')
+  if (/开源|open.?source/.test(b)) t.push('open-source')
+  if (/saas|订阅/.test(b)) t.push('saas')
+  return t.length > 0 ? t.slice(0, 3) : ['side-project']
+}
+
+function extractTagline(body: string): string {
+  const lines = body.split(/\n/).map(s => s.trim()).filter(s => s.length > 10 && s.length < 120)
+  for (const line of lines.slice(0, 5)) {
+    if (/^[#\-·•]/.test(line)) continue
+    return line.replace(/^[-·•\d.、)\s]+/, '').slice(0, 80)
+  }
+  return body.replace(/\n/g, ' ').slice(0, 80)
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 5. Main
+// ═══════════════════════════════════════════════════════════════
+
 function main() {
-  // 加载管道数据
   const sources = ['jike.json', 'v2ex.json', 'linuxdo.json']
   let items: any[] = []
   for (const src of sources) {
@@ -216,107 +219,128 @@ function main() {
       items.push(...data)
     }
   }
-  console.log(`加载管道数据: ${items.length} 条\n`)
+  console.log(`管道数据: ${items.length} 条\n`)
 
-  // 清理旧数据
-  const oldFiles = fs.readdirSync(PROJECTS_DIR).filter(f => f.endsWith('.json'))
-  for (const f of oldFiles) fs.unlinkSync(path.join(PROJECTS_DIR, f))
-  console.log(`清理旧文件: ${oldFiles.length} 个\n`)
+  // 按分数降序
+  items.sort((a: any, b: any) => (b.density_score?.total ?? 0) - (a.density_score?.total ?? 0))
 
-  const indexEntries: any[] = []
-  let matched = 0
+  const projects: any[] = []
+  const drafts: any[] = []
+  const seenSlugs = new Set<string>()
+  const seenProductUrls = new Set<string>()
 
-  for (const known of KNOWN_PRODUCTS) {
-    // 在管道数据中找匹配的条目（取分数最高的）
-    const candidates = items
-      .filter(item => item.body.includes(known.match))
-      .sort((a, b) => (b.density_score?.total || 0) - (a.density_score?.total || 0))
+  for (const item of items) {
+    const score = item.density_score?.total ?? 0
+    if (score < 10) continue
 
-    const item = candidates[0]
-    if (!item) {
-      console.log(`  ✗ ${known.name} — 管道中未找到`)
-      continue
-    }
+    // 找产品 URL
+    const productUrls = (item.external_links || [])
+      .map(identifyProductUrl)
+      .filter(Boolean) as ProductUrl[]
 
-    matched++
-    const slug = slugify(known.name)
-    const url = item.external_links?.[0] || item.source_url
+    if (productUrls.length === 0) continue
+
+    // 自创信号 + 排除别人的产品新闻
+    if (!hasSelfCreationSignal(item.body || '')) continue
+    if (isOthersProduct(item.body || '')) continue
+
+    // 去重：同一个产品 URL 只取分数最高的
+    const primaryUrl = productUrls[0]
+    if (seenProductUrls.has(primaryUrl.url)) continue
+    seenProductUrls.add(primaryUrl.url)
+
+    // 产品名：body 提取 > URL 提取，必须通过有效性检查
+    const nameFromBody = extractNameFromBody(item.body || '')
+    const urlName = isValidName(primaryUrl.name) ? primaryUrl.name : null
+    const name = nameFromBody || urlName
+    if (!name) continue
+
+    const slug = slugify(name)
+    if (!slug || seenSlugs.has(slug)) continue
+    seenSlugs.add(slug)
+
+    const hasImages = (item.media?.length ?? 0) > 0
+    const stage = inferStage(item.body || '')
 
     const project = {
       id: `proj_${slug}`,
       slug,
-      status: (item.density_score?.total || 0) >= 20 ? 'featured' : 'basic',
-      name: known.name,
-      tagline: known.tagline,
-      description: item.body.slice(0, 800),
-      url,
+      status: hasImages ? (score >= 18 ? 'featured' : 'basic') : 'draft',
+      name,
+      tagline: extractTagline(item.body || ''),
+      description: (item.body || '').slice(0, 800),
+      url: primaryUrl.url,
       screenshots: (item.media || []).slice(0, 3),
       businessModel: 'undetermined',
       buildEffort: 'undetermined',
       growthChannel: 'undetermined',
-      founderType: known.founderType,
-      stage: known.stage,
-      tags: {
-        track: known.topics,
-        taskScenario: [],
-        tools: [],
-        techStack: [],
-        market: [],
-        platform: [],
-      },
+      founderType: 'undetermined',
+      stage,
+      tags: { track: inferTopics(item.body || ''), taskScenario: [], tools: [], techStack: [], market: [], platform: [] },
       metrics: {},
       buildStory: {},
-      source: {
-        type: 'curated',
-        originalSource: item.source,
-        originalUrl: item.source_url,
-        claimedByFounder: false,
-      },
+      source: { type: 'curated', originalSource: item.source, originalUrl: item.source_url, claimedByFounder: false },
       featuredInsight: item.top_comments?.[0]?.content?.slice(0, 80) || undefined,
-      isEditorsPick: (item.density_score?.total || 0) >= 20,
-      stageColor: stageColorMap[known.stage] || '#9CA3AF',
-      vibes: known.vibes || [],
+      isEditorsPick: score >= 20,
+      stageColor: stageColorMap[stage] || '#9CA3AF',
       createdAt: item.published_at || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       publishedAt: item.published_at || new Date().toISOString(),
       _pipeline: {
-        source: item.source,
-        sourceUrl: item.source_url,
-        author: item.author_name,
-        authorBio: item.author_bio,
-        engagement: item.engagement,
-        densityScore: item.density_score,
-        crossRefs: item.source_extra?.cross_refs,
-        topComments: item.top_comments,
+        source: item.source, sourceUrl: item.source_url,
+        author: item.author_name, authorBio: item.author_bio,
+        engagement: item.engagement, densityScore: item.density_score,
+        crossRefs: item.source_extra?.cross_refs, topComments: item.top_comments,
+        productUrlType: primaryUrl.type,
       },
     }
 
-    fs.writeFileSync(
-      path.join(PROJECTS_DIR, `${slug}.json`),
-      JSON.stringify(project, null, 2),
-      'utf-8'
-    )
-
-    indexEntries.push({
-      slug, name: known.name, status: project.status,
-      businessModel: project.businessModel, buildEffort: project.buildEffort,
-      growthChannel: project.growthChannel, founderType: project.founderType,
-      stage: project.stage, tags: known.topics,
-      isEditorsPick: project.isEditorsPick, publishedAt: project.publishedAt,
-    })
-
-    const score = item.density_score?.total || 0
-    const pick = project.isEditorsPick ? ' ⭐' : ''
-    console.log(`  ✓ ${known.name} — ${known.tagline.slice(0, 35)}... [${item.source}] (${score}分${pick})`)
+    if (hasImages) {
+      projects.push(project)
+    } else {
+      drafts.push(project)
+    }
   }
 
-  fs.writeFileSync(
-    path.join(PROJECTS_DIR, '_index.json'),
-    JSON.stringify(indexEntries, null, 2),
-    'utf-8'
-  )
+  console.log(`提取结果:`)
+  console.log(`  有图 Project (进 feed): ${projects.length}`)
+  console.log(`  无图 Draft (暂存不展示): ${drafts.length}\n`)
 
-  console.log(`\n匹配 ${matched}/${KNOWN_PRODUCTS.length} 个产品 → data/projects/`)
+  // 清理旧数据
+  const oldFiles = fs.readdirSync(PROJECTS_DIR).filter(f => f.endsWith('.json'))
+  for (const f of oldFiles) fs.unlinkSync(path.join(PROJECTS_DIR, f))
+
+  // 写入
+  const allProjects = [...projects, ...drafts]
+  const indexEntries: any[] = []
+
+  for (const proj of allProjects) {
+    fs.writeFileSync(path.join(PROJECTS_DIR, `${proj.slug}.json`), JSON.stringify(proj, null, 2), 'utf-8')
+    indexEntries.push({
+      slug: proj.slug, name: proj.name, status: proj.status,
+      businessModel: proj.businessModel, buildEffort: proj.buildEffort,
+      growthChannel: proj.growthChannel, founderType: proj.founderType,
+      stage: proj.stage, tags: proj.tags.track,
+      isEditorsPick: proj.isEditorsPick, publishedAt: proj.publishedAt,
+    })
+  }
+
+  fs.writeFileSync(path.join(PROJECTS_DIR, '_index.json'), JSON.stringify(indexEntries, null, 2), 'utf-8')
+
+  // 展示有图的
+  console.log(`=== 有图 Project (进 feed) ===`)
+  for (const p of projects) {
+    const s = p._pipeline.densityScore?.total ?? 0
+    const urlType = p._pipeline.productUrlType
+    console.log(`  [${s}] ${p.name} — ${p.tagline.slice(0, 40)}... [${urlType}] ${p.status === 'featured' ? '⭐' : ''}`)
+  }
+  if (drafts.length > 0) {
+    console.log(`\n=== 无图 Draft (暂不展示) ===`)
+    for (const p of drafts.slice(0, 10)) {
+      console.log(`  [${p._pipeline.densityScore?.total}] ${p.name} — ${p.url.slice(0, 40)}`)
+    }
+    if (drafts.length > 10) console.log(`  ... 还有 ${drafts.length - 10} 个`)
+  }
 }
 
 main()

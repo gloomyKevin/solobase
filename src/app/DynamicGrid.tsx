@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { Heart, TrendingUp, Plus, ArrowRight, LayoutGrid, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+// Link unused — all cards now open product URLs in new tab
 
 /* ============================================================
    Types
@@ -11,7 +11,7 @@ import Link from "next/link";
 
 interface ProjectData {
   slug: string; name: string; tagline: string; screenshot: string;
-  stage: string; stageColor: string; revenue: string | null;
+  url?: string; stage: string; stageColor: string; revenue: string | null;
   founderType: string; buildEffort: string; isEditorsPick: boolean;
   featuredInsight?: string;
 }
@@ -93,24 +93,19 @@ function resolve(src: string, projects: ProjectData[]): ProjectData[] {
 
 const DEFAULT_LAYOUT: LayoutItem[] = [
   { id: "1", type: "A", dataSrc: "编辑精选", span: 3 },
-  { id: "2", type: "B", dataSrc: "最新", span: 1 },
-  { id: "3", type: "I", dataSrc: "编辑精选", span: 1 },
-  { id: "4", type: "J", dataSrc: "在赚钱的", span: 1 },
-  { id: "5", type: "E", dataSrc: "创作者", span: 3 },
-  { id: "6", type: "G", dataSrc: "热门", span: 3 },
-  { id: "7", type: "B", dataSrc: "在赚钱的", span: 1 },
-  { id: "8", type: "B", dataSrc: "AI 做的", span: 1 },
-  { id: "9", type: "D", dataSrc: "想法", span: 1 },
-  { id: "10", type: "H", dataSrc: "最新", span: 3 },
-  { id: "11", type: "C", dataSrc: "轻量创造", span: 3 },
-  { id: "12", type: "K", dataSrc: "平台统计", span: 3 },
+  { id: "2", type: "E", dataSrc: "创作者", span: 3 },
+  { id: "3", type: "G", dataSrc: "热门", span: 3 },
+  { id: "4", type: "I", dataSrc: "编辑精选", span: 1 },
+  { id: "5", type: "J", dataSrc: "在赚钱的", span: 1 },
+  { id: "6", type: "D", dataSrc: "想法", span: 1 },
+  { id: "7", type: "K", dataSrc: "平台统计", span: 3 },
 ];
 
 /* ============================================================
    DynamicGrid
    ============================================================ */
 
-export function DynamicGrid({ projects }: { projects: ProjectData[] }) {
+export function DynamicGrid({ projects, onTopicFilter }: { projects: ProjectData[]; onTopicFilter?: (topic: string | null) => void }) {
   const [layout, setLayout] = useState<LayoutItem[]>(DEFAULT_LAYOUT);
   const [editing, setEditing] = useState(false);
   const [sheetId, setSheetId] = useState<string | null>(null);
@@ -176,7 +171,7 @@ export function DynamicGrid({ projects }: { projects: ProjectData[] }) {
               >
                 <div className={cn("h-full relative", editing && "animate-[jiggle_0.25s_ease-in-out_infinite_alternate]")}>
                   {editing && <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-primary/20 pointer-events-none z-10" />}
-                  <RenderContainer item={item} projects={projects} seqIdx={nextIdx(item.dataSrc)} />
+                  <RenderContainer item={item} projects={projects} seqIdx={nextIdx(item.dataSrc)} onTopicFilter={onTopicFilter} />
                 </div>
               </div>
             );
@@ -206,7 +201,7 @@ export function DynamicGrid({ projects }: { projects: ProjectData[] }) {
                   >
                     <div className={cn("h-full relative", editing && "animate-[jiggle_0.25s_ease-in-out_infinite_alternate]")}>
                       {editing && <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-primary/20 pointer-events-none z-10" />}
-                      <RenderContainer item={item} projects={projects} seqIdx={nextIdx(item.dataSrc)} />
+                      <RenderContainer item={item} projects={projects} seqIdx={nextIdx(item.dataSrc)} onTopicFilter={onTopicFilter} />
                     </div>
                   </div>
                 );
@@ -309,8 +304,8 @@ function Sheet({ children, onClose }: { children: React.ReactNode; onClose: () =
    All containers: h-full + flex col for uniform row height
    ============================================================ */
 
-function RenderContainer({ item, projects, seqIdx }: {
-  item: LayoutItem; projects: ProjectData[]; seqIdx: number;
+function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
+  item: LayoutItem; projects: ProjectData[]; seqIdx: number; onTopicFilter?: (topic: string | null) => void;
 }) {
   const ps = resolve(item.dataSrc, projects);
 
@@ -320,7 +315,7 @@ function RenderContainer({ item, projects, seqIdx }: {
     case "A": {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[0];
       return (
-        <Link href={`/project/${p.slug}`} className="block h-full"><article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
+        <a href={p.url || `#`} target="_blank" rel="noopener noreferrer" className="block h-full"><article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
           <div className="relative md:w-[55%] shrink-0 aspect-[16/9] md:aspect-auto md:min-h-[200px] overflow-hidden bg-muted">
             <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/30 via-transparent to-transparent" />
@@ -336,7 +331,7 @@ function RenderContainer({ item, projects, seqIdx }: {
               <Heart className="ml-auto h-3.5 w-3.5 text-muted-foreground/20" />
             </div>
           </div>
-        </article></Link>
+        </article></a>
       );
     }
 
@@ -364,7 +359,7 @@ function RenderContainer({ item, projects, seqIdx }: {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[seqIdx % projects.length];
       const badge = p.revenue ? { label: `💰 ${p.revenue}`, cls: "bg-secondary/10 text-secondary" } : p.founderType === "non_tech_ai" ? { label: "🤖 AI 做的", cls: "bg-primary/10 text-primary" } : null;
       return (
-        <Link href={`/project/${p.slug}`} className="block h-full"><article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">
+        <a href={p.url || `#`} target="_blank" rel="noopener noreferrer" className="block h-full"><article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">
           <div className="relative aspect-[16/10] overflow-hidden bg-muted shrink-0">
             <div className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
             {badge && <span className={`absolute top-2 left-2 rounded-full px-2 py-0.5 text-[9px] font-semibold backdrop-blur-sm ${badge.cls}`}>{badge.label}</span>}
@@ -378,7 +373,7 @@ function RenderContainer({ item, projects, seqIdx }: {
               <Heart className="ml-auto h-3 w-3 text-muted-foreground/20" />
             </div>
           </div>
-        </article></Link>
+        </article></a>
       );
     }
 
@@ -386,8 +381,8 @@ function RenderContainer({ item, projects, seqIdx }: {
     case "C": {
       const isIdea = item.dataSrc === "想法";
       const list = isIdea
-        ? IDEAS.slice(0, 3).map(i => ({ slug: "", title: i.text.slice(0, 20) + "...", sub: i.author, img: "", dot: "#F59E0B", meta: "想法" }))
-        : ps.slice(0, 3).map(p => ({ slug: p.slug, title: p.name, sub: p.tagline, img: p.screenshot, dot: p.stageColor, meta: SN[p.stage] }));
+        ? IDEAS.slice(0, 3).map(i => ({ url: "", title: i.text.slice(0, 20) + "...", sub: i.author, img: "", dot: "#F59E0B", meta: "想法" }))
+        : ps.slice(0, 3).map(p => ({ url: p.url || "", title: p.name, sub: p.tagline, img: p.screenshot, dot: p.stageColor, meta: SN[p.stage] }));
       return (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 h-full">
           {list.map((c, i) => {
@@ -408,7 +403,7 @@ function RenderContainer({ item, projects, seqIdx }: {
                 </div>
               </article>
             );
-            return c.slug ? <Link key={i} href={`/project/${c.slug}`}>{inner}</Link> : <div key={i}>{inner}</div>;
+            return c.url ? <a key={i} href={c.url} target="_blank" rel="noopener noreferrer">{inner}</a> : <div key={i}>{inner}</div>;
           })}
         </div>
       );
@@ -444,7 +439,7 @@ function RenderContainer({ item, projects, seqIdx }: {
       return (
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-0.5 h-full items-center">
           {chips.map(c => (
-            <div key={c.label} className={cn(
+            <div key={c.label} onClick={() => onTopicFilter?.(c.label)} className={cn(
               "shrink-0 flex items-center gap-2 rounded-full pl-1.5 pr-3.5 py-1 border transition-all cursor-pointer",
               isCategory ? "border-primary/12 bg-primary/[0.03] hover:bg-primary/[0.06]" : "border-border/30 bg-card hover:bg-muted/30"
             )}>
@@ -490,7 +485,7 @@ function RenderContainer({ item, projects, seqIdx }: {
           </div>
           <div className="flex-1 space-y-px">
             {list.map((p, i) => (
-              <Link key={p.slug} href={`/project/${p.slug}`} className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 hover:bg-muted/30 transition-colors cursor-pointer">
+              <a key={p.slug} href={p.url || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 hover:bg-muted/30 transition-colors cursor-pointer">
                 <span className="font-latin text-[13px] font-bold text-muted-foreground/20 w-4 text-right shrink-0">{i + 1}</span>
                 <div className="shrink-0 h-8 w-8 rounded-md bg-muted overflow-hidden"><div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${p.screenshot})` }} /></div>
                 <div className="min-w-0 flex-1">
@@ -498,7 +493,7 @@ function RenderContainer({ item, projects, seqIdx }: {
                   <p className="text-[9px] text-muted-foreground/50 truncate">{p.tagline}</p>
                 </div>
                 {p.revenue && <span className="shrink-0 text-[8px] font-medium text-secondary bg-secondary/10 rounded-full px-1.5 py-0.5">{p.revenue}</span>}
-              </Link>
+              </a>
             ))}
           </div>
         </article>
@@ -513,7 +508,7 @@ function RenderContainer({ item, projects, seqIdx }: {
           <h3 className="text-[13px] font-semibold mb-3">{item.dataSrc}</h3>
           <div className="flex gap-2.5 overflow-x-auto no-scrollbar -mr-4 pr-4 flex-1">
             {list.map(p => (
-              <Link key={p.slug} href={`/project/${p.slug}`} className="shrink-0 w-[45%] sm:w-[28%] cursor-pointer group/inner">
+              <a key={p.slug} href={p.url || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 w-[45%] sm:w-[28%] cursor-pointer group/inner">
                 <div className="aspect-[16/10] rounded-lg bg-muted overflow-hidden mb-2">
                   <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover/inner:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
                 </div>
@@ -523,7 +518,7 @@ function RenderContainer({ item, projects, seqIdx }: {
                   <span className="h-[3px] w-[3px] rounded-full" style={{ backgroundColor: p.stageColor }} />
                   <span className="text-[9px] text-muted-foreground">{SN[p.stage]}</span>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
         </article>

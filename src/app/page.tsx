@@ -1,31 +1,31 @@
-import { DynamicGrid } from "./DynamicGrid";
+import { HomeClient } from "./HomeClient";
 import { HeaderSearch } from "./HeaderSearch";
-import { getDataService } from "@/services/data";
-import { getCategoryLabel, revenueRangeOptions, stageColorMap } from "@/config/categories";
+import { loadFeedData } from "@/lib/feed-data";
 import { Plus } from "lucide-react";
 
-export default async function DemoPage() {
-  const ds = getDataService();
-  const { items } = await ds.listProjects({}, { pageSize: 10, sortBy: "newest" });
+export default async function HomePage() {
+  const feedItems = loadFeedData();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const projects = items.map((p: any) => {
-    const metrics = p.metrics as Record<string, { value?: string }> | undefined;
-    const revValue = metrics?.revenueRange?.value;
-    return {
-      slug: String(p.slug),
-      name: String(p.name),
-      tagline: String(p.tagline),
-      screenshot: String(p.screenshots?.[0] ?? ""),
-      stage: String(p.stage),
-      stageColor: String(p.stageColor ?? stageColorMap[p.stage] ?? "#9CA3AF"),
-      revenue: revValue && revValue !== "pre_revenue" ? getCategoryLabel(revenueRangeOptions, revValue) : null,
-      founderType: String(p.founderType),
-      buildEffort: String(p.buildEffort),
-      isEditorsPick: Boolean(p.isEditorsPick),
-      featuredInsight: p.featuredInsight ? String(p.featuredInsight) : undefined,
-    };
-  });
+  // DynamicGrid 需要的 ProjectData 格式 — 直接从 feed 数据转换
+  const projects = feedItems
+    .filter(i => i.kind === "project")
+    .map(i => {
+      const p = i as typeof feedItems[number] & { slug: string; name: string; tagline: string; screenshot: string; stage: string; stageColor: string; topics: string[] };
+      return {
+        slug: p.slug,
+        name: p.name,
+        tagline: p.tagline,
+        screenshot: p.screenshot,
+        url: p.url,
+        stage: p.stage,
+        stageColor: p.stageColor,
+        revenue: p.stage === "revenue" ? "有收入" : null,
+        founderType: "undetermined",
+        buildEffort: "undetermined",
+        isEditorsPick: p.score >= 18,
+        featuredInsight: undefined as string | undefined,
+      };
+    });
 
   return (
     <div className="min-h-screen bg-background">
@@ -42,11 +42,11 @@ export default async function DemoPage() {
       </header>
 
       <main className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-5 pb-24">
-        <DynamicGrid projects={projects} />
+        <HomeClient projects={projects} feedItems={feedItems} />
       </main>
 
       <footer className="border-t border-border/30 py-6 text-center">
-        <p className="text-[11px] text-muted-foreground/30">solobase &middot; customizable home</p>
+        <p className="text-[11px] text-muted-foreground/30">solobase</p>
       </footer>
     </div>
   );
