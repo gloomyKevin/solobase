@@ -85,7 +85,7 @@ const Pass1Schema = z.object({
   inferredProductName:    z.string().nullable(),
   inferredProductUrl:     z.string().nullable(), // 最可能是产品的 URL
   inferredProductOneLiner:z.string().nullable(), // 一句话描述产品是什么
-  inferredProductStage:   z.enum(['idea', 'building', 'launched', 'revenue', 'paused', 'shutdown']).nullable(),
+  inferredProductStage:   z.enum(['idea', 'building', 'launched', 'revenue', 'paused', 'shutdown']).nullable().catch(null),
   inferredMakerName:      z.string().nullable(),
 
   keyMetrics:   z.array(z.string()), // 提到的具体指标（"200付费用户"、"$3k MRR"）

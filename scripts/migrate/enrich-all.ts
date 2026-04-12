@@ -33,16 +33,20 @@ async function runPool<T>(items: T[], concurrency: number, fn: (item: T) => Prom
 }
 
 async function main() {
+  // --limit N：只处理前 N 条（默认全量）
+  const limitArg = process.argv.find(a => a.startsWith('--limit='))
+  const limit = limitArg ? parseInt(limitArg.split('=')[1]) : undefined
+
   // 查询所有待处理记录
-  const pending = await db.query.contentItems.findMany({
+  const fullItems = await db.query.contentItems.findMany({
     where: isNull(schema.contentItems.llmProcessedAt),
-    columns: { id: true, source: true, body: true },
     orderBy: (ci, { asc }) => [asc(ci.crawledAt)],
+    ...(limit ? { limit } : {}),
   })
 
-  const total = pending.length
+  const total = fullItems.length
   console.log(`=== Enrichment Agent 冷启动 ===`)
-  console.log(`待处理: ${total} 条`)
+  console.log(`待处理: ${total} 条${limit ? `（限制 ${limit} 条）` : ''}`)
   console.log(`并发: ${3} 条同时`)
   console.log(`预估成本: ¥${(total * 0.025).toFixed(0)}-${(total * 0.035).toFixed(0)}\n`)
 
@@ -53,12 +57,6 @@ async function main() {
 
   const stats = { archived: 0, pass1_fail: 0, pass2_skip: 0, done: 0, total: 0 }
   const startTime = Date.now()
-
-  // 需要完整的 item，不只是 id，重新查（or 查 id 后再 findFirst）
-  const fullItems = await db.query.contentItems.findMany({
-    where: isNull(schema.contentItems.llmProcessedAt),
-    orderBy: (ci, { asc }) => [asc(ci.crawledAt)],
-  })
 
   await runPool(fullItems, 3, async (item) => {
     try {
