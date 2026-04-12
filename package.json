@@ -10,7 +10,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "migrate:json": "tsx scripts/migrate/from-json.ts",
+    "migrate:json": "node --env-file=.env.local ./node_modules/.bin/tsx scripts/migrate/from-json.ts",
+    "enrich:all": "node --env-file=.env.local ./node_modules/.bin/tsx scripts/migrate/enrich-all.ts",
+    "enrich:media": "node --env-file=.env.local ./node_modules/.bin/tsx scripts/agents/enrich-media.ts",
     "feed:json": "tsx scripts/build-feed.ts",
     "feed:db": "tsx scripts/build-feed.ts --from-db",
     "pipeline:daily": "tsx scripts/pipeline/run.ts && npm run feed:db"

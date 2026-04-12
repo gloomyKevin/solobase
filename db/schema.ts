@@ -109,6 +109,9 @@ export const projects = sqliteTable('projects', {
   description:  text('description'),
   url:          text('url').notNull(),
   urlNormalized:text('url_normalized'), // normalizeUrl(url)，用于 deterministic 去重
+  urlStatus:    text('url_status').default('unknown'),
+  // unknown | live | unreachable | dead
+  urlLastChecked: integer('url_last_checked', { mode: 'timestamp' }),
   screenshot:   text('screenshot'),
   stage:        text('stage'),
   topics:       text('topics', { mode: 'json' }).$type<string[]>(),

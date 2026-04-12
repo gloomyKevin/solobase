@@ -1,6 +1,6 @@
 # Solobase 实施任务清单
 
-> 基于 `data-infra-design.md` v3（2026-04-12）拆解  
+> 基于 `data-infra-design.md` v4（2026-04-13）拆解  
 > 状态：[ ] 待做 · [~] 进行中 · [x] 完成  
 > 当前分支：demo/bento-concept
 
@@ -35,25 +35,10 @@ pnpm add @libsql/client drizzle-orm
 pnpm add -D drizzle-kit
 ```
 
-- [ ] 创建 Turso 数据库：`turso db create solobase`
-- [ ] 配置 `.env.local`：
-  ```
-  DATABASE_URL=libsql://solobase-xxx.turso.io
-  DATABASE_AUTH_TOKEN=xxx
-  DATABASE_URL_LOCAL=file:./local.db   # 本地开发用
-  ```
-- [ ] 创建 `db/client.ts`（本地/远程自动切换）：
-  ```typescript
-  import { createClient } from '@libsql/client'
-  import { drizzle } from 'drizzle-orm/libsql'
-
-  const client = createClient({
-    url: process.env.DATABASE_URL_LOCAL ?? process.env.DATABASE_URL!,
-    authToken: process.env.DATABASE_AUTH_TOKEN,
-  })
-  export const db = drizzle(client, { schema })
-  ```
-- [ ] 创建 `drizzle.config.ts`
+- [ ] 创建 Turso 数据库：`turso db create solobase`（本地开发暂用 file:./local.db）
+- [x] 配置 `.env.local`：`ONE_API_BASE_URL`、`ONE_API_KEY`、`DATABASE_URL_LOCAL`
+- [x] 创建 `db/client.ts`（本地/远程自动切换）
+- [x] 创建 `drizzle.config.ts`
 
 **完成条件**：`npx drizzle-kit studio` 能连上并显示空库
 
@@ -61,23 +46,7 @@ pnpm add -D drizzle-kit
 
 ### 1.2 实现 normalizeUrl 工具函数
 
-- [ ] 创建 `scripts/utils/normalize-url.ts`：
-  ```typescript
-  export function normalizeUrl(raw: string): string {
-    try {
-      const u = new URL(raw)
-      const host = u.hostname.replace(/^www\./, '').toLowerCase()
-      const path = u.pathname.replace(/\/+$/, '').toLowerCase()
-      return `${host}${path}`
-    } catch {
-      return raw.toLowerCase().trim()
-    }
-  }
-  ```
-- [ ] 手动验证边缘用例：
-  - `https://www.Colamd.com/app/` → `colamd.com/app`
-  - `http://colamd.com` → `colamd.com`
-  - `https://github.com/user/repo` → `github.com/user/repo`
+- [x] 创建 `scripts/utils/normalize-url.ts`（三个边缘用例验证通过）
 
 **完成条件**：函数对以上三个用例输出正确结果
 
@@ -85,22 +54,15 @@ pnpm add -D drizzle-kit
 
 ### 1.3 Drizzle Schema 建表
 
-- [ ] 创建 `db/schema.ts`（按 data-infra-design.md 5.2 节完整实现）
-  - content_items（含 `urlNormalized` 字段）
-  - projects（含 `urlNormalized` 字段 + `idxUrlNorm` 索引）
-  - makers
-  - junction tables（content_project_links, content_maker_links, project_maker_links, project_sources）
-  - inference_runs
-  - editorial_actions
-  - submissions（rawInput 使用联合类型，含 claim_request 分支）
-  - maker_auth
-  - product_updates
-  - embeddings（建表，Phase 8 前不写数据）
-  - dedup_candidates
-  - media_cache
-
-- [ ] 运行 `npx drizzle-kit generate && npx drizzle-kit migrate`
-- [ ] 验证：`UNIQUE ON (source, source_id)` 约束存在
+- [x] 创建 `db/schema.ts`（15 张表，含 relations() 声明）
+  - content_items · projects（含 `urlNormalized`）· makers
+  - junction tables · inference_runs · editorial_actions
+  - submissions · maker_auth · product_updates
+  - embeddings · dedup_candidates · media_cache
+- [ ] projects 表补充 `urlStatus` + `urlLastChecked` 字段（v4 新增，见 data-infra-design.md 5.2）
+  - `urlStatus text default 'unknown'`  // unknown | live | unreachable | dead
+  - `urlLastChecked integer (timestamp)`
+- [x] 运行迁移，`UNIQUE ON (source, source_id)` 约束验证通过
 
 **完成条件**：`drizzle-kit studio` 显示所有表，重复 migrate 不报错
 
@@ -108,34 +70,19 @@ pnpm add -D drizzle-kit
 
 ### 1.4 迁移脚本：pipeline_output.json → Turso
 
-- [ ] 创建 `scripts/migrate/from-json.ts`
-- [ ] 读取 `data/pipeline/pipeline_output.json`，批量 upsert `content_items`：
-  - source 映射：jike / v2ex / linuxdo / producthunt
-  - `crawledAt` 从原始时间戳转换
-  - `urlNormalized` 在写入时计算
-  - 默认 `review_status=pending`，`publish_status=unpublished`
-- [ ] 处理 `data/pipeline/cross_matches.json`：为已识别产品创建 `projects` 记录 + `project_sources`
-- [ ] 幂等验证：运行两次，第二次全部命中 UNIQUE 约束（无重复行）
+- [x] 创建并运行 `scripts/migrate/from-json.ts`
+  - 4188 条 content_items 迁移完成，幂等验证通过
+  - feed.json 中的 129 条 projects 也已迁移（已重置为 unpublished，从零开始新架构）
 
-```bash
-npx tsx scripts/migrate/from-json.ts
-# 预期输出：已处理 4188 条，新增 XXXX，跳过（已存在）0
-# 第二次运行：新增 0，跳过 4188
-```
-
-**完成条件**：二次运行幂等，content_items 总数与 pipeline_output.json 行数一致
+**完成条件**：二次运行幂等，content_items 总数与 pipeline_output.json 行数一致 ✅
 
 ---
 
 ### 1.5 build-feed.ts 切换数据源
 
-- [ ] 修改 `scripts/build-feed.ts`：
-  - 从 DB 查询 `projects WHERE publish_status='published' AND entity_status='active'`
-  - 从 DB 查询 `content_items WHERE publish_status='published'`
-  - 保留现有 `FeedProject` / `FeedPost` 输出结构（前端不变）
-- [ ] 降级策略：DB 为空时 fallback 到现有 JSON（过渡期保护）
+- [x] 修改 `scripts/build-feed.ts`：新增 `--from-db` flag，从 DB 读取；DB 为空时 fallback JSON
 
-**完成条件**：运行 `build-feed.ts` 能生成与现有 feed.json 结构一致的输出（即使内容为空）
+**完成条件**：运行 `build-feed.ts --from-db` 能生成结构一致的输出 ✅
 
 ---
 
@@ -155,89 +102,72 @@ npx tsx scripts/migrate/from-json.ts
 
 ### 2.1 one-api 配置
 
-- [ ] 创建 `scripts/config/ai.ts`：
-  ```typescript
-  export const AI_CONFIG = {
-    baseURL: process.env.ONE_API_BASE_URL!,
-    haiku:   'claude-haiku-4-5-20251001',
-    sonnet:  'claude-sonnet-4-6',
-    embedding: 'text-embedding-3-small',
-  }
-  ```
-- [ ] 配置 `.env.local`：`ONE_API_BASE_URL`, `ONE_API_KEY`
-- [ ] 测试：发送一个测试请求，确认 Haiku 和 Sonnet 都可达
+- [x] 创建 `scripts/config/ai.ts`（one-api 路由，Haiku + Sonnet 均已验证可达）
 
-**完成条件**：两个模型各返回一次正确响应
+**完成条件**：两个模型各返回一次正确响应 ✅
 
 ---
 
 ### 2.2 Enrichment Agent — Pass 1（Haiku，分类+提取）
 
-- [ ] 创建 `scripts/agents/enrich.ts`
-- [ ] 实现确定性噪声过滤（NOISE_RULES：招聘/抽奖/转发等）
-  - 命中 → `review_status=archived`，`archiveReason` 记录规则名
-- [ ] 实现 LLM Pass 1（tool_use 模式，强制 JSON）：
-  - 输入：content_item.body + title + authorBio
-  - 输出字段：contentType, confidence, isIndieMaker, inferredProductName,
-    inferredProductUrl, inferredProductOneLiner, inferredProductStage,
-    inferredMakerName, keyMetrics, topics, contentDepth,
-    hasPersonalStory, hasSpecificNumbers, hasGenuineInsight,
-    editorialRec, recReason, concerns
-  - Zod schema 验证所有输出字段
-- [ ] 写 `inference_runs`（append-only）+ 更新 `content_items` 快照字段
-- [ ] 容错：指数退避重试 3 次（1s→2s→4s），失败记录 `parsedOk=false`，不跳过
+- [x] 创建 `scripts/agents/enrich.ts`
+  - 确定性噪声过滤（5条规则）+ Pass 1（Haiku, tool_use + Zod）+ Pass 2（Sonnet）
+  - 关键修复：inferredProductStage 使用 `.catch(null)` 兼容 LLM 越界枚举值
+  - import.meta.url 防止模块副作用（主函数不在 import 时执行）
 
-**完成条件**：对 10 条测试记录跑通，inference_runs 有对应记录，失败记录可重跑
+**完成条件**：50条样本测试通过，include/exclude/review 分类质量确认 ✅
 
 ---
 
 ### 2.3 Enrichment Agent — Pass 2（Sonnet，编辑摘要）
 
-- [ ] 仅对 `editorialRec=include` 或 `editorialRec=review` 的记录运行（约 30%）
-- [ ] 输出：`editorialSummary`，`collectionAngle`
-- [ ] Pass 2 失败降级：`editorialSummary=null`，不影响 Pass 1 结果和队列排序
+- [x] 在 enrich.ts 内实现（仅 rec=include/review 触发，Pass 2 失败降级不阻塞）
 
-**完成条件**：rec=include 的记录有 editorialSummary，rec=exclude 的没有
+**完成条件**：rec=include 的记录有 editorialSummary ✅
 
 ---
 
 ### 2.4 去重候选检测（Phase 1 Deterministic）
 
-- [ ] 在 enrich.ts Step 5 实现：
-  ```typescript
-  const normalized = normalizeUrl(item.inferredProductUrl ?? '')
-  const existing = await db.query.projects.findFirst({
-    where: eq(projects.urlNormalized, normalized)
-  })
-  if (existing) {
-    await db.insert(dedupCandidates).values({
-      itemAId: item.id,
-      itemBId: existing.id,
-      detectionMethod: 'url_normalized',
-      suggestedAction: 'merge',
-      status: 'pending',
-      createdAt: new Date(),
-    }).onConflictDoNothing()
-  }
-  ```
+- [x] 在 enrich.ts Step 5 实现（normalizeUrl 精确匹配 → dedup_candidates）
 
-**完成条件**：已知重复产品（同 URL 不同 source）被写入 dedup_candidates
+**完成条件**：已知重复产品被写入 dedup_candidates ✅
 
 ---
 
 ### 2.5 冷启动全量处理
 
-- [ ] 创建 `scripts/migrate/enrich-all.ts`（批量处理 4188 条，并发限制 5）
-- [ ] 按 `llmProcessedAt IS NULL` 过滤待处理记录
-- [ ] 记录进度（每 100 条打印一次）
-- [ ] 预算监控：累计 token 用量，超过 ¥150 时暂停并提示
+- [x] 创建 `scripts/migrate/enrich-all.ts`（并发 3，`--limit=N` 预览，断点续跑）
+- [~] 冷启动处理中：~179/4320 已完成，50条样本质量确认 OK，待继续跑完剩余
 
 ```bash
-npx tsx scripts/migrate/enrich-all.ts
-# 预期：~4188 条，成功率 >95%，成本 ¥80-130
+npx tsx scripts/migrate/enrich-all.ts          # 全量（~4132 条待处理）
+npx tsx scripts/migrate/enrich-all.ts --limit=50  # 预览用
 ```
 
 **完成条件**：llmProcessedAt 覆盖率 100%，error_rate < 5%
+
+---
+
+### 2.6 媒体富化（enrich-media）
+
+> **前置**：2.5 冷启动完成后执行
+
+- [ ] 创建 `scripts/agents/enrich-media.ts`（对所有 `media IS NULL` 的记录补图）
+- [ ] 三级优先级（见 data-infra-design.md 6.3）：
+  1. `media_raw[0]`（帖子原图，已有，质量最高）
+  2. OG Image 抓取（`fetch` + 解析 `<meta property="og:image">`，存 `media_cache`）
+  3. Microlink 截图（仅 `editorial_rec=include` 记录，节省配额）
+- [ ] 写 `content_items.media` + `content_items.mediaSource`（`post_image` / `og_image` / `screenshot`）
+- [ ] 写 `media_cache` 表（防止重复请求同一 URL，7 天冷却）
+- [ ] 统计：各级来源命中数量，无图（TextCard 降级）数量
+
+```bash
+npx tsx scripts/agents/enrich-media.ts
+# 预期：帖子原图 ~40%，OG image ~35%，无图 ~25%
+```
+
+**完成条件**：include 类内容的 media 覆盖率 > 70%
 
 ---
 
@@ -459,6 +389,22 @@ npx tsx scripts/migrate/enrich-all.ts
 - [ ] 列表：dedup_candidates WHERE status='pending'
 - [ ] 操作：merge（合并两个实体）/ dismiss（确认是不同产品）/ split（撤销误合并）
 - [ ] merge 操作写 editorial_actions（可回退）
+
+---
+
+### 6.4 URL 健康检测 Agent
+
+- [ ] 创建 `scripts/agents/url-health.ts`（每周日凌晨运行）
+- [ ] 对所有 `projects WHERE entity_status IN ('active','unreachable')` 做 HEAD 请求
+- [ ] 状态流转：
+  - 2xx/3xx → `url_status=live`，entity_status 恢复 active
+  - 失败 → 失败计数 +1；连续 ≥3 次 → `url_status=unreachable`，`entity_status=unreachable`
+  - unreachable ≥30 天 → 检查 Wayback Machine；无近期存档 → `url_status=dead`
+- [ ] 写 `projects.urlLastChecked`
+- [ ] 飞书周报附带：新增失联 N 个、恢复 M 个
+- [ ] launchd plist 或 Vercel Cron 调度（每周日 00:00）
+
+**完成条件**：跑一次后 projects 的 urlStatus 字段有值，失联产品被正确标记
 
 ---
 

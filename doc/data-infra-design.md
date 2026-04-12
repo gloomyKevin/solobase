@@ -1,7 +1,7 @@
 # Solobase 数据基础设施设计
 
 > 类型：权威设计文档（supersedes `pipeline-redesign.md`）
-> 版本：v3（2026-04-12，新增：原生输入层、认领流、AI Intake 引擎）
+> 版本：v4（2026-04-13，新增：独立作品收录口径、媒体富化三级策略、URL 生命周期健康检测）
 > 前置：`doc/data system design.md`（概念模型）·`doc/pipeline-redesign.md`（现状诊断）
 
 ---
@@ -46,6 +46,25 @@ Maker 只需要说真实的话。Solobase 的数据模型对他们透明不可�
 ### 1.4 数据系统的终态定位
 
 Solobase 的数据是**中文独立开发者生态的知识基础设施**。网站是第一个消费入口，未来还有 API、MCP Server、Newsletter。数据资产不依附于任何展示形式。
+
+### 1.5 收录范围：独立「作品」而非独立「产品」
+
+平台早期设想以"能独立运行的产品"为核心，实践中发现独立开发者的产出形态远比这丰富：VS Code 插件、Figma 插件、Raycast 扩展、Obsidian 插件、主题包、CLI 工具、npm 库、字体……这些同样是创造力的体现，有真实用户价值，且大量优秀的中文独立开发者正在这些生态中活跃。
+
+**收录口径更新为：任何由独立创作者制作、对使用者有真实价值的数字作品。**
+
+不同类型的作品在数据层用 `content_type` 区分，展示层根据类型渲染不同的关键信息：
+
+| 作品类型 | 关键展示字段 | 用户决策核心 |
+|---------|------------|------------|
+| 独立 SaaS / Web App | 定价、核心功能、用户规模 | 能解决我的问题吗 |
+| 移动 App | App Store 评分/下载量、平台 | iOS / Android？ |
+| 插件 / 扩展 | 宿主平台（VS Code / Figma / Raycast）、安装量 | 我在用这个平台吗 |
+| 开源工具 / CLI | GitHub Stars、维护状态 | 项目还活着吗 |
+| 模板 / 主题 | 预览图、适用框架/平台 | 好看吗？适合我吗 |
+| 字体 / 设计资源 | 授权协议、预览字形 | 商业可用吗 |
+
+Schema 层 `inferred_product_stage` 已覆盖全生命周期，`topics` 已支持 `plugin / cli / open-source / design-resource` 等标签，无需额外迁移。
 
 ---
 
@@ -190,9 +209,12 @@ publish_status（仅 review_status=approved 后可设置）
 
 entity_status
   active      → 正常
+  unreachable → URL 健康检测连续失败（≥3 次），前台降级展示，不下架
   deprecated  → 内容/产品已过期，降低权重
   withdrawn   → 作者要求删除，立即从前台移除
 ```
+
+> **`unreachable` 不等于下架**：独立产品生命周期短，URL 失效是常态而非异常。失效产品仍有历史价值（曾经的创造、技术选择、maker 故事）。前台显示「暂时无法访问 · 最后活跃于 xx」，不从 feed 移除。只有 maker 主动要求（`withdrawn`）或编辑明确判断已无参考价值（`deprecated`）才影响展示权重。
 
 **submissions 专用：**
 
@@ -310,6 +332,12 @@ export const projects = sqliteTable('projects', {
   description:  text('description'),
   url:          text('url').notNull(),
   urlNormalized:text('url_normalized'),  // normalizeUrl(url)，用于 deterministic 去重
+  urlStatus:    text('url_status').default('unknown'),
+  // unknown | live | unreachable | dead
+  // live：最近一次 HEAD 请求返回 2xx/3xx
+  // unreachable：连续 ≥3 次失败（rate limit / timeout / 4xx/5xx），不一定永久死亡
+  // dead：≥30天 unreachable 且 Wayback Machine 也无近期存档
+  urlLastChecked: integer('url_last_checked', { mode: 'timestamp' }),
   screenshot:   text('screenshot'),
   stage:        text('stage'),
   topics:       text('topics', { mode: 'json' }).$type<string[]>(),
@@ -592,7 +620,8 @@ Step 5：去重候选检测
   Phase 1（deterministic）：inferredProductUrl → 查 projects.url
   Phase 2（embedding）：cos_sim > 0.90 → dedup_candidates（候选，不自动合并）
   ↓
-Step 6：媒体富化（Microlink，异步，不阻塞）
+Step 6：媒体富化（异步，不阻塞主流程）
+  策略：三级优先级，逐级降级，不需要每条都成功
   ↓
 进入 Editorial Queue（按 editorial_rec 排序）：
   rec=include conf≥0.85  → 队列最前，深绿标记
@@ -608,7 +637,82 @@ Step 6：媒体富化（Microlink，异步，不阻塞）
 
 Pass 1 使用 Claude Haiku + tool_use 模式，完全避免 JSON 解析错误。Zod 验证所有输出字段。详见 `scripts/agents/enrich.ts`。
 
-### 6.3 容错与降级策略
+### 6.3 媒体富化策略
+
+**冷启动阶段前台必须有可用的展示图**，但没有稳定的第一手图片来源——这是所有内容聚合平台的共同困境。Solobase 采用三级优先级策略，确保绝大多数内容有图可展示：
+
+```
+优先级 1：帖子原图（media_raw）  ← 已有，质量最高
+  ↓ 来源：爬取时保留的社媒帖子图片列表
+  ↓ 特点：maker 精心挑选，往往是产品最佳截图
+  ↓ 处理：取 media_raw[0]（第一张图），存入 content_items.media
+  ↓ 覆盖率：即刻帖子 ~60%、Linux.do ~40%、V2EX ~20% 有配图
+
+优先级 2：OG Image 抓取  ← 最轻量，一个 HTTP 请求
+  ↓ 来源：产品官网/GitHub/App Store 的 og:image meta 标签
+  ↓ 特点：产品方自己设计的宣传图，质量有保障
+  ↓ 处理：HEAD + fetch，提取 <meta property="og:image"> 内容
+  ↓ 存储：media_cache 表（url + ogImage + ogTitle + ogDescription）
+  ↓ 覆盖率：有网站的产品 ~80% 有 OG image
+  ↓ 成本：零（普通 HTTP 请求，不需要第三方服务）
+
+优先级 3：截图服务（Microlink / Playwright）  ← 最后兜底
+  ↓ 来源：对产品 URL 做完整页面渲染截图
+  ↓ 使用条件：前两级均无结果
+  ↓ 成本：Microlink 免费额度 500 req/月，超出后 $9/月
+  ↓ 冷却：同一 URL 失败后 7 天不重试（media_cache.errorReason）
+
+无图兜底：TextCard
+  ↓ 展示：产品名 + tagline + topics 标签，文字排版风格
+  ↓ 不影响发布资格（screenshot=null 不是 blockers）
+```
+
+**媒体富化脚本**（独立于 Enrichment Agent，可单独重跑）：
+
+```typescript
+// scripts/agents/enrich-media.ts
+// 对所有 media IS NULL 且 llmProcessedAt IS NOT NULL 的记录补图
+// 运行：npx tsx scripts/agents/enrich-media.ts
+
+async function enrichMedia(item: ContentItem) {
+  // Step 1：帖子原图
+  const rawMedia: string[] = JSON.parse(item.mediaRaw ?? '[]')
+  if (rawMedia.length > 0) {
+    await db.update(contentItems)
+      .set({ media: rawMedia[0], mediaSource: 'post_image' })
+      .where(eq(contentItems.id, item.id))
+    return
+  }
+
+  // Step 2：OG Image
+  const url = item.inferredProductUrl
+  if (url) {
+    const cached = await db.query.mediaCache.findFirst({
+      where: eq(mediaCache.url, url)
+    })
+    const ogData = cached ?? await fetchOgImage(url)  // fetch + parse <meta>
+    if (ogData?.ogImage) {
+      await db.update(contentItems)
+        .set({ media: ogData.ogImage, mediaSource: 'og_image' })
+        .where(eq(contentItems.id, item.id))
+      return
+    }
+  }
+
+  // Step 3：截图服务（仅 editorial_rec=include 的内容值得花配额）
+  if (item.editorialRec === 'include' && url) {
+    const screenshot = await fetchMicrolinkScreenshot(url)
+    if (screenshot) {
+      await db.update(contentItems)
+        .set({ media: screenshot, mediaSource: 'screenshot' })
+        .where(eq(contentItems.id, item.id))
+    }
+  }
+  // 否则保持 media=null，前端 TextCard 降级
+}
+```
+
+### 6.4 容错与降级策略
 
 LLM 调用失败不是边缘情况，是运行时常态。每一步都需要明确的失败处理：
 
@@ -1326,6 +1430,13 @@ Editorial Digest Agent（每天 07:00 北京时间）
 Publisher Agent（status 变更时触发）
   → 增量 build feed.json → ISR 重建 → 飞书确认
 
+URL Health Check Agent（每周一次，周日凌晨）
+  → 对所有 projects WHERE entity_status IN ('active', 'unreachable') 做 HEAD 请求
+  → 2xx/3xx → url_status=live，entity_status 保持/恢复 active
+  → 失败（timeout/4xx/5xx）→ 失败计数 +1；连续 ≥3 次 → url_status=unreachable，entity_status=unreachable
+  → unreachable 持续 ≥30 天 → 检查 Wayback Machine 近期存档；无存档 → url_status=dead（编辑手动决定是否 deprecated）
+  → 每周汇总：新增失联 N 个，恢复 M 个 → 飞书周报附带
+
 Weekly Review Agent（每周一 09:00）
   → WeeklyMetrics 计算 → 飞书周报
   → override_rate > 25% 时附带 prompt 优化建议
@@ -1403,6 +1514,12 @@ interface WeeklyMetrics {
   dedup_pending: number
   dedup_merged: number
   dedup_split: number                 // 越高说明误合并越多
+
+  // URL 健康
+  url_live_count: number              // urlStatus=live 的产品数
+  url_unreachable_new: number         // 本周新增失联
+  url_recovered: number               // 本周恢复访问
+  url_dead_total: number              // 累计确认死亡
 
   // Feed 健康
   feed_projects: number
