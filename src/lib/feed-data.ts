@@ -51,13 +51,12 @@ export function loadFeedData(): FeedEntry[] {
     kind: "post" as const,
     score: p.score,
     topic: p.type,
-    source: p.source,
+    source: "",
+    slug: p.slug,
     title: p.title,
     body: p.body,
     author: p.author,
     postType: p.type,
-    sourceUrl: p.sourceUrl,
-    engagement: p.engagement,
     topics: p.topics ?? [],
   }));
 
@@ -103,4 +102,39 @@ export function getRelatedProjects(slug: string, limit: number = 4, dimension: "
   }
 
   return candidates.slice(0, limit);
+}
+
+/** Post 详情页 — 按 slug 查找 */
+export function getPostBySlug(slug: string): any | null {
+  const cache = readCache();
+  return cache.posts.find((p: any) => p.slug === slug) ?? null;
+}
+
+/** Post 相关推荐 — 同 topic 的其他 posts */
+export function getRelatedPosts(slug: string, limit: number = 3): any[] {
+  const cache = readCache();
+  const current = cache.posts.find((p: any) => p.slug === slug);
+  if (!current) return [];
+
+  const currentTopics = new Set(current.topics ?? []);
+  return cache.posts
+    .filter((p: any) => p.slug !== slug && (p.topics ?? []).some((t: string) => currentTopics.has(t)))
+    .slice(0, limit);
+}
+
+/** Post 详情页：提取正文中出现的相关产品 */
+export function getRelatedProjectsForPost(postBody: string, limit: number = 3): any[] {
+  const cache = readCache();
+  const bodyLower = postBody.toLowerCase();
+  return cache.projects
+    .filter((p: any) => {
+      const nameLower = (p.name || '').toLowerCase();
+      return nameLower.length >= 3 && bodyLower.includes(nameLower);
+    })
+    .slice(0, limit);
+}
+
+/** 首页 feed 用的 posts 列表 */
+export function loadPostsForFeed(): any[] {
+  return readCache().posts;
 }

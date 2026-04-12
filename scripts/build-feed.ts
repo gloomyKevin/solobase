@@ -41,17 +41,18 @@ interface FeedProject {
 }
 
 interface FeedPost {
-  id: string
-  type: string              // build_log / strategy_insight / ...
+  id: string                 // 内部 pipeline id（不对外暴露）
+  slug: string               // URL 标识：{source_prefix}-{short_id}
+  type: string               // build_log / strategy_insight / ...
   title: string
-  body: string
+  body: string               // 全文，最多 5000 字，已清洗
   author: string
-  source: string
-  sourceUrl: string
+  authorBio: string
   score: number
   engagement: { likes: number; comments: number }
   topics: string[]
   publishedAt: string
+  readingTime: number        // 估算分钟
 }
 
 interface FeedCache {
@@ -300,16 +301,66 @@ function inferStage(body: string): string {
 function inferTopics(body: string): string[] {
   const b = body.toLowerCase()
   const t: string[] = []
-  if (/\bai\b|人工智能|gpt|claude|模型/.test(b)) t.push('AI')
-  if (/出海|global|海外/.test(b)) t.push('出海')
-  if (/开发者|devtool|github|开源/.test(b)) t.push('开发工具')
-  if (/效率|productivity|workflow/.test(b)) t.push('效率')
-  if (/chrome|扩展|extension|插件/.test(b)) t.push('扩展')
-  if (/ios|app store|移动/.test(b)) t.push('App')
+  // 增长 / 冷启动（优先于 AI，独立开发者最关心的维度）
+  if (/冷启动|cold.?start|first.?user|第一批用户|种子用户/.test(b)) t.push('冷启动')
+  if (/seo|搜索优化|自然流量|关键词排名/.test(b)) t.push('SEO')
+  if (/增长|growth|获客|拉新|dau|mau|留存|转化率/.test(b)) t.push('增长')
+  // 变现
+  if (/mrr|月收入|月入|营收|付费用户|revenue|盈利|赚钱|订阅收入/.test(b)) t.push('变现')
+  // 产品思维 / 方法论
+  if (/产品思维|从0到1|方法论|prd|用户调研|需求验证|product.?market.?fit/.test(b)) t.push('产品思维')
+  // 出海
+  if (/出海|global|海外|海外市场|international|overseas/.test(b)) t.push('出海')
+  // AI 工具（后置，避免污染所有帖子）
+  if (/\bai\b|人工智能|大模型|gpt|claude|llm|agent/.test(b)) t.push('AI')
+  // 开发工具
+  if (/开发者工具|devtool|cursor|vscode|开发效率/.test(b)) t.push('开发工具')
+  // 效率
+  if (/效率|productivity|workflow|自动化|automation/.test(b)) t.push('效率')
+  // 设计（\bui\b 加词边界避免 "build"/"guide" 误匹配）
+  if (/设计|design|\bui\b|\bux\b|交互设计|视觉设计/.test(b)) t.push('设计')
+  // App / 移动
+  if (/ios|android|app store|移动端|小程序/.test(b)) t.push('App')
+  // 开源
   if (/开源|open.?source/.test(b)) t.push('开源')
-  if (/saas|订阅/.test(b)) t.push('SaaS')
-  if (/设计|design/.test(b)) t.push('设计')
-  return t.length > 0 ? t.slice(0, 3) : []
+  // SaaS
+  if (/\bsaas\b|订阅制|subscription/.test(b)) t.push('SaaS')
+
+  // 去重后最多取 3 个，优先保留前面的（更独立开发者相关）
+  return [...new Set(t)].slice(0, 3)
+}
+
+// Post 专用：清洗正文（去平台词、@提及、HTML 实体、多余换行）
+function cleanPostBody(text: string): string {
+  return text
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/@[\w\u4e00-\u9fff]+/g, '')
+    .replace(/即友们?|佬友们?|佬们|LDC|龙虾币/g, '')
+    .replace(/https?:\/\/\S+/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/^\s+|\s+$/gm, '')
+    .trim()
+}
+
+// 估算阅读时间（分钟）：中文 300 字/分钟，上限 20 分钟
+function estimateReadingTime(text: string): number {
+  return Math.min(20, Math.max(1, Math.round(text.length / 300)))
+}
+
+// 从 pipeline id 生成 URL-friendly slug
+// jike:abc123def456  →  jike-abc123de
+// linuxdo:12345      →  ld-12345
+function makePostSlug(id: string): string {
+  if (id.startsWith('jike:')) {
+    return 'jike-' + id.slice(5, 13)
+  }
+  if (id.startsWith('linuxdo:')) {
+    return 'ld-' + id.slice(8, 20)
+  }
+  if (id.startsWith('v2ex:')) {
+    return 'v2ex-' + id.slice(5, 16)
+  }
+  return id.replace(/[^a-z0-9-]/gi, '-').slice(0, 20)
 }
 
 function extractTagline(body: string): string {
@@ -474,41 +525,95 @@ function main() {
 
   // ── 精选 Post ──
   console.log('\n精选 Post...')
-  const WORTHY_TYPES = new Set(['build_log', 'revenue_report', 'strategy_insight', 'experience_share', 'failure_postmortem'])
-  const maxPosts = Math.max(Math.floor(projects.length / 4), 5)
+
+  // 扩展类型集：tutorial / tool_recommendation / market_observation / resource_collection 都有价值
+  // other 类用更高分数线（22+）才纳入，避免低质量杂项污染
+  const WORTHY_TYPES = new Set([
+    'build_log', 'revenue_report', 'strategy_insight', 'failure_postmortem',
+    'experience_share', 'tutorial', 'tool_recommendation',
+    'market_observation', 'resource_collection',
+  ])
+  const SCORE_THRESHOLD_DEFAULT = 20
+  const SCORE_THRESHOLD_OTHER = 22   // other 类要求更高
+
+  // 同 topic 最多保留 N 条，防止某个话题刷屏
+  // AI 因为太宽泛给多一些；具体细分 topic 严格限制
+  const MAX_PER_TOPIC: Record<string, number> = {}
+  const DEFAULT_MAX = 4
+  const getTopicMax = (topic: string) => MAX_PER_TOPIC[topic] ?? DEFAULT_MAX
+  const topicCount: Record<string, number> = {}
+
   const posts: FeedPost[] = []
+  const seenPostSlugs = new Set<string>()
 
   for (const item of allItems) {
-    if (posts.length >= maxPosts) break
-    if (item.inferred_type === 'product_launch') continue
-    if (!WORTHY_TYPES.has(item.inferred_type)) continue
-    if ((item.density_score?.total ?? 0) < 18) continue
+    const type = item.inferred_type
+    const score = item.density_score?.total ?? 0
+
+    // 过滤：product_launch 走 Project 通道，不进 Post
+    if (type === 'product_launch') continue
+
+    // 分数线
+    const threshold = type === 'other' ? SCORE_THRESHOLD_OTHER : SCORE_THRESHOLD_DEFAULT
+    if (score < threshold) continue
+
+    // 类型过滤
+    if (!WORTHY_TYPES.has(type) && type !== 'other') continue
+
+    // 正文太短（< 150 字）没有阅读价值
+    const rawBody = item.body || ''
+    if (rawBody.length < 150) continue
+
+    // 无标题的 other 类内容质量不稳定，要求更高分数
+    if (type === 'other' && !item.title && rawBody.length < 400) continue
+
+    // 非独立开发相关内容过滤（运营商教程、金融理财等）
+    if (/德国|O2|SIM|手机卡|保号|开卡|KYC|基金|涨跌幅|盯盘|炒股/.test(rawBody)) continue
+
+    const slug = makePostSlug(item.id)
+    if (seenPostSlugs.has(slug)) continue
+
+    // topic 去重：同主题不超过 MAX_PER_TOPIC 条
+    const topics = inferTopics(rawBody)
+    const primaryTopic = topics[0] || 'other'
+    if ((topicCount[primaryTopic] || 0) >= getTopicMax(primaryTopic)) continue
+
+    topicCount[primaryTopic] = (topicCount[primaryTopic] || 0) + 1
+    seenPostSlugs.add(slug)
+
+    const cleanedBody = cleanPostBody(rawBody)
 
     posts.push({
       id: item.id,
-      type: item.inferred_type,
-      title: item.title || '',
-      body: (item.body || '').slice(0, 500),
+      slug,
+      type,
+      title: (item.title || '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim(),
+      body: cleanedBody.slice(0, 5000),
       author: item.author_name || '',
-      source: item.source || '',
-      sourceUrl: item.source_url || '',
-      score: item.density_score?.total ?? 0,
+      authorBio: (item.author_bio || '').slice(0, 100),
+      score,
       engagement: item.engagement || { likes: 0, comments: 0 },
-      topics: inferTopics(item.body || ''),
+      topics,
       publishedAt: item.published_at || '',
+      readingTime: estimateReadingTime(cleanedBody),
     })
   }
 
-  console.log(`  精选: ${posts.length} 条 (上限: ${maxPosts})`)
+  // 按分数降序，最多取 project 数的 1/3（保证 Product 主导）
+  posts.sort((a, b) => b.score - a.score)
+  const maxPosts = Math.max(Math.floor(projects.length / 3), 10)
+  const finalPosts = posts.slice(0, maxPosts)
+
+  console.log(`  候选: ${posts.length} 条 → 精选: ${finalPosts.length} 条 (上限: ${maxPosts})`)
 
   // ── 输出 ──
   const cache: FeedCache = {
     projects,
-    posts,
+    posts: finalPosts,
     meta: {
       generatedAt: new Date().toISOString(),
       projectCount: projects.length,
-      postCount: posts.length,
+      postCount: finalPosts.length,
       sources: sourceCounts,
     },
   }
@@ -519,7 +624,7 @@ function main() {
   console.log(`\n=== 完成 ===`)
   console.log(`  data/feed.json: ${sizeMB}MB`)
   console.log(`  Project: ${projects.length}`)
-  console.log(`  Post: ${posts.length}`)
+  console.log(`  Post: ${finalPosts.length}`)
   console.log(`  生成时间: ${cache.meta.generatedAt}`)
 }
 

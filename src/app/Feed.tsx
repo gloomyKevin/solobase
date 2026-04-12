@@ -23,12 +23,11 @@ export interface FeedProjectItem extends FeedItem {
 
 export interface FeedPostItem extends FeedItem {
   kind: "post";
+  slug: string;
   title: string;
   body: string;
   author: string;
   postType: string;
-  sourceUrl: string;
-  engagement: { likes: number; comments: number };
   topics: string[];
 }
 
@@ -86,7 +85,7 @@ function ProjectCard({ item, onImageError }: { item: FeedProjectItem; onImageErr
 
 function PostCard({ item }: { item: FeedPostItem }) {
   return (
-    <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" className="group block">
+    <Link href={`/post/${item.slug}`} className="group block">
       <article className="overflow-hidden rounded-xl border border-border/40 bg-[color-mix(in_oklch,var(--accent)_3%,var(--card)_97%)] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 cursor-pointer p-3.5 flex flex-col h-full">
         <div className="flex items-center gap-1.5 mb-2">
           <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-primary/8 text-primary/60 font-medium">{PT[item.postType] || "分享"}</span>
@@ -105,7 +104,7 @@ function PostCard({ item }: { item: FeedPostItem }) {
           )}
         </div>
       </article>
-    </a>
+    </Link>
   );
 }
 

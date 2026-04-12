@@ -12,8 +12,8 @@
       "score": 24,
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "设计",
+        "开源"
       ],
       "author": "AGENT橘",
       "authorBio": "CEO of ColaOS/MarsWave",
@@ -107,7 +107,7 @@
       "score": 23,
       "topics": [
         "AI",
-        "开发工具",
+        "设计",
         "开源"
       ],
       "author": "AGENT橘",
@@ -160,8 +160,8 @@
       "score": 22,
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "效率",
+        "设计"
       ],
       "author": "Simon的白日梦",
       "authorBio": "🧐躺平AI创作者，跨领域研究者，PhD\n‍💼UCL🇬🇧 | 中国美院🇨🇳 | UIBK🇦🇹 外聘导师",
@@ -192,9 +192,9 @@
       "stageColor": "#DB6B25",
       "score": 22,
       "topics": [
-        "AI",
-        "出海",
-        "开发工具"
+        "SEO",
+        "增长",
+        "出海"
       ],
       "author": "Amanda是条狮子鱼",
       "authorBio": "7年产运，自由职业第4年\n手机厂AI语音助手➡️1人运营4家店➡️独立开发\n深度研究100个赚钱的网站3/100\n💡对一切让我自由的事情感兴趣",
@@ -245,8 +245,8 @@
       "stageColor": "#DB6B25",
       "score": 22,
       "topics": [
+        "产品思维",
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "Alchian花生",
@@ -299,7 +299,6 @@
       "score": 22,
       "topics": [
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "艾逗笔",
@@ -342,7 +341,6 @@
       "score": 22,
       "topics": [
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "歸藏",
@@ -395,7 +393,6 @@
       "score": 22,
       "topics": [
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "王老禅头",
@@ -448,8 +445,8 @@
       "score": 21,
       "topics": [
         "AI",
-        "开发工具",
-        "效率"
+        "效率",
+        "设计"
       ],
       "author": "空格_",
       "authorBio": "AI 产品 & 开发丨公号：空格的键盘\n新的认知在分享中形成\nsimple living ，lazy creating",
@@ -491,7 +488,7 @@
       "score": 20,
       "topics": [
         "AI",
-        "开发工具"
+        "效率"
       ],
       "author": "benn",
       "authorBio": "Make good new things.\n前腾讯高级工程师，独立作品：Chatbox[被收购]",
@@ -542,9 +539,9 @@
       "stageColor": "#DB6B25",
       "score": 20,
       "topics": [
-        "AI",
-        "出海",
-        "开发工具"
+        "增长",
+        "产品思维",
+        "出海"
       ],
       "author": "饼干哥哥",
       "authorBio": "10 年数据分析师，现在专注 AI 编程与 agent",
@@ -569,9 +566,7 @@
       "stageColor": "#DB6B25",
       "score": 20,
       "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
+        "AI"
       ],
       "author": "wong2",
       "authorBio": "out of context engineer\nhttps://wong2.me",
@@ -670,9 +665,9 @@
       "stageColor": "#DB6B25",
       "score": 19,
       "topics": [
-        "AI",
+        "SEO",
         "出海",
-        "开发工具"
+        "AI"
       ],
       "author": "饼干哥哥",
       "authorBio": "10 年数据分析师，现在专注 AI 编程与 agent",
@@ -697,7 +692,8 @@
       "stageColor": "#DB6B25",
       "score": 19,
       "topics": [
-        "AI"
+        "AI",
+        "效率"
       ],
       "author": "艾逗笔",
       "authorBio": "keep building.",
@@ -743,8 +739,8 @@
       "stageColor": "#DB6B25",
       "score": 19,
       "topics": [
-        "开发工具",
-        "开源",
+        "增长",
+        "产品思维",
         "设计"
       ],
       "author": "空格_",
@@ -796,7 +792,6 @@
       "stageColor": "#DB6B25",
       "score": 19,
       "topics": [
-        "开发工具",
         "开源"
       ],
       "author": "AGENT橘",
@@ -843,9 +838,8 @@
       "stageColor": "#DB6B25",
       "score": 19,
       "topics": [
-        "开发工具",
-        "开源",
-        "设计"
+        "设计",
+        "开源"
       ],
       "author": "海辛Hyacinth",
       "authorBio": "hyacinth.im\n🎶 AI 创作者\n💃🏽 摇摆舞 🍹 鸡尾酒\n🏠 Demo Inn 上海",
@@ -897,7 +891,7 @@
       "score": 19,
       "topics": [
         "AI",
-        "开发工具",
+        "设计",
         "开源"
       ],
       "author": "艾逗笔",
@@ -923,8 +917,9 @@
       "stageColor": "#DB6B25",
       "score": 19,
       "topics": [
-        "AI",
-        "SaaS"
+        "SEO",
+        "增长",
+        "AI"
       ],
       "author": "Kostja",
       "authorBio": "🤖  AI/产品/出海/运营\n💼  在即刻发工作相关\n🏫  🇷🇺本🇩🇪硕\n个人博客alignify.co/zh分享增长",
@@ -965,7 +960,7 @@
       "stageColor": "#3B9B8B",
       "score": 19,
       "topics": [
-        "开发工具"
+        "变现"
       ],
       "author": "哥飞",
       "authorBio": "搞了一个出海社群，教大家做网站赚美元。\n有四千多人加入了，目前大家满意度还行。\n微信：GeFeiSvip （是大号）\n公众号：哥飞",
@@ -997,7 +992,6 @@
       "score": 18,
       "topics": [
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "歸藏",
@@ -1029,8 +1023,6 @@
       "stageColor": "#DB6B25",
       "score": 18,
       "topics": [
-        "开发工具",
-        "扩展",
         "开源"
       ],
       "author": "MoshiYeap",
@@ -1083,8 +1075,7 @@
       "score": 18,
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "开源"
       ],
       "author": "哥飞",
       "authorBio": "搞了一个出海社群，教大家做网站赚美元。\n有四千多人加入了，目前大家满意度还行。\n微信：GeFeiSvip （是大号）\n公众号：哥飞",
@@ -1125,6 +1116,33 @@
       "publishedAt": "2023-05-26T01:27:36.416Z"
     },
     {
+      "slug": "podwise",
+      "name": "Podwise",
+      "tagline": "终于等到 Podwise CLI 和 官方 Skill 了，我的播客工作流彻底升级了！",
+      "description": "终于等到 Podwise CLI 和 官方 Skill 了，我的播客工作流彻底升级了！\n\n它将 https://podwise.ai 的核心播客智能处理能力完整带入命令行和 AI Agent 工作流，让「听播客」从被动消费真正升级为主动知识消化。\n\n核心能力一览：\n·支持小宇宙、YouTube 及任意播客链接，一键生成结构化输出（摘要、章节拆解、思维导图、高光金句、Q&A）\n·内置多种 Skills：Weekly Recap、周报自动整理、Anki 卡片生成、主题研究、辩论准备等\n·原生支持 Notion、Obsidian、Logseq 一键导出，知识直接进入第二大脑\n·可通过 MCP Server 接入 Claude Desktop、Gemini CLI、Cursor 等主流工具\n\n与小龙虾（OpenClaw）的完美集成：\n只需一行命令即可将 Podwise 能力加入你的 Agent 工作流：\n\n\rnpx skills add hardhackerlabs/podwise-cli\n\n之后，你可以在终端、AI 编辑器或任何支持 Skills 的环境中，直接让小龙虾「吃」播客、提炼洞见、生成素材，极大提升知识管理工作效率。安装与上手（macOS 推荐，3 分钟完成）：\n\n\rbrew tap hardhackerlabs/podwise-tap\nbrew install podwise\n\n或使用一键安装脚本：\n\n\rcurl -sL https://raw.githubusercontent.com/hardhackerlabs/podwise-cli/main/install.sh | sh\n\n安装后执行：\n\rpodwise auth          # 登录 Podwise.ai 账号\npodwise popular       # 查看实时热榜\npodwise process [播客链接]  # 处理单集\n\n项目地址：https://github.com/hardhackerlabs/podwise-cli\n\n我们开发这个工具的初心，就是希望每一位重视知识管理的朋友，都能把优质播客内容真正转化为自己的能力资产。\n\n欢迎大家前往 GitHub Star、安装试用，并给我们反馈意见或提出新功能需求。如果这个工具对你有帮助，欢迎在即刻或 X 上转发分享，让更多人看到。感",
+      "url": "https://podwise.ai",
+      "screenshot": "https://cdnv2.ruguoapp.com/FqEvjRaOQ44JhngJgmMeRsal5Goov3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+      "stage": "launched",
+      "stageColor": "#DB6B25",
+      "score": 17,
+      "topics": [
+        "AI",
+        "开发工具",
+        "效率"
+      ],
+      "author": "Saito",
+      "authorBio": "🌈 创业 10 年，👨‍🚀 现投身硬地骇客 。\n🤨 正在探究这个世界是如何运转。\n✨ 每个人都应该拥有一个小生意。",
+      "source": "jike",
+      "sourceUrl": "https://web.okjike.com/originalPost/69c27b4c13bc7ec3a6294b44",
+      "engagement": {
+        "likes": 16,
+        "comments": 3,
+        "shares": 3
+      },
+      "topComments": [],
+      "publishedAt": "2026-03-24T11:53:48.904Z"
+    },
+    {
       "slug": "jike-calendar",
       "name": "jike-calendar",
       "tagline": "来了！即刻黄历Chrome Extension！",
@@ -1134,10 +1152,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 17,
-      "topics": [
-        "开发工具",
-        "扩展"
-      ],
+      "topics": [],
       "author": "半赫-",
       "authorBio": "不知名程序员",
       "source": "jike",
@@ -1177,9 +1192,9 @@
       "stageColor": "#3B9B8B",
       "score": 17,
       "topics": [
-        "出海",
-        "开发工具",
-        "SaaS"
+        "增长",
+        "变现",
+        "出海"
       ],
       "author": "MiloHan",
       "authorBio": "干中学,  AI Agent  x  Business",
@@ -1230,8 +1245,7 @@
       "stageColor": "#DB6B25",
       "score": 17,
       "topics": [
-        "AI",
-        "开发工具"
+        "AI"
       ],
       "author": "超级峰",
       "authorBio": "👨‍💻AI独立开发者（一人公司，不创业，只创造）\n📱作品：芝士相机（免费榜107名）｜GIF表情包制作大师（200M用户）\n📪全网同名：@超级峰",
@@ -1267,8 +1281,8 @@
       "stageColor": "#3B9B8B",
       "score": 17,
       "topics": [
-        "出海",
-        "SaaS"
+        "增长",
+        "出海"
       ],
       "author": "Indie-Maker-Fox",
       "authorBio": "👋免费社群 mksaas.link/discord\n🔥mksaas.com 和 mkdirs.com\n💰独立开发，2年收入10万美刀",
@@ -1319,7 +1333,8 @@
       "stageColor": "#DB6B25",
       "score": 17,
       "topics": [
-        "AI"
+        "AI",
+        "App"
       ],
       "author": "周阿包",
       "authorBio": "很行一女的，主业是写商业财经的，有个播客《周五摸鱼》\n🪐fake it till you make it",
@@ -1366,7 +1381,6 @@
       "score": 17,
       "topics": [
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "王老禅头",
@@ -1392,7 +1406,7 @@
       "stageColor": "#DB6B25",
       "score": 17,
       "topics": [
-        "开发工具",
+        "AI",
         "开源"
       ],
       "author": "Alchian花生",
@@ -1429,8 +1443,6 @@
       "stageColor": "#DB6B25",
       "score": 16,
       "topics": [
-        "开发工具",
-        "扩展",
         "开源"
       ],
       "author": "BigYe程普",
@@ -1467,8 +1479,7 @@
       "stageColor": "#DB6B25",
       "score": 16,
       "topics": [
-        "开发工具",
-        "扩展",
+        "设计",
         "开源"
       ],
       "author": "D2Projects开源组",
@@ -1505,9 +1516,9 @@
       "stageColor": "#DB6B25",
       "score": 16,
       "topics": [
+        "SEO",
         "AI",
-        "开发工具",
-        "扩展"
+        "开发工具"
       ],
       "author": "D2Projects开源组",
       "authorBio": "Github 开源组织 https://github.com/d2-projects",
@@ -1534,7 +1545,7 @@
       "topics": [
         "AI",
         "开发工具",
-        "扩展"
+        "效率"
       ],
       "author": "apvia.bot",
       "authorBio": "🤖还没睡醒的机器人\n🐰由@Lenvia打理\n➡️https://www.trendproduct.top⬅️",
@@ -1559,6 +1570,7 @@
       "stageColor": "#3B9B8B",
       "score": 16,
       "topics": [
+        "变现",
         "AI"
       ],
       "author": "Saito",
@@ -1674,9 +1686,9 @@
       "stageColor": "#DB6B25",
       "score": 16,
       "topics": [
-        "AI",
         "出海",
-        "开发工具"
+        "AI",
+        "开源"
       ],
       "author": "艾逗笔",
       "authorBio": "keep building.",
@@ -1742,6 +1754,33 @@
       "publishedAt": "2020-03-27T14:14:44.254Z"
     },
     {
+      "slug": "airi",
+      "name": "airi",
+      "tagline": "Github 每日趋势 2026-03-02",
+      "description": "Github 每日趋势 2026-03-02\n\n1. /moeru-ai/airi: Project AIRI 是一个AI虚拟角色项目，旨在创建类似Neuro-sama的智能数字伴侣，具备游戏互动、聊天和多种任务能力.\nhttps://github.com/moeru-ai/airi [⭐️ 20,368]\n\n2. /ruvnet/wifi-densepose: WiFi DensePose 是一个基于WiFi信号的无摄像头人体姿态估计系统，利用CSI数据和机器学习实现实时、隐私保护的多人姿态检测.\nhttps://github.com/ruvnet/wifi-densepose [⭐️ 17,937]\n\n3. /ruvnet/ruflo: Ruflo v3 是一个企业级AI编排平台，支持60+专业代理协同工作，具备自学习、容错共识和企业级安全特性，专为Claude Code设计.\nhttps://github.com/ruvnet/ruflo [⭐️ 17,371]\n\n4. /microsoft/markitdown: MarkItDown 是一个轻量级 Python 工具，专注于将各种文件格式转换为结构化的 Markdown，特别适合用于 LLM 和文本分析管道.\nhttps://github.com/microsoft/markitdown [⭐️ 89,038]\n\n5. /bytedance/deer-flow: DeerFlow 是一个开源超级代理框架，通过编排子代理、内存和沙箱实现多功能任务处理，具备可扩展技能.\nhttps://github.com/bytedance/deer-flow [⭐️ 23,028]\n\n6. /alibaba/OpenSandbox: OpenSandbox 是一个通用 AI 应用沙箱平台，提供多语言 SDK、统一沙箱 API 及 Docker/Kubernetes 运行时，支持代码代理、GUI 代理和 AI 代码执行等场景.\nhttps://github.com/alibaba/OpenSandbox [⭐️ 3,438]\n\n7. /Shubhamsaboo/awesome-llm-apps: Awesome LLM Apps 是一个精选集合，展示使用 RAG、AI 代理、多代理团队等技术构建的 LLM 应用，涵盖多种模型",
+      "url": "https://github.com/moeru-ai/airi",
+      "screenshot": "https://cdnv2.ruguoapp.com/FurzjufTA-9n0BJ3N8Mq9L8_n6Siv3.jpg?imageMogr2/auto-orient/crop/!x3500a0a0",
+      "stage": "launched",
+      "stageColor": "#DB6B25",
+      "score": 16,
+      "topics": [
+        "AI",
+        "效率",
+        "设计"
+      ],
+      "author": "apvia.bot",
+      "authorBio": "🤖还没睡醒的机器人\n🐰由@Lenvia打理\n➡️https://www.trendproduct.top⬅️",
+      "source": "jike",
+      "sourceUrl": "https://web.okjike.com/originalPost/69a4f6a242791259bb0fd0aa",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "topComments": [],
+      "publishedAt": "2026-03-02T02:32:02.267Z"
+    },
+    {
       "slug": "ui-ux",
       "name": "ui-ux",
       "tagline": "在找AI产品经理工作时，你是不是总觉得自己Vibe Coding的作品不精致，拿不出手？",
@@ -1753,7 +1792,6 @@
       "score": 16,
       "topics": [
         "AI",
-        "开发工具",
         "设计"
       ],
       "author": "Zero君聊AI",
@@ -1779,8 +1817,9 @@
       "stageColor": "#3B9B8B",
       "score": 16,
       "topics": [
-        "AI",
-        "效率"
+        "SEO",
+        "变现",
+        "AI"
       ],
       "author": "GPTProto",
       "authorBio": "- 我们聚合了全球顶尖AI模型的API便宜卖\n- 然后顺便还做了几个产品\n- gptproto.com",
@@ -1805,7 +1844,7 @@
       "stageColor": "#DB6B25",
       "score": 16,
       "topics": [
-        "开发工具",
+        "AI",
         "开源"
       ],
       "author": "有无风声",
@@ -1853,8 +1892,7 @@
       "score": 16,
       "topics": [
         "AI",
-        "开发工具",
-        "App"
+        "设计"
       ],
       "author": "AGENT橘",
       "authorBio": "CEO of ColaOS/MarsWave",
@@ -1886,8 +1924,7 @@
       "score": 16,
       "topics": [
         "出海",
-        "开发工具",
-        "SaaS"
+        "效率"
       ],
       "author": "Indie-Maker-Fox",
       "authorBio": "👋免费社群 mksaas.link/discord\n🔥mksaas.com 和 mkdirs.com\n💰独立开发，2年收入10万美刀",
@@ -1913,8 +1950,7 @@
       "score": 16,
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "App"
       ],
       "author": "七鹿AI",
       "authorBio": "做产品就像讲故事！\n 🤝 公号：七鹿AI | V：aiqizilu",
@@ -1939,9 +1975,9 @@
       "stageColor": "#3B9B8B",
       "score": 16,
       "topics": [
-        "AI",
+        "变现",
         "出海",
-        "SaaS"
+        "AI"
       ],
       "author": "林阿福Alfred",
       "authorBio": "长着新疆脸的台湾人但不会讲馕言文\nAI产品工程师｜agent｜ENTJ｜ex Manus\nStay Humble, Stay Foolish",
@@ -1972,9 +2008,8 @@
       "stageColor": "#3B9B8B",
       "score": 16,
       "topics": [
-        "AI",
-        "开发工具",
-        "SaaS"
+        "变现",
+        "AI"
       ],
       "author": "BigYe程普",
       "authorBio": "🌐全栈工程师，出海开发者，Next.js手艺人\n🧑‍💻开源：github.com/weijunext\n📚SaaS全栈模板：nexty.dev",
@@ -2004,7 +2039,9 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 16,
-      "topics": [],
+      "topics": [
+        "AI"
+      ],
       "author": "dexteryy",
       "authorBio": "Web/XR/元宇宙/AI/Web3/游戏开发者。用软件技术超越生物物理的局限。游戏玩家，投资者，热爱奇幻科幻",
       "source": "jike",
@@ -2030,7 +2067,7 @@
       "topics": [
         "AI",
         "开发工具",
-        "扩展"
+        "效率"
       ],
       "author": "apvia.bot",
       "authorBio": "🤖还没睡醒的机器人\n🐰由@Lenvia打理\n➡️https://www.trendproduct.top⬅️",
@@ -2057,7 +2094,7 @@
       "topics": [
         "AI",
         "开发工具",
-        "扩展"
+        "效率"
       ],
       "author": "apvia.bot",
       "authorBio": "🤖还没睡醒的机器人\n🐰由@Lenvia打理\n➡️https://www.trendproduct.top⬅️",
@@ -2084,7 +2121,7 @@
       "topics": [
         "AI",
         "效率",
-        "App"
+        "设计"
       ],
       "author": "Kexin_Maker",
       "authorBio": "I build software I actually want to use.\nhttps://kexin.li",
@@ -2108,9 +2145,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 15,
-      "topics": [
-        "AI"
-      ],
+      "topics": [],
       "author": "JC.",
       "authorBio": "享受过程，想到就去做。\n所有妈妈长命百岁。\n🚢 \nkulikuli.app\npromptknit.com",
       "source": "jike",
@@ -2155,8 +2190,7 @@
       "stageColor": "#DB6B25",
       "score": 15,
       "topics": [
-        "AI",
-        "开发工具"
+        "AI"
       ],
       "author": "糯.米.鸡",
       "authorBio": "一创业公司ai产品 ex美团光年AI产品\n为AI构建它的native产品中🥰",
@@ -2261,7 +2295,6 @@
       "stageColor": "#DB6B25",
       "score": 15,
       "topics": [
-        "开发工具",
         "开源"
       ],
       "author": "空格_",
@@ -2287,7 +2320,7 @@
       "stageColor": "#DB6B25",
       "score": 15,
       "topics": [
-        "开发工具",
+        "AI",
         "开源"
       ],
       "author": "超级峰",
@@ -2339,9 +2372,9 @@
       "stageColor": "#DB6B25",
       "score": 14,
       "topics": [
-        "AI",
         "出海",
-        "开发工具"
+        "AI",
+        "开源"
       ],
       "author": "BigYe程普",
       "authorBio": "🌐全栈工程师，出海开发者，Next.js手艺人\n🧑‍💻开源：github.com/weijunext\n📚SaaS全栈模板：nexty.dev",
@@ -2366,7 +2399,7 @@
       "stageColor": "#3B9B8B",
       "score": 14,
       "topics": [
-        "SaaS"
+        "变现"
       ],
       "author": "小邱很行",
       "authorBio": "🏦金融行业写代码的\n🤖AI出海/独立开发\n📷拍照｜🏋️撸铁｜WLB\n梦想是Coding around the world \n做有意思的垃圾",
@@ -2391,7 +2424,8 @@
       "stageColor": "#DB6B25",
       "score": 14,
       "topics": [
-        "设计"
+        "设计",
+        "App"
       ],
       "author": "磨刀工具",
       "authorBio": "设计师和产品经理的工具箱",
@@ -2422,9 +2456,8 @@
       "stageColor": "#DB6B25",
       "score": 14,
       "topics": [
-        "开发工具",
-        "App",
-        "设计"
+        "设计",
+        "App"
       ],
       "author": "煎蛋吐司",
       "authorBio": "内蒙古呼和浩特人\n前互联网音乐公司运营总监\n干腻了辞职后做过地下俱乐部调酒师，唱片店店长，海南青年社区搭建，目前家里蹲\n黑人音乐迷/足球迷",
@@ -2448,9 +2481,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 14,
-      "topics": [
-        "扩展"
-      ],
+      "topics": [],
       "author": "汐笺",
       "authorBio": "🅙 即刻精神股东；\n沧野光学签约摄影师；\n文章只读结论，写稿收尾潦草，拍照不后期的半吊子；\n微信：otaku_xijian",
       "source": "jike",
@@ -2512,9 +2543,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 14,
-      "topics": [
-        "开发工具"
-      ],
+      "topics": [],
       "author": "落霞孤鹜lxgw",
       "authorBio": "公众号：霞鹜（ID：lxgwshare）\n微博：孤鹜先森  GitHub：lxgw\n小红书同名",
       "source": "jike",
@@ -2539,7 +2568,6 @@
       "score": 14,
       "topics": [
         "AI",
-        "开发工具",
         "效率"
       ],
       "author": "向度之桥",
@@ -2561,32 +2589,6 @@
       "publishedAt": "2025-09-04T06:01:03.359Z"
     },
     {
-      "slug": "hugo-theme-epistle",
-      "name": "hugo-theme-epistle",
-      "tagline": "做了一个以「私人书信」为设计隐喻的 Hugo 博客主题：Epistle （尺素）。",
-      "description": "做了一个以「私人书信」为设计隐喻的 Hugo 博客主题：Epistle （尺素）。\n\n它将博客构想为书桌上的一叠私人信札：\n\n首页是桌上摊开的最新一封信\n\n点击「信匣」可展开历年书信归档\n\n每篇文章都有称谓、正文、祝颂语、署名、日期——如传统中文书信\n\n\"从前的日色变得慢，车、马、邮件都慢...\"\n\n特性：\n\n- 深度集成 赫蹏 (Heti)：自动中西文间距、标点挤压、行间注、诗词/古文/多栏排版等全部版式能力均通过 \nshortcode 开箱即用\n\n- 五款信纸：白纸蓝墨 / 暖笺 / 晴空 / 夜信 / 春笺\n\n- 楷体标题：文章标题使用楷体，营造手写感\n\n- 信笺索引：右侧「信匣」按钮，抽屉式展开归档\n\n- 轻量无依赖：纯原生 CSS/JS，无框架负担\n\nhttps://github.com/yibie/hugo-theme-epistle",
-      "url": "https://github.com/yibie/hugo-theme-epistle",
-      "screenshot": "https://cdnv2.ruguoapp.com/FtRETOB2ETVRVz56Tz7IxArj6RlEv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
-      "stage": "launched",
-      "stageColor": "#DB6B25",
-      "score": 14,
-      "topics": [
-        "开发工具",
-        "设计"
-      ],
-      "author": "Yibie",
-      "authorBio": "用好奇心行走江湖\n以热爱行侠仗义",
-      "source": "jike",
-      "sourceUrl": "https://web.okjike.com/originalPost/69aaba7f800201ac6851eeed",
-      "engagement": {
-        "likes": 8,
-        "comments": 0,
-        "shares": 0
-      },
-      "topComments": [],
-      "publishedAt": "2026-03-06T11:29:03.547Z"
-    },
-    {
       "slug": "excalidraw-collaboration",
       "name": "excalidraw-collaboration",
       "tagline": "Excalidraw Collabration 发了新版 v0.18.0。",
@@ -2596,9 +2598,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 14,
-      "topics": [
-        "开发工具"
-      ],
+      "topics": [],
       "author": "alswl",
       "authorBio": "Code Monkey // Senior YAML Editor // 擅长江浙菜 // 公众号 窥豹",
       "source": "jike",
@@ -2623,8 +2623,7 @@
       "score": 13,
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "开源"
       ],
       "author": "姜sir在云南",
       "authorBio": "喜欢思考各种问题的INTJ",
@@ -2649,9 +2648,7 @@
       "stageColor": "#F59E0B",
       "score": 13,
       "topics": [
-        "效率",
-        "扩展",
-        "SaaS"
+        "效率"
       ],
       "author": "凯凯刘",
       "authorBio": "IndieMaker http://liujinkai.com",
@@ -2692,8 +2689,7 @@
       "stageColor": "#DB6B25",
       "score": 13,
       "topics": [
-        "AI",
-        "扩展"
+        "AI"
       ],
       "author": "张翼Joey",
       "authorBio": "程序员，创业者\n前美团技术专家\nzyi1024.com",
@@ -2744,8 +2740,8 @@
       "score": 13,
       "topics": [
         "AI",
-        "SaaS",
-        "设计"
+        "设计",
+        "SaaS"
       ],
       "author": "BigYe程普",
       "authorBio": "🌐全栈工程师，出海开发者，Next.js手艺人\n🧑‍💻开源：github.com/weijunext\n📚SaaS全栈模板：nexty.dev",
@@ -2795,10 +2791,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 13,
-      "topics": [
-        "开发工具",
-        "扩展"
-      ],
+      "topics": [],
       "author": "小有哥",
       "authorBio": "分享有趣、有用的东西，帮助他人，成就自己。",
       "source": "jike",
@@ -2821,7 +2814,9 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 13,
-      "topics": [],
+      "topics": [
+        "开发工具"
+      ],
       "author": "zhijie",
       "authorBio": "Less sure about everything",
       "source": "jike",
@@ -2908,7 +2903,7 @@
       "score": 13,
       "topics": [
         "AI",
-        "开发工具"
+        "App"
       ],
       "author": "zhubaining",
       "authorBio": "",
@@ -2934,8 +2929,7 @@
       "score": 13,
       "topics": [
         "AI",
-        "效率",
-        "扩展"
+        "效率"
       ],
       "author": "AI工具派",
       "authorBio": "探索最新AI工具，发现AI带来的无限可能性！\n公众号/小红书：AI工具派\n😄感谢关注♡欢迎一起讨论",
@@ -2961,8 +2955,8 @@
       "score": 12,
       "topics": [
         "AI",
-        "开发工具",
-        "效率"
+        "效率",
+        "设计"
       ],
       "author": "林仔.",
       "authorBio": "",
@@ -2988,8 +2982,8 @@
       "score": 12,
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "效率",
+        "开源"
       ],
       "author": "Simon的白日梦",
       "authorBio": "🧐躺平AI创作者，跨领域研究者，PhD\n‍💼UCL🇬🇧 | 中国美院🇨🇳 | UIBK🇦🇹 外聘导师",
@@ -3014,9 +3008,7 @@
       "stageColor": "#DB6B25",
       "score": 12,
       "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
+        "AI"
       ],
       "author": "汤姆CC的AI工具箱",
       "authorBio": "00后在校大学生\n专注于各种有趣高效工具挖掘\nAI爱好者&喜欢折腾",
@@ -3046,10 +3038,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 12,
-      "topics": [
-        "开发工具",
-        "扩展"
-      ],
+      "topics": [],
       "author": "敖特_Aute",
       "authorBio": "AI startup founder\nEx 美团/光年之外 PM\n\nContext is everything",
       "source": "jike",
@@ -3073,6 +3062,7 @@
       "stageColor": "#3B9B8B",
       "score": 12,
       "topics": [
+        "变现",
         "设计"
       ],
       "author": "鱼总聊AI",
@@ -3119,6 +3109,7 @@
       "stageColor": "#3B9B8B",
       "score": 12,
       "topics": [
+        "变现",
         "设计"
       ],
       "author": "Lessimore",
@@ -3167,8 +3158,8 @@
       "stageColor": "#F59E0B",
       "score": 12,
       "topics": [
-        "AI",
-        "出海"
+        "出海",
+        "AI"
       ],
       "author": "欧阳葵",
       "authorBio": "",
@@ -3199,7 +3190,6 @@
       "stageColor": "#DB6B25",
       "score": 12,
       "topics": [
-        "开发工具",
         "效率",
         "开源"
       ],
@@ -3239,6 +3229,29 @@
       "publishedAt": "2026-04-09T08:13:47.579Z"
     },
     {
+      "slug": "hugo-theme-epistle",
+      "name": "hugo-theme-epistle",
+      "tagline": "https://github.com/yibie/hugo-theme-epistle 主题升级了，感觉质感强了很多",
+      "description": "https://github.com/yibie/hugo-theme-epistle 主题升级了，感觉质感强了很多",
+      "url": "https://github.com/yibie/hugo-theme-epistle",
+      "screenshot": "https://cdnv2.ruguoapp.com/FoJRP-ESg_b_YKxH1wG_KBe5CfLKv3.png?imageMogr2/auto-orient/thumbnail/1500x2000%3E",
+      "stage": "launched",
+      "stageColor": "#DB6B25",
+      "score": 12,
+      "topics": [],
+      "author": "Yibie",
+      "authorBio": "用好奇心行走江湖\n以热爱行侠仗义",
+      "source": "jike",
+      "sourceUrl": "https://web.okjike.com/originalPost/69cf32de800201ac68a28ee0",
+      "engagement": {
+        "likes": 9,
+        "comments": 2,
+        "shares": 0
+      },
+      "topComments": [],
+      "publishedAt": "2026-04-03T03:24:14.661Z"
+    },
+    {
       "slug": "uxagent",
       "name": "Uxagent",
       "tagline": "节前最后一个工作日，我们的UX Agent正式发布，专门针对出海的SaaS和品牌独立站，通过AI Agent分析Session Replay，发现产品体验问题和",
@@ -3249,9 +3262,9 @@
       "stageColor": "#DB6B25",
       "score": 11,
       "topics": [
-        "AI",
+        "增长",
         "出海",
-        "SaaS"
+        "AI"
       ],
       "author": "桑文锋SensorsData",
       "authorBio": "",
@@ -3275,9 +3288,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 11,
-      "topics": [
-        "开发工具"
-      ],
+      "topics": [],
       "author": "Sawana",
       "authorBio": "最近正在: AI导航站 www.SeeWhatNewAI.com\n商科专业，独立开发是爱好🔑\nX: @HSawana9",
       "source": "jike",
@@ -3351,8 +3362,7 @@
       "stageColor": "#DB6B25",
       "score": 11,
       "topics": [
-        "开发工具",
-        "扩展",
+        "设计",
         "开源"
       ],
       "author": "是汤圆吖ooooooooo",
@@ -3378,9 +3388,8 @@
       "stageColor": "#DB6B25",
       "score": 10,
       "topics": [
-        "开发工具",
-        "开源",
-        "设计"
+        "设计",
+        "开源"
       ],
       "author": "开源星探",
       "authorBio": "💫 专注于AIGC分享。",
@@ -3405,9 +3414,9 @@
       "stageColor": "#DB6B25",
       "score": 10,
       "topics": [
-        "开发工具",
-        "App",
-        "SaaS"
+        "SEO",
+        "设计",
+        "App"
       ],
       "author": "Kevin不会写代码",
       "authorBio": "🧰大厂裸辞独立开发者\n🙈全网最低价中转api『CheapGpt』\n🔥AI出海工具站『节点导航站』\n🎉开源一站式出海AI模板『nuxtpro』",
@@ -3480,7 +3489,6 @@
       "stageColor": "#DB6B25",
       "score": 10,
       "topics": [
-        "开发工具",
         "设计"
       ],
       "author": "龙爪槐守望者",
@@ -3506,7 +3514,6 @@
       "stageColor": "#DB6B25",
       "score": 10,
       "topics": [
-        "开发工具",
         "开源"
       ],
       "author": "加伊jk",
@@ -3532,8 +3539,7 @@
       "stageColor": "#DB6B25",
       "score": 10,
       "topics": [
-        "开发工具",
-        "扩展"
+        "开发工具"
       ],
       "author": "BHznJNs",
       "authorBio": "一个穷学生，一个编程爱好者",
@@ -3558,7 +3564,7 @@
       "stageColor": "#DB6B25",
       "score": 9,
       "topics": [
-        "开发工具"
+        "AI"
       ],
       "author": "溪河",
       "authorBio": "在做「观猹」\n我有 token，你有好项目吗？",
@@ -3583,6 +3589,7 @@
       "stageColor": "#DB6B25",
       "score": 9,
       "topics": [
+        "SEO",
         "出海"
       ],
       "author": "Jeff林树",
@@ -3608,7 +3615,6 @@
       "stageColor": "#DB6B25",
       "score": 9,
       "topics": [
-        "开发工具",
         "开源"
       ],
       "author": "张小吉",
@@ -3682,9 +3688,7 @@
       "stageColor": "#DB6B25",
       "score": 9,
       "topics": [
-        "AI",
-        "开发工具",
-        "App"
+        "AI"
       ],
       "author": "AI有话说",
       "authorBio": "浙大->大厂算法🤡\n独立开发者👿\n分享AI资讯，加速AI落地🤠\n微博 小红书同名",
@@ -3708,10 +3712,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 9,
-      "topics": [
-        "AI",
-        "开发工具"
-      ],
+      "topics": [],
       "author": "AI有话说",
       "authorBio": "浙大->大厂算法🤡\n独立开发者👿\n分享AI资讯，加速AI落地🤠\n微博 小红书同名",
       "source": "jike",
@@ -3736,8 +3737,8 @@
       "score": 9,
       "topics": [
         "AI",
-        "开发工具",
-        "App"
+        "效率",
+        "设计"
       ],
       "author": "AI有话说",
       "authorBio": "浙大->大厂算法🤡\n独立开发者👿\n分享AI资讯，加速AI落地🤠\n微博 小红书同名",
@@ -3762,7 +3763,6 @@
       "stageColor": "#DB6B25",
       "score": 9,
       "topics": [
-        "开发工具",
         "开源"
       ],
       "author": "alswl",
@@ -3813,9 +3813,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 9,
-      "topics": [
-        "开发工具"
-      ],
+      "topics": [],
       "author": "加伊jk",
       "authorBio": "",
       "source": "jike",
@@ -3862,9 +3860,7 @@
       "stageColor": "#DB6B25",
       "score": 8,
       "topics": [
-        "开发工具",
-        "效率",
-        "扩展"
+        "效率"
       ],
       "author": "西梦",
       "authorBio": "🥳前端，Web3D，数据可视化\n🧐独立应用全干工程师\n😃喜欢尝试新奇的事物\n😘分享有趣的工具和资源",
@@ -3987,7 +3983,6 @@
       "stageColor": "#DB6B25",
       "score": 8,
       "topics": [
-        "开发工具",
         "开源"
       ],
       "author": "Johan约翰",
@@ -4013,9 +4008,9 @@
       "stageColor": "#DB6B25",
       "score": 8,
       "topics": [
-        "AI",
+        "SEO",
         "出海",
-        "效率"
+        "AI"
       ],
       "author": "lickfeng",
       "authorBio": "Ai编程爱好者，喜欢捣鼓捣鼓，正在学习谷歌seo，目标做出海产品",
@@ -4064,9 +4059,7 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 8,
-      "topics": [
-        "开发工具"
-      ],
+      "topics": [],
       "author": "前端之虎陈随易",
       "authorBio": "农村程序员，独立开发者，前端之虎。\n公众号：陈随易\n博客：https://chensuiyi.me\n作品：VSCode扩展👉fnMap",
       "source": "jike",
@@ -4114,7 +4107,6 @@
       "score": 8,
       "topics": [
         "AI",
-        "开发工具",
         "开源"
       ],
       "author": "dexteryy",
@@ -4139,7 +4131,9 @@
       "stage": "launched",
       "stageColor": "#DB6B25",
       "score": 8,
-      "topics": [],
+      "topics": [
+        "SEO"
+      ],
       "author": "张翼Joey",
       "authorBio": "程序员，创业者\n前美团技术专家\nzyi1024.com",
       "source": "jike",
@@ -4156,12 +4150,12 @@
   "posts": [
     {
       "id": "linuxdo:1495172",
+      "slug": "ld-1495172",
       "type": "strategy_insight",
       "title": "分享给 Java 开发者的 Claude Code Rules & Skills",
-      "body": "分享给 Java 开发者的 Claude Code Rules & Skills\n\n分享给 Java 开发者的 Claude Code Rules &amp; Skills\nClaude Code 上下文的完整加载机制\n\n\n\n\n优先级\n路径\n说明\n\n\n\n\n1\n企业策略\n/Library/Application Support/ClaudeCode/CLAUDE.md (macOS)\n\n\n2\n项目规则\n./.claude/rules/*.md（递归扫描）\n\n\n3\n项目内存\n./CLAUDE.md 或 ./.claude/CLAUDE.md\n\n\n4\n本地项目内存\n./CLAUDE.local.md（gitignore，个人配置）\n\n\n5\n用户内存\n~/.claude/CLAUDE.md\n\n\n6\n用户规则\n~/.claude/rules/*.md（递归扫描）\n\n\n\n优先级规则\n\n项目规则 &gt; 用户规则（冲突时项目规则覆盖全局）\n支持子目录组织：~/.claude/rules/frontend/*.md 也会被递归发现\n\nClaude Code 的代码编写规范限制\n从上面的加载机制中，可",
+      "body": "分享给 Java 开发者的 Claude Code Rules & Skills分享给 Java 开发者的 Claude Code Rules & Skills\nClaude Code 上下文的完整加载机制优先级\n路径\n说明1\n企业策略\n/Library/Application Support/ClaudeCode/CLAUDE.md (macOS)2\n项目规则\n./.claude/rules/*.md（递归扫描）3\n项目内存\n./CLAUDE.md 或 ./.claude/CLAUDE.md4\n本地项目内存\n./CLAUDE.local.md（gitignore，个人配置）5\n用户内存\n~/.claude/CLAUDE.md6\n用户规则\n~/.claude/rules/*.md（递归扫描）优先级规则项目规则 > 用户规则（冲突时项目规则覆盖全局）\n支持子目录组织：~/.claude/rules/frontend/*.md 也会被递归发现Claude Code 的代码编写规范限制\n从上面的加载机制中，可以很快地出结论，可以将我们的某类开发语言(Go / Java / Vue)的规范放到项目规则或项目内存中\n所以我就会把我的我的规范 md 放到项目的 .claude/rules 文件夹中(其实也可以放到全局的规则文件夹中，我一开始也是放到全局规则文件夹中，后面项目多了才放到项目规则文件夹中)，得到如下\nimage-202601211501544521138×594 40.5 KB\n放入后，重启一下 Claude Code，然后使用 /memory 查看一下，有没有加载到你添加的规则文件\nimage-202601211626335071606×750 71.6 KB\n可以参考的 java-spring 规范 md，都是用 Claude Code 以来，很多 CC 不怎么遵守的，根据自己的项目与实际情况微调一下\nimage-20260121151553690692×1596 41.5 KB\n规则 Gists:\n为什么不用 Skill 做代码编写规范?\n确实使用 skill 更符合现在的方向，减少使用 tokens 以及上下文占用，\n但是 skill 的调用如果是自动调用的情况下，不管是 opus 或者 sonnet 都会选择性执行(模型要想偷懒)，触发都是不稳定的，除非显式地在 prompts 中说明调用，但是 prompts 中我们更多是跟模型对话一整个功能的实现，很少会说：帮我修改 xx 类 / 帮我优化一下这个类的代码\n所以我选择把这个 skill 做成一个代码审查的操作，然后每次代码完成输出后，显式地调用这个 skill 进行审查\n按照这样的格式构建 skill 文件夹 java-review, 文件夹放入 SKILL.md，得到如下：\nimage-20260121154513947728×1484 107 KB\n显式执行效果：\nimage-202601211606463232440×1356 437 KB\nskill Gists:\nhook 函数\nskill 的方式始终触发不稳定情况，可以添加一个 hook 函数，让 Claude Code 再每次执行了新增/修改操作的工具时收到一个提示(也可以放到 git 提交的时候触发，根据自己实际情况修改)，修改到了 java 代码，需要执行 java-review 进行规范审查，不过最终模型也会根据这个修改的文件复杂程度来决定是否触发这个 skill (简而言之就是想省事一点)\n修改配置文件： ~/.claude/setting.json，补充一下这个 PostToolUse 的\n\"hooks\": {\n\"PostToolUse\": [\n{\n\"hooks\": [\n{\n\"command\": \"filepath=\\\"$CLAUDE_FILE_PATH\\\"; if [[ \\\"$filepath\\\" == *.java ]]; then echo '⚠️ [Java文件修改] 建议执行 /java-review 进行代码审查'; fi\",\n\"type\": \"command\"\n}\n],\n\"matcher\": \"Edit|Write|MultiEdit\"\n}\n]\n}效果：\nimage-202601211604593813364×860 339 KB\nclaude-code-guide Agent 的妙用\n这个子 Agent 是 Claude Code 内置的指导使用 Claude Code 的代理，有很多我不明白怎么使用 Claude Code 的地方我都会使用这个代理进行分析\n比如：配置 Hook 的环境变量不生效，提问解决\nimage-202601211614223441956×1192 377 KB插件配置问题导致启动失败(claude-mem)\nimage-202601211616449421736×1748 401 KB对于配置和使用 Claude Code 方面，相关的问题还是十分好解决的，只能说 A/ 在护城河这方面真的做得挺好的",
       "author": "lostsheep",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1495172",
+      "authorBio": "",
       "score": 26,
       "engagement": {
         "likes": 282,
@@ -4169,122 +4163,126 @@
         "shares": 0
       },
       "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
+        "AI"
       ],
-      "publishedAt": "2026-01-21T08:32:11.334Z"
+      "publishedAt": "2026-01-21T08:32:11.334Z",
+      "readingTime": 7
     },
     {
-      "id": "linuxdo:1813085",
-      "type": "build_log",
-      "title": "使用零刻mini主机/群晖/Macmini 用docker部署openclaw详细方法以及遇到的错误处理",
-      "body": "使用零刻mini主机/群晖/Macmini 用docker部署openclaw详细方法以及遇到的错误处理\n\n\n群晖的部署遇到挺多问题的整理下给大家一个喂饭部署教程以及一些遇到的问题总结，都是这段时间一点一点部署修改得出来的一些经验，目前整理了群晖和Mac部署的，以后有零刻再更新零刻的部署方法\n\n黑群晖/群晖部署\n\n先下载文件\n拉取文件 先进入ssh终端\n\n\nsudo -i 输入密码\ncd到需要部署的目录下 如：cd /volume2/docker_m2/openClaw 然后输入\n\ngit clone https://github.com/openclaw/openclaw.git\n截屏2026-03-26 19.44.511292×286 50.6 KB\n文件就会下载到 /volume2/docker_m2/openClaw/叫openclaw的文件\n或者去github下载\nopenclaw官方原版\n下载后上传到需要部署的文件夹里面解压\n\n建议文件夹名称加上版号 如 -2026.3.24\n\n截屏2026-03-26 19.45.49440×590 14.7 KB\n接着这就是群晖容易遇",
-      "author": "calm66",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1813085",
-      "score": 23,
+      "id": "jike:69c900419f3cd84f65727e61",
+      "slug": "jike-69c90041",
+      "type": "market_observation",
+      "title": "",
+      "body": "MarkDown 已经成为我的生活中最重要的文件格式了。\nTypora 虽然是非常好的 MD 编辑器，但是有个很大的痛点：\n每次 Agent 改完文件，都要手动关掉再打开才能看到变化。\n这个操作一天要重复几十次，很烦。今天决定自己解决这个问题，开发了一个新的编辑器 ColaMD：\nAgent 在后台改你的 .md 文件，你眼前的内容实时刷新。\n就像是在看 Agent 现场写作，体验彻底改变。相比其他编辑器的 区别？\n- Obsidian 功能强大但太重了，我只是想看一个 .md 文件，不需要打开一整个知识库。\n- Typora 是我用过体验最好的编辑器，但它不支持文件被外部修改后实时刷新\n- 其他付费软件，Markdown 是一个基础格式，免费的编辑器也应该更加普及。所以 ColaMD 的定位就是：\n一个轻量的、免费的、为 Agent 时代设计的 Markdown 编辑器。\n没有文件管理，没有知识库，没有插件系统，没有 AI 功能。对了，icon 设计了 20 版，最后选了一个极简的版本，希望你能喜欢。MIT 开源，免费，macOS / Windows / Linux 都能用。GitHub 地址：好记的域名：",
+      "author": "AGENT橘",
+      "authorBio": "CEO of ColaOS/MarsWave",
+      "score": 24,
       "engagement": {
-        "likes": 24,
-        "comments": 23,
-        "shares": 0
+        "likes": 110,
+        "comments": 15,
+        "shares": 23
       },
       "topics": [
         "AI",
-        "开发工具",
-        "扩展"
+        "设计",
+        "开源"
       ],
-      "publishedAt": "2026-03-25T09:06:10.953Z"
+      "publishedAt": "2026-03-29T10:34:41.922Z",
+      "readingTime": 2
     },
     {
-      "id": "linuxdo:1667136",
-      "type": "build_log",
-      "title": "【排障】OpenClaw 接中转站常见坑与解决方案",
-      "body": "【排障】OpenClaw 接中转站常见坑与解决方案\n\n用 OpenClaw 接自定义中转站（NewAPI / OneAPI 等），配置看着没问题但就是不work，这篇整理了几个高频踩坑点和对应的解决方案，都是实战中一个个排出来的。\n最近有点缺LDC，佬们如果觉得有用务必给我点一个赞谢谢\n建议扔给CC/龙虾让它给你修复\n\n1. 403 被拦\n症状\nprovider 配好了，curl 直接请求中转站 API 完全正常（200），但 OpenClaw 发出去就是 403 Your request was blocked。\n原因\nOpenClaw 底层用的 @anthropic-ai/sdk，发请求时会带上官方 SDK 的 User-Agent：\nUser-Agent: Anthropic/JS 0.73.0\n\n很多中转站（特别是套了 Cloudflare 或自带 WAF 的）会直接拦截带官方 SDK 特征的 UA。OpenAI/JS 同理。\n验证方法\n# 带 SDK UA → 403\ncurl -H \"User-Agent: Anthropic/JS 0.73.0\" \\\n     -H \"x",
-      "author": "一念",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1667136",
+      "id": "jike:69ca2ade9f3cd84f658ced04",
+      "slug": "jike-69ca2ade",
+      "type": "other",
+      "title": "",
+      "body": "大家好（紧张Vibe Coding 了一段时间，跟我有联系的朋友都知道我同时在 Code 好多个项目。3月初在湾区见了个创始人朋友，一见面我们就在说最近沉迷 Coding，因此有了下面这个项目👇🏻Agentboard，极其简单地理解，这是一个 Coding 的微信运动排行榜，可以看你 Coding 的时长、烧掉的 token、写过多少行代码但是我们的 CLI collector 并不会收集你的会话信息、代码内容和文件内容。整个机制是 CLI collector 在本地做聚合，只会把统计数字进行上传和落库，所以请大家安心服用！不会有任何数据风险！我看不到你的代码和会话！这个产品我很满意，尤其是在整体的视觉和分享卡片的设计上，我花了很长时间跟 Claude Code 磨合，欢迎所有对自己 Coding 数据好奇的朋友试用嘿嘿（目前仅支持 Claude Code 和 Codex ），俺烧掉的 token 数是 4.83 Billion🫡🔗链接：",
+      "author": "yanjun",
+      "authorBio": "seeking alpha",
       "score": 23,
       "engagement": {
-        "likes": 531,
-        "comments": 164,
+        "likes": 172,
+        "comments": 134,
+        "shares": 74
+      },
+      "topics": [
+        "AI",
+        "设计"
+      ],
+      "publishedAt": "2026-03-30T07:48:46.105Z",
+      "readingTime": 1
+    },
+    {
+      "id": "linuxdo:1722987",
+      "slug": "ld-1722987",
+      "type": "tool_recommendation",
+      "title": "分享一下 OpenClaw 多 Agent、多账户怎么配",
+      "body": "分享一下 OpenClaw 多 Agent、多账户怎么配85a64d8835daa2a5aff5954f9971ed4c800×1071 81.9 KB省流：可以查看最后面的提示词，发送给AI工具可以一键获取完整配置先讲一些 OpenClaw 的多Agent、多账户配置概念，文章最后有完整样例。很多人在开始做 OpenClaw 多机器人接入时，都会遇到同一类问题：我明明配了两个机器人，为什么它们还像共用一个脑子？\n我已经配了多账户，为什么记忆、人格、workspace 还是混在一起？\ndmScope、bindings、agents.list、accounts 到底谁管谁？这些问题的根源，是没有先分清 “会话隔离” 和 “机器人隔离” 是两回事。\n一句话先说结论\n只记住一句话，那就是：多账户不等于多 Agent，dmScope 也不等于 Agent 隔离。更准确一点说：channels.<channel>.accounts 决定这个渠道挂了几个账号\nagents.list 决定系统里有几个真正独立的 Agent\nbindings 决定某个账号或会话最终进哪个 Agent\nsession.dmScope 只决定私聊历史怎么分桶，避免串会话很多“明明配了多个机器人却还是串线”的问题，基本都能归结到这里。\n先看效果：GitHub - BytePioneer-AI/clawmate: 为 OpenClaw 添加一个有温度的角色伴侣。 · GitHub\nGitHub - BytePioneer-AI/openclaw-china: OpenClaw中国插件：支持飞书，钉钉，QQ，企业微信，微信 · GitHubimage1080×692 83.4 KB\n先把四个核心概念和配置职责讲明白\n1. Agent 是“脑”\n在 OpenClaw 里，一个 agent 不是一个简单标签，而是一套完整隔离的运行单元，通常意味着：独立 workspace\n独立 session store所以，不同 agentId 本质上就是不同人格、不同记忆、不同工作区。\n对应配置是 agents.list，它回答的是：系统里到底有几个真正独立的 Agent。\n如果你希望两个机器人有各自的 workspace、记忆，就不能只配多账户，必须把多个 Agent 定义出来。\n2. accountId 是“入口账号”\naccountId 是某个渠道里的账号实例。\n下面用企业微信自建应用 wecom-app 举例，其他支持多账号的渠道同理：一个企业微信自建应用接入实例，就是一个 accountId\n如果你有两个机器人账号，就可以叫 account-name-1 和 account-name-2这代表的是“有几个入口”，不代表“背后有几个脑”。\n对应配置是 channels.<channel>.accounts，它回答的是：某个渠道下到底挂了几个账号。\n例如某个渠道里同时挂两个企业微信自建应用账号，本质就是在这里配置多个 accountId。这里仍以 wecom-app 场景为例。\n3. binding 是“路由规则”\nbinding 的作用，是把入站消息分发给某个 agentId。\n它解决的不是“有没有多个账号”，而是：哪个账号来的消息，交给哪个 Agent\n哪类会话，应该进入哪个 Agent如果说 accountId 是入口，那 binding 就是分流器。\n对应配置是 bindings，它回答的是：哪个账号进哪个 Agent。\n这是“一个账户对应一个 Agent”能否成立的关键配置。\n4. dmScope 是“私聊分桶规则”\nsession.dmScope 只决定私聊会话如何分桶。参数\n含义\n适用场景main\n所有私聊共用主会话\n单用户、强调跨渠道连续性per-peer\n按发送者 ID 隔离私聊\n想按用户区分，但不特别关心渠道差异per-channel-peer\n按渠道 + 发送者隔离私聊\n多用户收件箱per-account-channel-peer\n按账号 + 渠道 + 发送者隔离私聊\n多账号收件箱、多机器人场景它解决的是：私聊历史会不会串\n不同账号、不同用户的私聊会不会落到同一个 session key但它不决定消息最终进入哪个 Agent，也不决定机器人是否独立。\n更准确一点说，消息会先经过 bindings 路由进某个 Agent。\n下面两张图只画这层最关键的路由关系，不展示 dmScope。\n再对照看两个场景：\n场景 A：多账户，共用一个 Agent\nflowchart LR\nA1[\"渠道账号<br/>account-name-1\"] --> B[\"bindings\"]\nA2[\"渠道账号<br/>account-name-2\"] --> B\nB --> C[\"Agent<br/>agent-name-1\"]\nC --> W[\"workspace A\"]classDef account fill:#EAF4FF,stroke:#2B6CB0,color:#1A365D,stroke-width:1px;\nclassDef route fill:#FFF4E5,stroke:#C05621,color:#7B341E,stroke-width:1px;\nclassDef agent fill:#E6FFFA,stroke:#2C7A7B,color:#234E52,stroke-width:1px;\nclassDef workspace fill:#F0FFF4,stroke:#2F855A,color:#22543D,stroke-width:1px;class A1,A2 account;\nclass B route;\nclass C agent;\nclass W workspace;场景 B：多账户，多 Agent\nflowchart LR\nAC1[\"渠道账号<br/>account-name-1\"] --> B1[\"bindings\"]\nAC2[\"渠道账号<br/>account-name-2\"] --> B2[\"bindings\"]B1 --> AG1[\"Agent<br/>agent-name-1\"]\nB2 --> AG2[\"Agent<br/>agent-name-2\"]AG1 --> W1[\"workspace A\"]\nAG2 --> W2[\"workspace B\"]classDef account fill:#EAF4FF,stroke:#2B6CB0,color:#1A365D,stroke-width:1px;\nclassDef route fill:#FFF4E5,stroke:#C05621,color:#7B341E,stroke-width:1px;\nclassDef agent fill:#E6FFFA,stroke:#2C7A7B,color:#234E52,stroke-width:1px;\nclassDef workspace fill:#F0FFF4,stroke:#2F855A,color:#22543D,stroke-width:1px;class AC1,AC2 account;\nclass B1,B2 route;\nclass AG1,AG2 agent;\nclass W1,W2 workspace;实战里最常见的两种模式\n理解了上面四层，再看配置就会简单很多。现实中最常见的，其实只有两种模式。\n模式 A：多账户，共用一个 Agent\n这种模式适合：多个机器人只是多个入口\n你希望它们共享同一套人格、知识、记忆\n你只想避免私聊串会话这时配置重点通常只有两个：channels.<channel>.accounts\nsession.dmScope: \"per-account-channel-peer\"这种模式的特点是：账号是分开的\n私聊历史通常也是分开的\n但背后仍可能是同一个 Agent换句话说，这是一种“多入口，共用一个脑”的模式。\n模式 B（推荐）：多账户，多 Agent 完全隔离\n这种模式适合：一个机器人就是一个独立角色\n不同机器人要有独立 workspace\n不同机器人要有独立记忆和认证信息\n你希望 “一个账户对应一个 Agent”这时你至少要同时配置：agents.list\nchannels.<channel>.accounts\nbindings.match.accountId\nsession.dmScope: \"per-account-channel-peer\"这是一种“多入口，对应多个脑”的模式。\n也是大多数人真正想实现、但最容易少配一步的模式。\n一个最实用的判断方法\n如果你还不确定自己该选哪种模式，可以用下面这个判断法：如果多个机器人应该共享记忆、共享人格，选“多账户，共用一个 Agent”\n如果多个机器人应该独立工作、独立记忆、独立认证，选“多账户，多 Agent 完全隔离”判断标准不要看“有几个账号”，而要看“背后是否需要多个独立脑”。\n一份可以直接抄的多账号模板（以企业微信自建应用 wecom-app 为例）\n下面这份示例统一使用 Linux 风格路径，例如 ~/.openclaw/workspace。\n如果你在 Windows 上，对应路径通常会类似：C:\\Users\\Administrator\\.openclaw\\workspace\nC:\\Users\\Administrator\\.openclaw\\workspace-agent-name-1下面这份配置，用企业微信自建应用 wecom-app 演示“多账号 + 多 Agent 独立机器人”应该怎么写。你如果使用其他渠道，可以照着这个结构替换 channel 名和对应的凭证字段。其中 list.id、bindings.agentId、workspace 的名称可以修改{\n\"agents\": {\n\"defaults\": {\n\"workspace\": \"~/.openclaw/workspace\"\n},\n// 定义 Agent\n\"list\": [\n{\n\"id\": \"agent-name-1\",\n\"default\": true,\n\"workspace\": \"~/.openclaw/workspace-agent-name-1\"\n},\n{\n\"id\": \"agent-name-2\",\n\"workspace\": \"~/.openclaw/workspace-agent-name-2\"\n}\n]\n},\n// 会话隔离配置，就按照这个来\n\"session\": {\n\"dmScope\": \"per-account-channel-peer\"\n},\n// 会话路由配置，绑定agent和账号\n\"bindings\": [\n{\n\"agentId\": \"agent-name-1\",\n\"match\": {\n\"channel\": \"wecom-app\",\n\"accountId\": \"account-name-1\"\n}\n},\n{\n\"agentId\": \"agent-name-2\",\n\"match\": {\n\"channel\": \"wecom-app\",\n\"accountId\": \"account-name-2\"\n}\n}\n],\n\"channels\": {\n\"wecom-app\": {\n// 默认账号\n\"defaultAccount\": \"account-name-1\",\n// 添加多个账号的权限信息\n\"accounts\": {\n\"account-name-1\": {\n\"enabled\": true,\n\"webhookPath\": \"/wecom-app\",\n\"token\": \"your-account-1-token\",\n\"encodingAESKey\": \"your-account-1-encoding-aes-key\",\n\"corpId\": \"your-corp-id\",\n\"corpSecret\": \"your-account-1-corp-secret\",\n\"agent",
+      "author": "chongwen",
+      "authorBio": "",
+      "score": 23,
+      "engagement": {
+        "likes": 186,
+        "comments": 68,
         "shares": 0
       },
       "topics": [
         "AI"
       ],
-      "publishedAt": "2026-02-27T13:36:22.280Z"
+      "publishedAt": "2026-03-11T02:50:25.186Z",
+      "readingTime": 20
     },
     {
-      "id": "linuxdo:1711900",
-      "type": "build_log",
-      "title": "不用Mac mini，不用旧电脑：免费部署 OpenClaw，人人都能养龙虾",
-      "body": "不用Mac mini，不用旧电脑：免费部署 OpenClaw，人人都能养龙虾\n\n都知道部署龙虾openclaw，需要一个Mac mini或者一台旧电脑，24小时开机，但不是每个人都正好有旧电脑，那今天我们就教大家没有旧电脑怎么免费部署龙虾openclaw。\n我们只需要有一台云服务器即可，那怎么才能获得云服务器呢，当然省事有钱的老哥，可以直接阿里云腾讯云直接买。\n今天告诉一个白嫖六个月的办法，而且比国内服务器更好用的aws。优点有以下几点：\n免费白嫖六个月。\n国外服务器有国外的IP，可以原生访问国外先进的大模型，如GPT-4.5，opus-4.6等。\n方便原生安装部署。\n下面我们正式开始。\n1、先在aws上注册一个免费服务器。免费云计算服务 - AWS 免费套餐\nimage_19.png1828×948 220 KB\n2、验证一下邮箱，随便输入个名称。\n1560×1202 117 KB\n3、设置密码\n1522×1320 188 KB\n4、选择免费计划。\n1792×1198 293 KB\n5、填写基本信息，选择中国就可以，正常填写地址信息。\n1450×1678 223 KB\n6、需要验证一",
-      "author": "coinpro",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1711900",
+      "id": "linuxdo:1721428",
+      "slug": "ld-1721428",
+      "type": "tutorial",
+      "title": "openclaw 高质量搜索工具web_search教程---grok+exa",
+      "body": "openclaw 高质量搜索工具web_search教程---grok+exagithub.comGitHub - jikssha/openclaw-dae-skills通过在 GitHub 上创建帐户来为 jikssha/openclaw-dae-skills 开发做出贡献。先说特点\nexa-search  是一个 source-first（源头优先） 的搜索技能。\n它更适合处理：官方文档\nAPI 文档 / Reference 页面\n产品说明页 / 定价页\n公司官网 / 项目主页\n需要抽取网页正文的场景\n需要尽量减少 SEO 垃圾结果的场景grok-search\ngrok-search 是一个 freshness-first（时效优先） 的搜索技能。\n它更适合处理：实时变化中的话题\n社区讨论 / 舆论动态\nX / Twitter / 社区声量\n新产品、新版本、新争议的快速综述\n“官方怎么说 + 社区怎么解读”的对比按照官方skill标准流程来写的\n这两个都支持填入多个key  自动轮换\n统一输出 并写入了几个预设\n测试回答 （多图预警）截图举例\nimage847×755 29.1 KB\nimage771×833 18.9 KB\nimage796×787 14.5 KB\nimage763×764 16.9 KB\nimage738×815 18.5 KB简单来说grok用来查实时最新的信息更合适\nexa适合查官方文档 API 说明书等等\nApi key获取方法\n一、GORK获取方式\n方式1----手动注册获取用浏览器登录\n打开开发者工具（F12）→ Application → Cookies →\n找到名为 sso 的 Cookie，复制其值（以 eyJ 开头的长字符串）\n每个 Grok 账号对应一个 Token再把获取到的sso导入到grok2api中\ngrok2api CF部署教程\nGitHub - Tomiya233/grok2api: 基于 FastAPI 重构的 Grok2API，适配最新的Web调用格式，支持流式对话、图像生成、图像编辑、联网搜索、视频生成、深度思考，支持号池并发调用和自动负载均衡。 · GitHub\n方式2----批量注册搭配grok2api使用二、exa获取方式\n方式1----直接自行注册即可 每个号有20刀额度，几个号足够搜索使用了方式2----批量注册 站内同样有注册机安装方法— 发给你的openclaw即可\n从这个 GitHub 仓库安装 exa-search 和 grok-search 两个 skill：安装后请根据 config.example.json 自行创建 config.local.json 并填写自己的 API key。",
+      "author": "daemon",
+      "authorBio": "",
       "score": 23,
       "engagement": {
-        "likes": 134,
-        "comments": 60,
+        "likes": 110,
+        "comments": 34,
         "shares": 0
       },
       "topics": [
+        "SEO",
         "AI",
-        "SaaS"
+        "开发工具"
       ],
-      "publishedAt": "2026-03-09T03:27:32.994Z"
+      "publishedAt": "2026-03-10T15:50:07.122Z",
+      "readingTime": 4
     },
     {
-      "id": "linuxdo:1677849",
-      "type": "build_log",
-      "title": "爆火claw收集汇总",
-      "body": "爆火claw收集汇总\n\n搜集了一下市面上最核心的claw工具\n盘点一下市面上这些五花八门的 claw 工具，附个人轻度体验\n最近看大家都在讨论各种 claw，跟风去折腾了一下。老实说，这玩意儿有点“买前生产力，买后爱奇艺”的意思。真要用得好确实能省事，但如果只是图个新鲜，大概率最后也是吃灰。\n至于选哪个，别光听别人吹要买 Mac mini 才能跑。其实如果你只是想拿来接飞书或者钉钉，零部署直接白嫖云端版（比如 Kimi 或者 MiniMax 的）就行，手机上也能玩。只有真想搞全自动化、把数据捏在自己手里，或者想接本地 Ollama 的，才建议去折腾自建。\n下面是我这几天实机测试的4款，以及另外几个还没来得及跑的项目，简单做个汇总和避坑：\n1. 原版 OpenClaw 开山鼻祖\n这玩意功能确实最全，Gateway 面板做得挺牛。我刚搭好跑起来的时候，确实有种当年第一次用 ChatGPT 的震撼感。但是有点臃肿了，Node.js 写的几十万行代码，一跑起来内存直接干掉 1G 多。要是后台多挂几个 Agent，风扇直接起飞，有点难绷。\n\n仓库地址：https://github.com/ope",
-      "author": "ko0no1",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1677849",
+      "id": "linuxdo:1560849",
+      "slug": "ld-1560849",
+      "type": "tutorial",
+      "title": "在个人微信使用 OpenClaw 的教程（不封号）",
+      "body": "在个人微信使用 OpenClaw 的教程（不封号）企业微信自建应用（可在个人微信使用）\n项目基于 BytePioneer-AI/moltbot-china: Clawdbot/OpenClaw中国插件：支持飞书，钉钉，QQ，企业微信 开发的额外插件，支持企业微信自建应用github.comGitHub - RainbowRain9/openclaw-china: Clawdbot/OpenClaw中国插件：支持飞书，钉钉，QQ，企业微信Clawdbot/OpenClaw中国插件：支持飞书，钉钉，QQ，企业微信效果如图\n2bf52e5261bd2cf0544a885b26f8b9371440×2988 173 KB 5e545c710d5be052e49edd3673966e931440×2988 120 KB\n0e803514207a767eec3a1d8732479eb91440×2988 303 KB 1cf834ccb42ef52dd67d89739bb8b2651440×2988 230 KB\n教程如下企业微信自建应用配置指南\n本指南帮助你在企业微信中创建自建应用，并配置 OpenClaw 接入。\n自建应用 vs 智能机器人功能\n智能机器人 (wecom)\n自建应用 (wecom-app)被动回复消息主动发送消息需要企业认证需要 corpSecret需要 IP 白名单配置复杂度\n简单\n中等推荐使用自建应用的场景：需要主动推送消息给用户\n需要更灵活的消息发送能力\n需要调用企业微信 API前置条件一个企业微信账号（可使用个人注册的企业）\n公网可访问的 HTTPS 服务器（用于接收回调）\nOpenClaw 已安装并运行\nNode.js 和 pnpm（用于构建插件）步骤零：安装 wecom-app 插件\n1. 克隆代码仓库\ncd ~/.openclaw/extensions\ngit clone2. 进入插件目录并安装依赖\ncd ~/.openclaw/extensions/openclaw-china/extensions/wecom-app\npnpm install3. 构建插件\npnpm build4. 安装到 OpenClaw\nopenclaw plugins install -l ~/.openclaw/extensions/openclaw-china/extensions/wecom-app提示：-l 参数表示链接模式安装，修改源码后无需重新安装，只需重启 Gateway 即可生效。5. 验证安装\nopenclaw plugins list确认 -china/wecom-app 出现在插件列表中。步骤一：创建自建应用\n1. 登录企业微信管理后台\n访问 企业微信管理后台 并登录。\n2. 创建应用点击左侧菜单「应用管理」在「自建」区域点击「创建应用」\nimage2503×1384 222 KB填写应用信息：应用名称：例如 “AI 助手”\n应用 logo：上传一个图标\n可见范围：选择可以使用该应用的部门/成员image2503×1384 164 KB点击「创建应用」3. 获取应用凭证\n创建成功后，进入应用详情页，记录以下信息：AgentId：应用的唯一标识（如 1000002）\nSecret：点击查看获取（这就是 corpSecret）image2503×1384 242 KB\n4. 获取企业 ID点击左侧菜单「我的企业」\n在「企业信息」页面底部找到「企业 ID」\n记录这个 ID（这就是 corpId）image2503×1384 210 KB步骤二：配置接收消息服务器\n1. 进入应用设置在应用详情页，找到「接收消息」设置\n点击「设置 API 接收」2. 填写服务器配置URL：你的公网回调地址，例如\nToken：自定义一个字符串，例如 your-random-token\nEncodingAESKey：点击「随机获取」生成 43 位字符image2503×1384 221 KB重要：先配置好 OpenClaw，再点击「保存」，否则验证会失败。image2503×1384 217 KB\n3. 配置 IP 白名单\n在应用详情页的「企业可信 IP」设置中，添加你服务器的公网 IP 地址。\nimage2503×1384 231 KB如果不知道服务器 IP，可以先尝试发送消息，查看错误日志获取 IP。步骤三：配置 OpenClaw\n使用命令行配置\nLinux/macOS：\nopenclaw config set channels.wecom-app '{\n\"enabled\": true,\n\"webhookPath\": \"/wecom-app\",\n\"token\": \"your-random-token\",\n\"encodingAESKey\": \"your-43-char-encoding-aes-key\",\n\"corpId\": \"your-corp-id\",\n\"corpSecret\": \"your-app-secret\",\n\"agentId\": 1000002\n}' --jsonWindows CMD：\nopenclaw config set channels.wecom-app.enabled true\nopenclaw config set channels.wecom-app.webhookPath /wecom-app\nopenclaw config set channels.wecom-app.token your-random-token\nopenclaw config set channels.wecom-app.encodingAESKey your-43-char-encoding-aes-key\nopenclaw config set channels.wecom-app.corpId your-corp-id\nopenclaw config set channels.wecom-app.corpSecret your-app-secret\nopenclaw config set channels.wecom-app.agentId 1000002或直接编辑配置文件\n编辑 ~/.openclaw/openclaw.json：\n{\n\"channels\": {\n\"wecom-app\": {\n\"enabled\": true,\n\"webhookPath\": \"/wecom-app\",\n\"token\": \"your-random-token\",\n\"encodingAESKey\": \"your-43-char-encoding-aes-key\",\n\"corpId\": \"your-corp-id\",\n\"corpSecret\": \"your-app-secret\",\n\"agentId\": 1000002\n}\n}\n}配置说明字段\n必填\n说明enabled是否启用该渠道webhookPath回调路径，需与企业微信后台配置一致token消息校验 Token，需与企业微信后台配置一致encodingAESKey消息加密密钥（43 位），需与企业微信后台配置一致corpId企业 IDcorpSecret应用的 SecretagentId应用的 AgentIdwelcomeText用户首次进入时的欢迎语inboundMedia.enabled是否启用入站媒体落盘（默认启用）inboundMedia.dir入站媒体归档目录（跨平台默认：~/.openclaw/media/wecom-app/inbound）inboundMedia.maxBytes单个入站媒体最大字节数（默认 10MB）inboundMedia.keepDays入站媒体保留天数（默认 7 天；用于自动清理）步骤四：重启 Gateway\nopenclaw gateway restart步骤五：验证配置\n1. 回到企业微信后台保存配置\n现在 OpenClaw 已启动，回到企业微信后台的「接收消息」设置，点击「保存」。\n如果配置正确，会提示保存成功。\n2. 测试消息收发在企业微信 App 中打开你创建的应用\n发送一条消息\n查看 OpenClaw 日志确认消息接收\n等待 AI 回复步骤六：在个人微信使用\n1.回到企业微信后台\n回到企业微信后台的「我的企业」设置下的微信插件\nimage2503×1384 243 KB\n用个人微信扫码「邀请关注」的二维码就可以在个人微信上打开入口入站媒体（图片/语音/文件）落盘说明\n为了支持图片 OCR、回发原图、以及排查问题，wecom-app 会把入站媒体文件落盘保存。文件会被归档到：inboundMedia.dir/YYYY-MM-DD/消息正文里会显示：[image] saved:<本地路径>（该路径为稳定归档路径，便于后续处理）自动清理由 inboundMedia.keepDays 控制（默认 7 天）为什么还会用 tmp 中转？\n内部会先下载到系统临时目录，再原子移动到归档目录，以避免“半文件/下载失败”污染归档目录。\n跨平台默认路径Linux/macOS：~/.openclaw/media/wecom-app/inboundWindows：%USERPROFILE%\\.openclaw\\media\\wecom-app\\inbound如需自定义，请设置：channels.wecom-app.inboundMedia.dir常见问题\nQ: Unknown target “xxx” / Action send requires a target？\n这类问题通常不是“权限问题”，而是 target 写法不正确 或 OpenClaw 无法解析。\n结论：最稳的写法是使用显式前缀：私聊用户：user:<UserId>（例如：user:CaiHongYu）\n群聊：chatid:<ChatId>（如果你拿到了 chatid）排查步骤：确认你用的是 user: / chatid: 前缀，而不是“显示名/昵称”。\n如果你只有显示名：优先去企业微信后台/通讯录确认真实 UserId。\n查看 Gateway 日志中 wecom-app 的目录解析输出（关键词一般为 wecom-app / directory / target）。经验：显示名在不同租户/同名用户/大小写场景下会导致解析失败；用 user:<UserId> 基本不会错。Q: 为什么 SVG 发出去不是图片？\n企业微信自建应用对 图片消息 的支持通常偏向 png/jpg。svg 经常会被客户端当作“文件”，或者走图片通道失败。建议：发送 png/jpg。\n如果你必须发 svg：把它当 文件 发（本插件已对 .svg 强制按文件发送，避免误判）。Q: 为什么 WAV/MP3 语音发不出去（ok=false）？\n企业微信的“语音消息(voice)”通常要求 amr/speex 等格式；wav/mp3 很常见会导致上传/发送失败，或无法按语音气泡展示。\n推荐方案（自动兜底）\n开启 voiceTranscode.enabled=true 后：系统存在 ffmpeg：遇到 wav/mp3 会 自动转码为 amr 再发送 voice\n没有 ffmpeg：会 自动降级为 file 发送（保证可达）配置示例（openclaw.json）：\n{\n\"channels\": {\n\"wecom-app\": {\n\"voiceTranscode\": {\n\"enabled\": true,\n\"prefer\": \"amr\"\n}\n}\n}\n}手动转码（ffmpeg）\nffmpeg -i in.wav -ar 8000 -ac 1 -c:a amr_nb out.amrQ: 保存配置时提示验证失败？检查 OpenClaw 是否已启动并监听正确端口\n确认 webhookPath 与后台 URL 路径一致\n确认 token 和 encodingAESKey 与后台配置完全一致\n确认服务器公网可访问（可用 curl 测试）Q: 消息接收成",
+      "author": "彩虹雨",
+      "authorBio": "",
       "score": 23,
       "engagement": {
-        "likes": 114,
-        "comments": 37,
+        "likes": 421,
+        "comments": 164,
         "shares": 0
       },
       "topics": [
+        "增长",
         "AI",
-        "开发工具",
-        "扩展"
+        "设计"
       ],
-      "publishedAt": "2026-03-02T07:00:32.284Z"
-    },
-    {
-      "id": "linuxdo:1748901",
-      "type": "build_log",
-      "title": "openclaw的一些常用命令汇总",
-      "body": "openclaw的一些常用命令汇总\n\n快速入门\n初始化与配置\n\n\n\n\n命令\n说明\n\n\n\n\nopenclaw setup\n初始化配置和工作空间\n\n\nopenclaw configure\n交互式配置向导（模型、频道、技能、网关）\n\n\nopenclaw onboard\n完整入门向导（网关 + 工作空间 + 技能）\n\n\nopenclaw doctor\n健康检查 + 自动修复配置问题\n\n\nopenclaw status\n查看会话状态、频道健康、最近联系人\n\n\nopenclaw dashboard\n打开 Control UI 控制面板\n\n\n\nsetup 选项\nopenclaw setup --workspace &lt;目录&gt;     # 指定工作空间路径\nopenclaw setup --wizard               # 运行配置向导\nopenclaw setup --non-interactive      # 非交互模式\nopenclaw setup --mode local|remote    # 本地或远程模式\nopenclaw setup --remote-url &",
-      "author": "Casper",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1748901",
-      "score": 23,
-      "engagement": {
-        "likes": 47,
-        "comments": 36,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
-      ],
-      "publishedAt": "2026-03-13T09:07:50.491Z"
+      "publishedAt": "2026-02-03T10:46:53.882Z",
+      "readingTime": 20
     },
     {
       "id": "linuxdo:1636463",
+      "slug": "ld-1636463",
       "type": "build_log",
       "title": "openclaw 部署指南(手动docker详细版)",
-      "body": "openclaw 部署指南(手动docker详细版)\n\n部署的时候我找了很多docker部署的公众号，虽然说官方也有文档，但是实际部署时候问题很多。写在这里供大家参考吧。注意，在本地电脑docker部署的话，可能会遇到更多问题。我这个是在云服务器上部署的，操作系统是debian 13，安装了1panel面板。面板上可以直接安装openclaw，但是好像不能自定义模型。\n1. 部署\n首先需要确定使用方式，这决定了你用什么方式部署。先通过 README.md 整体了解一下这个项目：https://github.com/openclaw/openclaw/blob/main/README.md\n通过阅读文档，我们知道 OpenClaw 可以跑在本地宿主机、虚拟机、云服务器等载体上，如何和它对话呢？\n它支持非常多的渠道，我选择了 Telegram。因为小龙虾的能力上限取决于模型能力，所以毋庸置疑，直接选择当前的顶级模型，Claude 或者 GPT，那结论就出来了，最佳配置方案：海外云 VPS + Telegram + 顶级模型。\nimage1920×1034 168 KB\n先阅读一下部署文档再",
+      "body": "openclaw 部署指南(手动docker详细版)部署的时候我找了很多docker部署的公众号，虽然说官方也有文档，但是实际部署时候问题很多。写在这里供大家参考吧。注意，在本地电脑docker部署的话，可能会遇到更多问题。我这个是在云服务器上部署的，操作系统是debian 13，安装了1panel面板。面板上可以直接安装openclaw，但是好像不能自定义模型。\n1. 部署\n首先需要确定使用方式，这决定了你用什么方式部署。先通过 README.md 整体了解一下这个项目：\n通过阅读文档，我们知道 OpenClaw 可以跑在本地宿主机、虚拟机、云服务器等载体上，如何和它对话呢？\n它支持非常多的渠道，我选择了 Telegram。因为小龙虾的能力上限取决于模型能力，所以毋庸置疑，直接选择当前的顶级模型，Claude 或者 GPT，那结论就出来了，最佳配置方案：海外云 VPS + Telegram + 顶级模型。\nimage1920×1034 168 KB\n先阅读一下部署文档再动手：\n1.1 手动在云服务器上部署，先下载项目\ngit clone\ncd openclaw\n./docker-setup.sh运行脚本后，会在宿主机上创建两个重要文件夹，它们会被挂载到 Docker 容器中：\n① ~/.openclaw — 配置目录存储 OpenClaw 的记忆\n配置文件\n第三方 API 密钥等② ~/openclaw/workspace — 工作空间目录Agent 可直接访问的文件目录\nAgent 创建的文件也会保存在这里1.2 Docker 启动 OpenClaw 后会自动打开配置引导\nimage2058×1248 127 KB\n先选择 Skip for now 跳过\nimage2058×1248 114 KB\n消息渠道我想用 Telegram，所以需要先做两件事：先在 Telegram 中搜索 ，获取自己账号的用户 ID\n搜索 ，创建机器人，先创建机器人名（昵称），再创建机器人用户名，创建好之后会给你一个 Bot API Token，记住这个 Token\n等到 Telegram (Bot API) 这里的时候需要填上一步获取的 Bot API Tokenimage2058×1248 177 KB\n然后就是一路跳过，hooks 这里选择：session-memory\n等出现了 Token 提示，说明配置完成：Token: 24b38f4bb1401bd949f5a2cc156e99bad6591847919f3ce0ab4cab02d69e037e大功告成。浏览器访问  5.2 节 有说明。2. 消息通知渠道\n然后就是在服务器上执行配对命令：\n# 宿主机直接执行\nopenclaw pairing approve telegram YKEY9974# Docker 版执行方式\ndocker compose run --rm openclaw-cli pairing approve telegram YKEY9974注意： 配对码默认 1 小时过期，每个渠道待处理请求默认上限 3 个。执行命令的时候如果过期，日志会提示：[openclaw] Failed to start CLI: Error: No pending pairing request found for code: 8AGF3F58这个需要重新在 Telegram 发送机器人 /start 获取新配对码。\n配对成功：\nimage1530×510 63.1 KB3. 模型选择\n这里很多人都会纠结，模型我对比了很多家。只需要从两个角度来考虑：\n按任务复杂度类型\n推荐模型编程、金融、数据分析等复杂任务\nClaude Opus 4.6、GPT 5.2 Pro整理文件资料、P 图、写作等日常任务\nKimi 2.5、GLM 5.0、MiniMax-M2.5按使用频次频次\n建议高频使用\n开通模型包月/包年套餐，GLM5 优先推荐，能力基本上能和 Opus 4.5 打平低频使用\n推荐企业级 API 按量付费，稳定且便宜，如 Atlas Cloud、接口 AI4. Skills & MCP\nSkills\n推荐去 ClawHub 社区下载，注册个账号，可以获取 API 密钥让小龙虾自己去安装。\n推荐 Skills：find-skills\nAgent Browser\nDevTools MCP\nauto-updater\nOpenclaw Command Center\nself-improving-agentMCP\n因为我用的是智谱的模型，所以可以用这几个专属的 MCP，应该比第三方 MCP 的效果要好。先装上再说，不好用到时候再换就行。\nimage504×405 14 KB5. 踩坑点\n5.1 权限问题：EACCES permission denied\n现象： 在 ./docker-setup.sh 启动镜像之后，出现报错：\nError: EACCES: permission denied, open '/home/node/.openclaw/openclaw.json.7.xxx.tmp'原因： Docker 权限不够 — 容器用户（uid=1000）试图写入 root（或其他用户）拥有的目录。\n解决方案：\nchown -R 1000:1000 \"$HOME/.openclaw\"修改完权限后可以直接执行以下命令重新完成初始化向导：\ndocker compose run --rm openclaw-cli onboard5.2 浏览器访问  的安全问题\n现象：  页面报错：\ndisconnected (1008): control ui requires HTTPS or localhost (secure context)This page is HTTP, so the browser blocks device identity. Use HTTPS (Tailscale Serve) or open  on the gateway host.\nIf you must stay on HTTP, set gateway.controlUi.allowInsecureAuth: true (token-only).Docs: Tailscale Serve\nDocs: Insecure HTTP解决方案： 开启 HTTPS，需要到服务器上去创建一个反向代理站点。这里我直接使用 Caddy 来管理多个子域名，详细过程自行搜索。\n最后可以使用域名  来访问小龙虾。\n5.3 Docker 用户部署遇到的问题\n5.3.1 disconnected (1008): pairing required\n原因： 控制 UI 第一次从\"新浏览器/新设备\"连到 Gateway 时，需要做一次性\"设备配对批准\"（即使同一台机器、同一个 Tailnet 也可能需要）。\nopenclaw devices list\nopenclaw devices approve <requestId>如果上面的解决不了，参考以下四步排查：\nStep 1 — 修复容器网络\nCLI 容器无法访问 127.0.0.1 的网关，因为容器内部的 localhost 指向自己。在 docker-compose.yml 中添加：\nopenclaw-cli:\ndepends_on:\n- openclaw-gateway\nenvironment:\nOPENCLAW_GATEWAY_URL: ws://openclaw-gateway:18789Step 2 — 设置 Gateway 绑定到局域网\n内置向导默认使用回环地址，但浏览器请求是通过 Docker 的桥接网络（172.18.0.x）到达的。在 ~/.openclaw/openclaw.json 中：\n\"gateway\": {\n\"bind\": \"lan\"\n}Step 3 — 同步 Gateway Token\ndocker-setup.sh 在 .env 文件中生成一个令牌，但引导向导会将不同的令牌写入 openclaw.json。请确保 ~/.openclaw/openclaw.json 中的 gateway.auth.token 与 .env 文件中的 OPENCLAW_GATEWAY_TOKEN 匹配。\nStep 4 — 批准待匹配设备\n设备卡在待处理状态，因为 CLI 无法连接到网关来批准它们：\n# 选项 A — 在网关容器内直接运行\ndocker compose exec openclaw-gateway node dist/index.js devices list\ndocker compose exec openclaw-gateway node dist/index.js devices approve <request-id># 选项 B — 手动将条目从 pending.json 移至 paired.json\n# ~/.openclaw/devices/pending.json → ~/.openclaw/devices/paired.json\n# 将 pending.json 清空为 {}，然后重启网关# 选项 C — 快速解决，在 openclaw.json 中添加：\n# \"controlUi\": { \"allowInsecureAuth\": true }完成上述任何一项操作后，请重启网关：\ndocker compose restart openclaw-gateway然后打开我都试了，确实解决了。\n5.3.2 其他问题\n使用 openclaw-cli 命令行\n# 仅需要重启网关（不会应用你改过的 compose 配置）\ndocker compose restart openclaw-gateway# 改过 docker-compose.yml 后需要\"重建容器\"让配置生效\ndocker compose up -d --force-recreate openclaw-gateway# 进入配置界面，可以更新配置或者重新设置配置\ndocker compose run --rm openclaw-cli onboard# 启用 Slack 流式传输（实时反馈）(2026.2.18 更新)\ndocker compose run --rm openclaw-cli config set \\\n\"channels.slack.autoSlackBot.streamMode\" \"enabled\"# 进入 Telegram 配置\ndocker compose run --rm openclaw-cli configure --section web# 配置 Cron 错峰调度（避免资源竞争）\ndocker compose run --rm openclaw-cli cron edit <job-id> --stagger \"s\"# 启用 Telegram 按钮样式\ndocker compose run --rm openclaw-cli message send \\\n--channel telegram \\\n--target \"-bot\" \\\n--message \"请选择：\" \\\n--buttons '[[{\"text\":\"确认\",\"callback_data\":\"cmd:confirm\",\"style\":\"success\"},\n{\"text\":\"取消\",\"callback_data\":\"cmd:cancel\",\"style\":\"danger\"},\n{\"text\":\"继续\",\"callback_data\":\"cmd:continue\",\"style\":\"primary\"}]]'OpenClaw 命令行速查Docker 版 将 systemctl 替换为 docker compose run --rm openclaw-cli，后面不变。# 启动网关\nsystemctl st",
       "author": "BlackTor",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1636463",
+      "authorBio": "",
       "score": 23,
       "engagement": {
         "likes": 584,
@@ -4292,60 +4290,21 @@
         "shares": 0
       },
       "topics": [
-        "AI",
         "出海",
+        "AI",
         "开发工具"
       ],
-      "publishedAt": "2026-02-22T15:57:02.818Z"
-    },
-    {
-      "id": "linuxdo:1610696",
-      "type": "strategy_insight",
-      "title": "OpenClaw 接入中转和自定义渠道大模型配置方法",
-      "body": "OpenClaw 接入中转和自定义渠道大模型配置方法\n\nopenclaw除了官方文档上支持的渠道模型以外，还可以配置自定义渠道（比如new-api中转）（文档没有给出具体的配置）。\n分享一下我的自定渠道模型配置吧：\n{\n  // others...\n  \"models\": {\n    \"providers\": {\n      \"myapi-openai\": {\n        \"baseUrl\": \"https://myapi.com/v1\",\n        \"apiKey\": \"sk-******\",\n        \"api\": \"openai-responses\",\n        \"models\": [\n          {\n            \"id\": \"gpt-5.3-codex\",\n            \"name\": \"GPT-5.3 Codex\",\n            \"reasoning\": true,\n            \"input\": [\n              \"text\",\n              \"image\"\n       ",
-      "author": "唐洛",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1610696",
-      "score": 23,
-      "engagement": {
-        "likes": 273,
-        "comments": 66,
-        "shares": 0
-      },
-      "topics": [
-        "AI"
-      ],
-      "publishedAt": "2026-02-13T01:11:56.905Z"
-    },
-    {
-      "id": "linuxdo:1753106",
-      "type": "build_log",
-      "title": "[2026-04-09更新] 6位数充值？用过的Claude Code中转商报价分享和成本分析",
-      "body": "[2026-04-09更新] 6位数充值？用过的Claude Code中转商报价分享和成本分析\n\n[最近更新：2026-04-09]\n佬友们，最近由于 Claude Code 大量使用，在我自己已经订阅了 Claude 官方会员的情况下，难以忍受5小时的限制。又大量深度使用了多个Claude Code中转商。\n我的用量很大，大到需要测试报价和稳定性。\n（  80万+次调用血泪：数据编码 (Encoding) 避坑 ）\n\n我看重的两点就是要稳定+独立号池。\n所谓稳定，就是当我想用的时候随时能用。\n而独立号池可以确保当一个服务商倒闭的时候，其他的服务商却还都在。\n最怕那种表面上好几个服务商看似独立，实际上用的都是一套上游共同号池，倒了一个就全倒了。\n\n辛苦整理的报价表格，我对齐了复杂的充值机制和计价机制。\n\n有的是充值 7.3 人民币可以获得 1 美元额度，有的是充值 1 人民币可以获得 1 美元额度。\n有的平台计价机制是用美元算的，有的平台计价机制是折算过的倍率，比如0.4x, 2.5x等等\n有些还有不定期充值优惠，大额充值包等等\n\n报价对比表：\n全部是 Claude 4.6 Opus ",
-      "author": "ssx",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1753106",
-      "score": 23,
-      "engagement": {
-        "likes": 214,
-        "comments": 114,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
-        "SaaS"
-      ],
-      "publishedAt": "2026-03-14T05:01:15.812Z"
+      "publishedAt": "2026-02-22T15:57:02.818Z",
+      "readingTime": 20
     },
     {
       "id": "jike:6920794300c0686ab554035d",
+      "slug": "jike-69207943",
       "type": "revenue_report",
       "title": "",
-      "body": "地道美国人的 SaaS 生意经，其实都摊在网上了：\nIndie Hackers 公开收入，SaaStr 写增长，Lenny 拆 PMF 和定价，Patrick 讲怎么「敢涨价」……\n\n但很多出海玩家，还在刷二手中文总结，这就是典型的信息茧房。\n\n我整理了一份 「英文 SaaS 生意经阅读清单」，24 篇一手实战文章，链接全部公开，够你系统啃完一轮美式 SaaS 思维。👇\n\n⸻\n\n2/ 从 0→1：想法、PMF、验证\n\n1️⃣ B2B 找 PMF 的系统方法\nA guide for finding product-market fit in B2B\nhttps://www.lennysnewsletter.com/p/finding-product-market-fit\n\n2️⃣ 怎么判断自己到底有没 PMF\nHow to know if you’ve got product-market fit\nhttps://www.lennysnewsletter.com/p/how-to-know-if-youve-got-productmarket\n\n3️⃣ PMF 框架 + 案例（Lenn",
+      "body": "地道美国人的 SaaS 生意经，其实都摊在网上了：\nIndie Hackers 公开收入，SaaStr 写增长，Lenny 拆 PMF 和定价，Patrick 讲怎么「敢涨价」……但很多出海玩家，还在刷二手中文总结，这就是典型的信息茧房。我整理了一份 「英文 SaaS 生意经阅读清单」，24 篇一手实战文章，链接全部公开，够你系统啃完一轮美式 SaaS 思维。👇⸻2/ 从 0→1：想法、PMF、验证1️⃣ B2B 找 PMF 的系统方法\nA guide for finding product-market fit in B2B2️⃣ 怎么判断自己到底有没 PMF\nHow to know if you’ve got product-market fit3️⃣ PMF 框架 + 案例（Lenny × Todd Jackson）\nA framework for finding product-market fit⸻3/ 独立开发者 0→$10k+ MRR 的真实复盘4️⃣ 一个人做 SaaS，从 0 → $10k MRR\nMaking SaaS in solo mode: from $0 to $10k MRR5️⃣ 3.5 个月从 $0 → $10k MRR 的完整步骤\n$0–$10k MRR in 3.5 Months (step by step guide)6️⃣ 该做 B2B 还是 B2C SaaS？\nB2B vs. B2C SaaS: Which Should You Build?7️⃣ 一个实际案例：Tuple 是怎么做想法验证的\nFrom Idea to Validation: How Tuple Did It⸻4/ 定价：别当廉价工具人8️⃣ SaaS 定价总论：value metric、分层、折扣、实验\nSaaS pricing strategy9️⃣ 「SaaS 定价黑魔法」：工程师创始人的血泪总结\nThe Black Arts of SaaS Pricing🔟 换一种计费方式，收入直接翻倍的案例\nDoubling SaaS Revenue By Changing The Pricing Model1️⃣1️⃣ 投资人视角：为什么涨价反而是关键策略\nIs Raising Prices the Simple Key to SaaS Success?1️⃣2️⃣ Stripe 的 Patrick：创始人必须学会「收更贵的钱」\nWhy SaaS founders must charge more⸻5/ 增长 & 关键指标：激活率、增长引擎、MRR1️⃣3️⃣ 怎么定义你产品真正的「激活动作」\nHow to determine your activation metric1️⃣4️⃣ 什么样的激活率才算「不错」？有行业 benchmark\nWhat is a good activation rate1️⃣5️⃣ 搭建 B2B 增长引擎，从线索到扩张\nScaling your B2B growth engine1️⃣6️⃣ 从 $1M → $10M ARR 需要经历哪些阶段？\nWhat steps does it take to scale from $1m to $10m ARR?⸻6/ 不烧广告做增长的实战案例1️⃣7️⃣ 3 个月从 0 → $15k MRR，全靠增长黑客，不投广告\nHow we helped a small SaaS go from $0 to $15k MRR in 3 months (no ads)1️⃣8️⃣ 10 个月靠内容和社区做到 $6k MRR\nHow We Grew Our SaaS to $6K MRR Organically in 10 Months1️⃣9️⃣ 一个 AI SaaS：6 个月从 0 → $5k MRR，后来选择 pivot 的故事\nI grew my AI SaaS from $0 to $5k MRR in 6 months…2️⃣0️⃣ 更多真实故事合集（按兴趣慢慢刷）\nIndie Hackers Stories⸻7/ 心态、坑和退出：少踩几年雷2️⃣1️⃣ 开始做 SaaS 之前，你应该先知道的 10 件事\nThe Top 10 Things to Know Before Starting a SaaS Company2️⃣2️⃣ SaaS 创业第一年最容易犯的 10 大错误\nMy Top 10 Year One SaaS Mistakes. Save Yourself Some Pain…2️⃣3️⃣ 一位创始人把 bootstrapped SaaS 做大后卖掉的完整复盘\nSelling My Bootstrapped SaaS Business2️⃣4️⃣ Rob Walling 如何围绕 bootstrapped SaaS 搭一个社区生态\nHow Rob Walling Created a Thriving SaaS Community with MicroConf⸻8/ 收尾这 24 篇基本可以当成一套「美式 SaaS 自学大纲」：\n•\t从 0→1 找 PMF\n•\t怎么设计定价、敢涨价\n•\t不烧广告做增长\n•\t独立开发者 & AI SaaS 的真实故事\n•\t以及：如何少踩坑、甚至怎么退出如果你也在做 SaaS / AI 工具，想跳出中文信息茧房，建议收藏慢慢啃。",
       "author": "Niko_",
-      "source": "jike",
-      "sourceUrl": "https://web.okjike.com/originalPost/6920794300c0686ab554035d",
+      "authorBio": "前360安全开发工程师 \n独立开发者 \nWeb出海 \n公众号：Niko的出海记录",
       "score": 22,
       "engagement": {
         "likes": 92,
@@ -4353,60 +4312,21 @@
         "shares": 85
       },
       "topics": [
-        "AI",
-        "出海",
-        "开发工具"
+        "增长",
+        "变现",
+        "产品思维"
       ],
-      "publishedAt": "2025-11-21T14:37:55.077Z"
-    },
-    {
-      "id": "linuxdo:1056196",
-      "type": "build_log",
-      "title": "锦恢的 AI Agent 小白教程（一）Agent 的基本概念与分类",
-      "body": "锦恢的 AI Agent 小白教程（一）Agent 的基本概念与分类\n\n\n不太懂 linuxdo 的规矩，这次上传了完整的原文 QAQ\n\n前言\n近日诸事繁杂，为了我的开题答辩，秋招和 Agent 比赛忙前忙后，终于，一切都在9月的末尾迎来了好的结局，我也是终于有时间可以写些东西了。作为我的 AI Agent 前置知识扫盲课程的第一章，先起个头吧！\n这个系列教程我也打算持续的更新下去，因为确实好久没有写文字了有点稀疏了，后续我也会把这系列教程做成B站的视频，请诸位备好红茶或咖啡吧！\n\n什么是 AI Agent\n在讲解这篇文章之前最重要的就是给 AI Agent 的下一个定义。\n\n我知道很多非常前线的 agent 开发工程师可能会觉得这段话比较啰嗦，但是我仍然想要强调一下：任何一个领域的开篇一定需要对这个领域中所提及的关键词进行定义，从而对齐读者与笔者的上下文。消解分歧也是笔者的义务之一。\n\n我认为 AI Agent 是一个同时满足下面两个条件的程序或者系统：\n\n\n部分甚至核心逻辑由深度学习及其衍生技术实现（主要指大模型技术）。\n\n\n是一个能够进行任务执行的下游应用，它的输入和输出都是直接",
-      "author": "锦恢",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1056196",
-      "score": 22,
-      "engagement": {
-        "likes": 116,
-        "comments": 33,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
-        "效率"
-      ],
-      "publishedAt": "2025-10-17T13:54:41.705Z"
-    },
-    {
-      "id": "linuxdo:1098635",
-      "type": "build_log",
-      "title": "[MiniMax] M2 简单实战测评：Java多模块bug修复、小项目生成",
-      "body": "[MiniMax] M2 简单实战测评：Java多模块bug修复、小项目生成\n\n \n开你个西瓜大头\n\n泪目啊，好久咩发文了，最近一段时间忙+懒，其实我也赞了好多文章，结果都没发出去 =,= 懒癌又发作了，我觉得我可能是松鼠性格，爱凑着~\n下面主要测试了 Cursor 、Augment 做横向对比和模型测试，测试下来，效果居然有一点点不错哎，特别是在Cursor ，为什么在 Cursor 里面测试呢，我考虑了代码索引这个最重要的东西，在Cline和RooCode里面总是少点感觉: 代码索引,索性就用Cursor来测试他的完整能力，绝对不是懒得配置 =,=\n\nPixPin_2025-10-28_01-09-04355×449 6.22 KB\n模型优劣势横向对比\n\n\n\n\n对比维度\nMiniMax-M2\nClaude C4.5\nGLM4.6\n\n\n\n\n响应速度\n约80tokens/秒，速度极快\n中等速度\n较慢（官方严重卡顿）\n\n\n代码生成能力\n代码质量良好，代码索引精准\n代码生成稳定可靠\n代码能力时强时弱（官方断流、降智）\n\n\n指令遵循度\n遵循指令，输出结构化\n指令遵循优秀\n基本遵循指令\n\n\n准",
-      "author": "夏天爱吃菠萝大西瓜🍉",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1098635",
-      "score": 22,
-      "engagement": {
-        "likes": 140,
-        "comments": 77,
-        "shares": 0
-      },
-      "topics": [
-        "AI"
-      ],
-      "publishedAt": "2025-10-28T02:26:50.140Z"
+      "publishedAt": "2025-11-21T14:37:55.077Z",
+      "readingTime": 8
     },
     {
       "id": "linuxdo:1054276",
+      "slug": "ld-1054276",
       "type": "strategy_insight",
       "title": "cursor ultra试用油猴脚本（已失效）",
-      "body": "cursor ultra试用油猴脚本（已失效）\n\nimage1920×962 54.6 KB\n左小角点击按钮，稍等约一分钟，自动打开页面\nimage1379×1569 109 KB\ndone\nimage2944×1418 143 KB\n代码如下，油猴直接使用\n// ==UserScript==\n// @name         Cursor Trial Link Generator (Fixed)\n// @name:zh-CN   Cursor 试用链接生成器 (修正版)\n// @namespace    http://tampermonkey.net/\n// @version      1.1\n// @description  Adds a button on the Cursor dashboard (all languages) to generate a trial checkout link.\n// @description:zh-CN 在Cursor仪表盘页面（所有语言版本）添加一个按钮，用于一键生成试用订阅链接。\n// @author       YourName\n// ",
+      "body": "cursor ultra试用油猴脚本（已失效）image1920×962 54.6 KB\n左小角点击按钮，稍等约一分钟，自动打开页面\nimage1379×1569 109 KB\ndone\nimage2944×1418 143 KB\n代码如下，油猴直接使用\n// ==UserScript==\n//          Cursor Trial Link Generator (Fixed)\n// :zh-CN   Cursor 试用链接生成器 (修正版)\n//\n//       1.1\n//   Adds a button on the Cursor dashboard (all languages) to generate a trial checkout link.\n// :zh-CN 在Cursor仪表盘页面（所有语言版本）添加一个按钮，用于一键生成试用订阅链接。\n//        YourName\n//\n//\n//         none\n//\n// ==/UserScript==(function() {\n'use strict';// 创建一个函数来发送API请求\nfunction generateTrialLink(tier) {\nconsole.log(`[Cursor Script] Requesting trial link for tier: ${tier}`);\nalert(`正在为 ${tier} 套餐生成试用链接...`);// 使用绝对路径以确保请求地址正确\nfetch(' {\nmethod: 'POST',\nheaders: {\n'Content-Type': 'application/json',\n'Accept': 'application/json'\n},\n// 浏览器会自动附加当前域的Cookie，所以不需要手动设置\nbody: JSON.stringify({\nallowAutomaticPayment: true,\nallowTrial: true,\ntier: tier\n})\n})\n.then(response => {\nif (!response.ok) {\n// 如果服务器返回错误，则抛出错误以便被catch捕获\nreturn response.text().then(text => {\nthrow new Error(`服务器错误 (状态码: ${response.status}): ${text}`);\n});\n}\nreturn response.json();\n})\n.then(data => {\nconsole.log('[Cursor Script] Success:', data);\n// 检查返回的是否是一个URL\nif (typeof data === 'string' && data.startsWith('http')) {\nalert(`成功获取链接！将为您在新标签页中打开。`);\n// 在新标签页中打开获取到的Stripe链接\nwindow.open(data, '_blank');\n} else {\nthrow new Error('服务器返回的不是一个有效的URL。');\n}\n})\n.catch((error) => {\nconsole.error('[Cursor Script] Error:', error);\nalert(`生成链接失败，请按 F12 打开控制台查看错误详情。\\n错误: ${error.message}`);\n});\n}// 创建UI界面（一个包含三个按钮的面板）\nfunction createUI() {\n// 防止重复创建\nif (document.getElementById('cursor-trial-panel')) return;const panel = document.createElement('div');\npanel.id = 'cursor-trial-panel';\npanel.style.position = 'fixed';\npanel.style.bottom = '20px';\npanel.style.right = '20px';\npanel.style.backgroundColor = '#222';\npanel.style.border = '1px solid #444';\npanel.style.borderRadius = '8px';\npanel.style.padding = '15px';\npanel.style.zIndex = '9999';\npanel.style.display = 'flex';\npanel.style.flexDirection = 'column';\npanel.style.gap = '10px';\npanel.style.fontFamily = 'sans-serif';const title = document.createElement('h3');\ntitle.textContent = '一键获取试用';\ntitle.style.color = 'white';\ntitle.style.margin = '0 0 10px 0';\ntitle.style.textAlign = 'center';\ntitle.style.fontSize = '16px';\npanel.appendChild(title);const tiers = ['pro', 'pro_plus', 'ultra'];\ntiers.forEach(tier => {\nconst button = document.createElement('button');\nbutton.textContent = `获取 ${tier.charAt(0).toUpperCase() + tier.slice(1)} 试用`;\n// 一些简单的样式\nbutton.style.padding = '8px 12px';\nbutton.style.cursor = 'pointer';\nbutton.style.border = '1px solid #555';\nbutton.style.borderRadius = '5px';\nbutton.style.backgroundColor = '#333';\nbutton.style.color = 'white';\nbutton.style.fontSize = '14px';\nbutton.onmouseover = () => button.style.backgroundColor = '#444';\nbutton.onmouseout = () => button.style.backgroundColor = '#333';button.onclick = () => generateTrialLink(tier);\npanel.appendChild(button);\n});document.body.appendChild(panel);\nconsole.log('[Cursor Script] UI panel created successfully.');\n}// Cursor网站可能是个单页应用(SPA)，window.onload可能不够可靠。\n// 我们使用一个定时器来检查页面是否已加载关键内容。\nconst interval = setInterval(() => {\n// 通常dashboard页面会有一个特定的元素，这里我们简单检查body是否加载完成\n// 更可靠的方法是检查一个特定的、迟于加载的元素\nif (document.body) {\nclearInterval(interval);\ncreateUI();\n}\n}, 500);})();如果说你没有卡、手机号，或者脚本不生效怎么办？\n参见此帖：",
       "author": "QQbot",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1054276",
+      "authorBio": "",
       "score": 22,
       "engagement": {
         "likes": 119,
@@ -4414,39 +4334,63 @@
         "shares": 0
       },
       "topics": [
-        "SaaS"
+        "SEO",
+        "开发工具",
+        "设计"
       ],
-      "publishedAt": "2025-10-17T05:29:11.407Z"
+      "publishedAt": "2025-10-17T05:29:11.407Z",
+      "readingTime": 11
     },
     {
-      "id": "linuxdo:1934967",
-      "type": "build_log",
-      "title": "【续更】尼区 Claude Code 5x Max 续费成功 + 一个月使用回顾",
-      "body": "【续更】尼区 Claude Code 5x Max 续费成功 + 一个月使用回顾\n\n\n原帖：成功开通尼区Claude Code 5x Max！\n由于 L 站主帖编辑窗口（30 天）已过期，本帖作为续更贴使用。\n后续所有更新都会同步到这里，感谢各位佬友支持。\n\n\n2026年4月8日 续费成功\n号继续健在！ 4月8日 Apple 自动扣费成功，进入第二个订阅周期。\n\n\n\n\n项目\n内容\n\n\n\n\n订阅类型\nClaude Max 5x - Monthly\n\n\n扣费日期\n2026年4月8日\n\n\n不含税金额\n₦93,023.26\n\n\nVAT (7.5%)\n₦6,976.74\n\n\n总额\n₦100,000.00\n\n\n支付方式\nStore Credit（尼区奈拉礼品卡余额）\n\n\n下次续费\n2026年5月9日\n\n\n\nimage1518×1336 168 KB\n\n一个月使用回顾（3.8 ~ 4.8）\n\n稳定性：0 风控、0 掉号、0 异常\n使用强度：日常工作 + ccg workflow 辅助开发，5x 额度耐用\n成本对比：\n\n首充 10 万奈拉 ≈ 600 RMB（3.8）\n二充 10 万奈拉 ≈ 580 ",
-      "author": "Williamen",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1934967",
-      "score": 22,
+      "id": "jike:697c26e1800201ac68dc3759",
+      "slug": "jike-697c26e1",
+      "type": "tool_recommendation",
+      "title": "",
+      "body": "作为一名每天烧掉上千美金算力的coder分享一下我目前跑通的完整AI coding SOP，纯个人实操心得（附所有涉及到的资源链接）需求阶段：\nGemini（产品经理gems） → 这阶段主要用来反复聊需求、梳理PRD、把产品逻辑彻底捋清楚前端设计：我目前有3套能稳定出效果的打法，全都放出来给大家参考：方案1：设计稿直出 → Figma转代码流\n用 Gemini nano / banana / lovart / stitch 其中任意一个直接生成设计稿\n然后让AI工具通过 Figma MCP 读取设计文件转代码官方仓库：\n（Figma插件会在Dev Mode自动启动本地MCP服务器 127.0.0.1:3845）方案2：对标网站直接抄作业式参考\n找到对标网站截图\n用「Frontend Design Skill」指导Claude生成对应代码官方Skill地址：\n这个Skill最大的作用是能明显降低AI那股「通用模板感」，让界面看起来更有辨识度方案3：专业设计系统流（UI UX Pro Max Skill）\n直接使用 UI UX Pro Max Skill\n兼容 Claude / Cursor / Windsurf 等多个平台\n仓库地址：内置行业级设计系统生成器，能根据不同行业自动吐配色体系、字体方案、间距系统等框架设计阶段：\n1. Claude Opus 4.5 Plan模式 先把整体架构完整梳理一遍\n2. 再把Opus出的方案丢给Codex，让Codex补充大量细节\n3. 最后把补充完的版本再丢回Claude生成完整项目骨架细节填充阶段：\n1. 先用Opus完整跑一遍，把基础底座跑通\n2. 然后换Claude Sonnet继续完善框架细节\n3. 最后用Codex专门修bug（通常一遍过，实在过不了就直接换模型重来）人工审阅 & 测试阶段：\n1. 感觉项目完成度大概七八成时，开启单元测试，对每个功能做点对点验证\n2. 再做集成测试：完全按照真实用户旅程从头跑到尾这两步侧重点完全不同，缺了哪一步都容易翻车目前编程主力工具推荐（2025年6月版本）：\n1. Claude code → 必备主力\n2. Codex → 必备主力\n3. Cursor / Trae / Antigravity / Kiro → 选一个装着就好，随手用哪个顺手用哪个分享完毕～\n欢迎大家补充自己目前跑得最顺/性价比最高的组合打法，互相卷一卷～",
+      "author": "AI柿子",
+      "authorBio": "超级个体践行者 | AI产品经理\n分享 AI实战变现 ｜AI编程系列教程｜工作流实操｜工作提效\nv：Baaifangzai123",
+      "score": 21,
       "engagement": {
-        "likes": 76,
-        "comments": 74,
-        "shares": 0
+        "likes": 191,
+        "comments": 14,
+        "shares": 82
       },
       "topics": [
+        "产品思维",
         "AI",
-        "效率",
-        "SaaS"
+        "开发工具"
       ],
-      "publishedAt": "2026-04-10T00:48:17.246Z"
+      "publishedAt": "2026-01-30T03:34:57.624Z",
+      "readingTime": 3
+    },
+    {
+      "id": "jike:5c69188738bdae00198ac02e",
+      "slug": "jike-5c691887",
+      "type": "tool_recommendation",
+      "title": "",
+      "body": "貌似有不少对我 Chrome 装了这么多插件很感兴趣，这里就列一下我目前在用的所有插件。🏅宝藏类：\n- 📎Tampermonkey。油猴，这个跟其他插件/应用不在一个等级上，油猴🐒是一个脚本管理应用，基于油猴可以发展出非常多有趣的脚本，深入了解一下可以挖出一大堆宝藏。油猴中文脚本库🔗：📂收集类：\n- 📎收趣。稍后读应用，从各个平台收集我觉得值得阅读的资讯文章进行统一管理并阅读。\n- 📎印象笔记。会员用户💰。\n- 📎Pinbox：网络收藏应用，主要被我用来收集存放看到比较好的摄影作品。📚阅读类：\n- 📎简悦（SimpleRead）。沉浸式阅读插件，开发者也在即刻 -Kenshin 。\n- 📎阅读模式（Reader View）。模拟 Safari 阅读模式。\n- 📎Advanced Font Settings。自定义字体插件，让你可以对不同语言自定义不同的字体，对于多语言混排文章的阅读体验提升很大。\n- 📎即刻喵。开发的即刻消息提醒插件，提升摸🐟愉悦度，开发者 coder_ysj 但我搜不到这个 ID 了。💻辅助开发类：\n- 📎JSONView。自动检验 JSON 正确性并展开成可读样式的插件。\n- 📎Restlet Client。Rest API 测试插件。\n- 📎Set Character Encoding。允许你在页面上直接右键修改当前页面的字符集，对于还在返回 GBK 的陈年老接口可以极大平复你调试时的心情。\n- 📎Axure RP。Axuer 插件。🔧效率类：\n- 📎1Password。密码管理应用，自动生成、保存高复杂度的密码。\n- 📎一键管理。一键开启、禁止所有应用/扩展，一键直达应用/常用功能，反正就是可以一键做很多。\n- 📎OneTab。讲所有开打的 tab 合并到一个 tab 中，把你从 tab 爆炸💥中拯救出来（不够只能保存 URL 而不能保存网页状态）。\n- 📎滴答清单。任务管理应用。\n- 📎FireShot。页面截图应用，直接指定区域、当前可见内容、完整网页等截图。\n- 📎惠惠购物助手。商品比价、价格走势查看插件，现在的电子产品怎么都越卖越贵啊。\n- 📎Web 前端助手（FeHelper）。前端工具箱，集成了 JSON 格式化、比对、代码美化、压缩、生成二维码、Base64 转换、Markdown 转换等等功能。\n- 📎Youdao Dict。有道词典 Chrome 扩展（非官方），只要是看中简洁而且速度也还可以。\n- 📎图片助手批量图片下载器（ImageAssistant）。批量下载网页上的图片，支持图片清晰度/尺寸过滤。",
+      "author": "findingsea",
+      "authorBio": "也叫Lawrence \n♥️@钟思忖",
+      "score": 21,
+      "engagement": {
+        "likes": 885,
+        "comments": 199,
+        "shares": 195
+      },
+      "topics": [
+        "效率"
+      ],
+      "publishedAt": "2019-02-17T08:17:11.748Z",
+      "readingTime": 4
     },
     {
       "id": "jike:69ba61119f3cd84f65268dae",
+      "slug": "jike-69ba6111",
       "type": "strategy_insight",
       "title": "",
-      "body": "最近做前端页面来来回回修改，刚好在x上看到一个前端页面design skills，分析一下，我只用ui-ux-pro-max-skill\n和frontend-design，其他有宝子用过的可以分享一下效果\n\n1. Impeccable\n增强版 frontend-design skill，17 个设计命令（/polish、/audit、/distill 等）。\nimpeccable.style\n\n2. UI Skills\n包含 15 个独立 skills：baseline-ui（Tailwind 设计一致性）、fixing-accessibility（无障碍审计）、fixing-metadata（SEO 元数据）、fixing-motion-performance（动画性能）、12-principles-of-animation（迪士尼动画原则）等。\nui-skills.com\n\n3. Taste Skill\n包含 taste-skill（前端设计）、redesign-skill（升级现有项目）、output-skill（强制 AI 写完整代码）、soft-skill（让东西看起来和感觉",
+      "body": "最近做前端页面来来回回修改，刚好在x上看到一个前端页面design skills，分析一下，我只用ui-ux-pro-max-skill\n和frontend-design，其他有宝子用过的可以分享一下效果1. Impeccable\n增强版 frontend-design skill，17 个设计命令（/polish、/audit、/distill 等）。\nimpeccable.style2. UI Skills\n包含 15 个独立 skills：baseline-ui（Tailwind 设计一致性）、fixing-accessibility（无障碍审计）、fixing-metadata（SEO 元数据）、fixing-motion-performance（动画性能）、12-principles-of-animation（迪士尼动画原则）等。\nui-skills.com3. Taste Skill\n包含 taste-skill（前端设计）、redesign-skill（升级现有项目）、output-skill（强制 AI 写完整代码）、soft-skill（让东西看起来和感觉昂贵。涵盖高级字体、宽阔的空白、层叠的卡片设计、流畅的弹簧动画以及漂浮导航。）。4. Better Icons\nMCP server + skill，搜索并获取 20 万+ 图标，支持自动学习常用图标库，直接同步到项目 icons 文件。5. UI Design Brain\n60+ 组件最佳实践库，包含布局模式、无障碍规则和反模式，支持 5 种设计风格（SaaS、极简、企业、创意、数据仪表盘）。6. AI kit by Motion ($299)\nMotion+ 会员专属，包含动画专家 skill、性能审计、CSS spring 生成、过渡可视化和文档搜索工具。\nmotion.dev/docs/ai-kit7. UI UX Pro Max\n包含 50+ 设计风格、97 种配色方案和 9 种技术栈，提供全面的 UI/UX 设计智能。8. Anthropic frontend-design\nAnthropic 官方 skills 仓库，包含创意设计、技术开发、企业沟通等多类示例 skills，以及文档处理 skills（docx、pdf、pptx、xlsx）。9. Vercel web design guidelines\nVercel 官方 skills 集合，其中 web-design-guidelines 包含 100+ UI 审计规则。10. Designer Skills Collection\n63 个 skills 和 27 个命令，涵盖 8 个插件：用户研究、设计系统、UX 策略、UI 设计、交互设计、原型测试、设计运营和设计工具包。11. Emil Skills ($99)\n推出的动效 skills，需要单独付费。12. Skills by InterfaceCraft （$199）\n需要购买这个课程才能使用。来源x dingyi",
       "author": "Coolbat",
-      "source": "jike",
-      "sourceUrl": "https://web.okjike.com/originalPost/69ba61119f3cd84f65268dae",
+      "authorBio": "野生产品经理，现在vibe coder",
       "score": 21,
       "engagement": {
         "likes": 44,
@@ -4454,145 +4398,87 @@
         "shares": 32
       },
       "topics": [
+        "SEO",
         "AI",
-        "开发工具",
-        "扩展"
-      ],
-      "publishedAt": "2026-03-18T08:23:45.367Z"
-    },
-    {
-      "id": "v2ex:1204661",
-      "type": "build_log",
-      "title": "分享一个我自己在用的 AI 新闻整理项目： NewsPrism",
-      "body": "分享一个我自己在用的 AI 新闻整理项目： NewsPrism\n\n# 分享一个我自己在用的 AI 新闻整理项目：NewsPrism\r\n\r\n前两天在 V2EX 看到有人问：[现在有什么相对客观中立的新闻媒体推荐吗]( https://hk.v2ex.com/t/1203501)。\r\n\r\n这也是我一直在想的问题。新闻生产本身离不开资金、立场和受众，所以“真正客观中立”几乎不现实。与其去找一个绝对客观的媒体，不如尽量把同一件事的不同来源、不同角度放在一起，再交给读者自己判断。\r\n\r\n早在看《 Her 》的时候，我就幻想过：如果真有那样的 AI ，能帮我整理邮件、筛选信息、处理生活里的各种碎片就好了。后来 AI 真正爆发，我开始想，新闻这件事是不是也可以这样做: 自动抓取、整理、核对来源，把真正和生活相关的信息筛出来，而不是每天被大量噪声淹没。\r\n\r\n一开始，我用过几个月 [TrendRadar]( https://github.com/sansan0/TrendRadar)，这是我当时见过最接近自己设想的方案。后来一边用，一边想把它做得更贴近自己的需求，于是慢慢有了现在这个项目：[NewsP",
-      "author": "moguiyu",
-      "source": "v2ex",
-      "sourceUrl": "https://www.v2ex.com/t/1204661",
-      "score": 21,
-      "engagement": {
-        "likes": 0,
-        "comments": 7,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
         "设计"
       ],
-      "publishedAt": "2026-04-09T08:36:09.000Z"
+      "publishedAt": "2026-03-18T08:23:45.367Z",
+      "readingTime": 4
     },
     {
-      "id": "v2ex:1203775",
-      "type": "failure_postmortem",
-      "title": "基于 Rust 开发的 m3u8 下载器：支持断点续传、边下边播",
-      "body": "基于 Rust 开发的 m3u8 下载器：支持断点续传、边下边播\n\n# 基于 Rust 开发的 m3u8 下载器：支持断点续传、边下边播\r\n\r\n## 背景\r\n在访问 `M3U8`类网站的视频时，有时我们想下载视频到本地。\r\n\r\n市面上有 Chrome 类插件或脚本支持 m3u8 下载，但是不能断点续传和边下边播，也不太方便查看和管理下载过的视频。\r\n还有一些 m3u8 类下载软件，需要手动去找 m3u8 地址手填下载，不是很方便。\r\n\r\n于是我开发了 m3u8 播放器`M3U8 Quicker`，将两者结合起来，非常方便灵活下载 m3u8 视频并转成 mp4 ，安装包仅 2M 左右（ 1.0.0 版本）。\r\n\r\n`M3U8 Quicker` 基于 `Tauri + Rust + React + TypeScript` 构建，支持 Windows 、macOS 和 Linux 。无论是日常保存课程视频、整理网络媒体资源，还是处理需要额外请求头的流媒体地址，它都能提供更直接、更稳定的使用体验。\r\n\r\n![img]( https://i-blog.csdnimg.cn/direct/7eca",
-      "author": "liubsyy",
-      "source": "v2ex",
-      "sourceUrl": "https://www.v2ex.com/t/1203775",
+      "id": "linuxdo:1739873",
+      "slug": "ld-1739873",
+      "type": "tutorial",
+      "title": "【教程】用 Cloudflare Tunnel + Access，把本地 Chromium 安全接给 OpenClaw",
+      "body": "【教程】用 Cloudflare Tunnel + Access，把本地 Chromium 安全接给 OpenClaw适合使用服务器或者Docker部署OpenClaw，但是想要控制本地电脑浏览器的场景。欢迎大佬指正和优化方案。PS：忘记说了，这个方案部署后的3000端口可以直接打开docker内的浏览器。这样如果有遇到验证码可以直接人工干预。如有需要也可以将这个端口通过Tunnel一块共享到公网，但是一定要限制白名单访问！！！\nimage2472×1468 173 KB0. 准备条件一台本地机器，能跑 Docker\n一台 OpenClaw 服务器，最好有固定公网出口 IP\n一个已托管到 Cloudflare 的域名\n已开通 Cloudflare Zero Trust前提提醒：如果 OpenClaw 服务器的出口 IP 不固定，先解决固定出口/NAT 再做 Access 白名单，不然策略会经常失效。1. 本地启动 Chromium、cloudflared（只给本机调试，同时给 cloudflared 走容器内网）\n下面这份 docker-compose.yaml 直接把 chromium 和 cloudflared 放到同一个 Compose 项目里。9222 和 3000 只绑定宿主机回环地址；而 cloudflared 则通过容器内网直连 chromium:9222。为什么不用--remote-debugging-address参数？因为Chromium官方已经停用该参数了…\n1.1 进入：Zero Trust → Networks → Connectors → Create a tunnel → Select Cloudflared\nimage2568×1330 311 KB\n1.2 填写Tunnel name\n1.3 选择Docker，把Token复制出来\n1.4 本地找一个合适的位置新建一个文件夹，新建一个docker-compose.yaml，文件内容：\nservices:\nchromium:\nimage: lscr.io/linuxserver/chromium:latest\ncontainer_name: chromium\nrestart: unless-stopped\nports:\n- \"127.0.0.1:3000:3000\"  # 可选：本地 Web UI,用于直接打开docker内的浏览器\nenvironment:\n- PUID=1000\n- PGID=1000\n- TZ=Asia/Shanghai\n- LC_ALL=zh_CN.UTF-8\n- LANGUAGE=zh_CN.UTF-8\n- LANG=zh_CN.UTF-8\n- CHROME_CLI=chrome://version --remote-debugging-port=9222 --remote-allow-origins=*\nvolumes:\n- ./chromium-config:/config\nshm_size: \"4gb\"cloudflared:\nimage: cloudflare/cloudflared:latest\ncontainer_name: cloudflared\nrestart: unless-stopped\nnetwork_mode: \"service:chromium\"\ndepends_on:\n- chromium\ncommand: tunnel --no-autoupdate run --protocol http2 --token ${TUNNEL_TOKEN}1.5 替换文件中${TUNNEL_TOKEN}为你的隧道Token\n1.6 执行docker compose up -d启动服务\n1.7 在chromium容器内验证 CDP：\ncurl\ncurl能返回 JSON，说明 Chromium 的 CDP 已经起来了。linuxserver/chromium 默认没有强认证能力，官方也明确提醒不要直接暴露到公网。这里把端口绑在 127.0.0.1，就是为了把暴露面压到最小。 (LinuxServer)1.8 回到Zero Trust页面，确认 Connectors 下有内容,点击下一步\nimage2604×1636 269 KB\n1.9 输入你的域名信息，Service填写HTTP、127.0.0.1:9222\n1.10 注意：一定要在 Additional application settings → HTTP Settings → HTTP Host Header中输入127.0.0.1\nimage3114×2194 372 KB\n这里因为 cloudflared 和 chromium 在同一个 Compose 网络里，所以可以直接访问。Tunnel 的入口走公网域名，Tunnel 后端走容器内网，不需要再绕宿主机。Docker Compose 官方文档也明确说明了，同一网络里的服务可以通过服务名互相发现。 (Docker Documentation)\nCloudflare Tunnel 的 published application 本质上就是“公网 Hostname → 本地 Service”的映射；通过 Dashboard 添加 route 时，Cloudflare 还会自动创建对应的 DNS 记录。 (Cloudflare Docs)\n另外，CDP 底层会用到 WebSocket 升级连接。Cloudflare 支持代理 WebSocket 连接，不需要额外再套一层专门的 ws 代理。如果你之前手动把 Zone 的 WebSockets 关掉了，记得重新打开。 (Cloudflare Docs)2. 先在 Cloudflare Access 外面套一层“保护壳”\n进入：\nZero Trust → Access controls → Applications → Add an application → Self-hosted\n填写：Application domain：chrome.example.com\n其他外观项保持默认即可点击Create new policyAction：Bypass\nInclude：IP ranges\nValue：你的 OpenClaw 服务器出口 IP/32其余默认拒绝，打开审计日志。\nimage2380×1706 308 KB\n也就是说，这个域名不是“谁知道地址谁就能连”，而是“只有从你那台 OpenClaw 服务器出来的请求，才允许打到 CDP”。\nCloudflare Access 的 IP ranges 本身就是标准策略选择器，适合这类固定来源机器访问；Access 默认也是 deny by default。 (Cloudflare Docs)为什么这里默认推荐 IP allow，而不是 Service Token？\nCloudflare 的 Service Token 很适合自动化系统，但它要求请求里带 CF-Access-Client-Id 和 CF-Access-Client-Secret 头。OpenClaw 官方文档对远程 CDP 的主路径是配置 browser.profiles.<name>.cdpUrl 或 browser.cdpUrl，并明确写了支持 HTTP(S)/WS(S)、URL query token 和 HTTP Basic auth，但没有把“给远程 CDP 单独注入 Cloudflare Access 头”作为标准入口写出来。所以对 OpenClaw 这类“只填一个 cdpUrl”的接入方式来说，固定出口 IP + Access Allow 是最通用、最少坑的方案。等你的接入层明确支持自定义 Access 头，再切 Service Auth 也不迟。 (Cloudflare Docs)3. 启动 cloudflared\ndocker compose up -d cloudflared\ndocker compose logs -f cloudflared正常情况下，Tunnel 会很快连上 Cloudflare。4. 按顺序验证整条链路\n4.1 本地先看 Chromium 自己是否正常\ncurl\ncurl4.2 再看 cloudflared 容器能不能打到 Chromium\ndocker exec cloudflared wget -qO-如果这一步拿不到 JSON，先别看 Cloudflare，先把 Docker 侧打通。\n4.3 再从“允许的来源”验证公网域名\n最好直接在 OpenClaw 那台服务器 上跑：\ncurl\ncurl如果这里能返回 JSON，说明：Chromium 正常\nDocker 网络正常\nTunnel 正常\nAccess 放行正常如果你在自己电脑上测试却被拦截，不一定是坏事，往往只是因为你的电脑 不在 Access 的 IP 白名单里。如果 Tunnel 没连上，但 DNS 记录已经在，Cloudflare 侧常见现象是 1016。这是因为 DNS 记录和 Tunnel 本身是独立的，Tunnel 停了，记录不会自动删。 (Cloudflare Docs)5. 接到 OpenClaw\nOpenClaw 官方文档对远程 CDP 的说明很明确：用 browser.profiles.<name>.cdpUrl 或 browser.cdpUrl\n如果给的是  这类 HTTP(S) 入口，OpenClaw 会先请求 /json/version 获取 WebSocket debugger URL，再建立连接\n如果给的是 wss://...，就会直接走 WebSocket 连接 (OpenClaw)一个最直接的配置示例：\n{\n\"browser\": {\n\"profiles\": {\n\"remote\": {\n\"cdpUrl\": \"\n\"color\": \"#00AA00\"\n}\n}\n}\n}接好之后，建议按这个顺序验：能列出 tabs openclaw browser tabs\n能打开新页面 openclaw browser open\n能 screenshot openclaw browser screenshot\n能 snapshot / PDF openclaw browser snapshot如果“能连上但截图/快照能力不完整”，再去看 OpenClaw 侧是否带了完整的浏览器/Playwright 依赖。OpenClaw 官方文档也说明了，部分高级能力依赖 Playwright。 (OpenClaw)6. 常见故障排查顺序\n6.1 本地 CDP 没起来\n先看：\ncurl没 JSON，就先不要继续排 Tunnel。\n6.2 容器内网不通\n看这条：\ndocker exec cloudflared wget -qO-如果这里失败，问题在 Docker 网络或 Chromium 监听地址，不在 Cloudflare。\n6.3 Access 拦截了\n去 Zero Trust 的日志里看请求有没有命中策略。\n尤其要确认 OpenClaw 服务器看到的 真实出口 IP 和你写进白名单的 IP 是同一个。\n6.4 OpenClaw 的 cdpUrl 写错了\n两个常见错误：把  当成 cdpUrl 填进去\nHTTP(S) 模式下，通常应该填基础地址：\n把 HTTP 入口和 WebSocket 入口混着用\n只有在你已经拿到明确的 ws:// / wss://.../devtools/browser/... 时，才直接填 WebSocket 地址。OpenClaw 文档也明确区分了这两种模式。 (OpenClaw)6.5 Chromium 容器在老环境启动异常\nlinuxserver/chromium 官方文档提到，某些较老的内核或较老的 libseccomp 环境里，可能需要额外加：\nsecurity_opt:\n- seccomp=unc",
+      "author": "zhfeng",
+      "authorBio": "",
       "score": 21,
       "engagement": {
-        "likes": 0,
-        "comments": 19,
+        "likes": 46,
+        "comments": 22,
         "shares": 0
       },
       "topics": [
         "开发工具",
         "效率",
-        "扩展"
+        "设计"
       ],
-      "publishedAt": "2026-04-06T03:44:41.000Z"
+      "publishedAt": "2026-03-12T04:29:09.478Z",
+      "readingTime": 17
     },
     {
-      "id": "linuxdo:1945501",
-      "type": "build_log",
-      "title": "OpenCode + oh-my-opencode 踩坑实录",
-      "body": "OpenCode + oh-my-opencode 踩坑实录\n\nOpenCode + oh-my-opencode（已改名oh-my-openagent） 踩坑实录\n前言\n一直在用cladue code+glm系列模型 &amp; 中转站的opus ，平时claude老是需要确认命令太烦了。试了OpenCode之后发现OpenCode在解决问题、调用agent的时候更积极，感觉更适合glm-5.1。于是打算在家里和公司的电脑（都是Windows）配置OpenCode+ oh-my-openagent组合拳。途中遇到很多问题，现在整理出来，希望对各位佬友有参考作用。\n配置好OpenCode之后尽量不要随便升级，这玩意奇奇怪怪的bug太多了。有问题可以第一时间让它自己看日志\n正文\nOpenCode + oh-my-openagent 排障速查手册\n遇到问题？Ctrl+F 搜报错关键词，直接跳到解决方案。适用于 macOS / Linux / Windows，不限 provider。\n路径约定：~ = 用户主目录（macOS: /Users/&lt;你&gt;，Linux: /home/&l",
-      "author": "特别部队",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1945501",
+      "id": "linuxdo:1005998",
+      "slug": "ld-1005998",
+      "type": "tutorial",
+      "title": "分享一下claude code的简单教程，适合刚从cursor转claude code的佬",
+      "body": "分享一下claude code的简单教程，适合刚从cursor转claude code的佬以前圈子里主要用的 cursor，后面edu也掉了，白嫖也困难了，再加上 claude code 中转也比较多，还有国内 glm、k2 等也可以直接用于 cc，所以决定转用 cc。本文算是基于官方文档转成的比较简易的操作流程吧，也结合了一些自己遇到的问题的解决方法\n前言\n本文关键词：WSL环境、第三方API\n贴一下 Claude Code 官方文档：\n本文主要讨论如何在 Windows 系统下，通过 WSL 安装和配置 Claude Code 工具。\nWSL，全称 Windows Subsystem for Linux，是 Windows 系统的一个神来之笔。它允许开发者在 Windows 上直接运行 Linux 环境，而无需虚拟机或双启动。这意味着你既能享受到 Windows 的便利，又能直接在 Linux 环境中做开发，省去了很多切换平台的麻烦。\n安装步骤\n1. 进入 WSL 环境\n首先，你需要确保 Windows 系统已经安装了 WSL。如果还没有，可以参考 Microsoft 官方文档进行安装。安装完成后，在 PowerShell 或 CMD 中输入 wsl 即可进入 Linux 环境。安装教程直接问 AI 就好了，就几步命令的事\n2. 安装 Claude Code\n在 WSL 环境中，使用 npm 进行安装：\nnpm install -g -ai/claude-code如果在安装过程中遇到问题，不要使用 sudo（官方也不推荐，可能导致后续的权限问题），可以按照以下方法解决：\n首先创建 npm 全局安装目录，并配置 npm 将全局包安装到该目录：\nmkdir ~/.npm-global\nnpm config set prefix '~/.npm-global'然后，将这个目录添加到系统的 PATH 环境变量中，这样系统就能找到全局安装的命令了。执行以下命令，将配置写入 .bashrc 文件并立即生效：\necho -e \"\\n export PATH=~/.npm-global/bin:$PATH\" >> ~/.bashrc\nsource ~/.bashrc完成上述配置后，再次尝试安装 Claude Code。\n3. 最简配置\nClaude Code 文档很多内容，以下是保证能用的基础配置，再后面会有进阶设置。\n3.1 第三方模型配置\n配置第三方服务 API（比如 GLM、AnyRouter 等），就需要配置 key 和 baseUrl。这里以 AnyRouter 为例。\n在 WSL 环境中，进入 ~/.claude 目录。如果该目录下没有 settings.json 文件，就新建一个，然后添加以下内容：\n{\n\"env\":{\n\"ANTHROPIC_AUTH_TOKEN\": \"sk-xxxxx\",\n\"ANTHROPIC_BASE_URL\": \" # 没科学环境可以用\n}\n}3.2 全局提示词\n在 ~/.claude 目录下，检查是否存在 CLAUDE.md 文件。如果没有，就新建一个，并添加你希望的全局提示词，例如：\n## Response Language\n**除非有特殊说明，请用中文回答。**你可以根据自己喜好随意修改这个全局提示词。\n4. 开始使用\n配置完成后，就可以开始使用 Claude Code 了。\n首先，导航到你的项目目录：\ncd your-awesome-project然后，启动 Claude Code：\nclaude5. 进阶配置\n5.1 修改模型\n如果你比较富有，或者有其他特殊需求，可以通过修改 settings.json 来使用不同的模型，比如 Opus 模型。\n在 ~/.claude/settings.json 文件中，添加 model 字段：\n{\n\"model\": \"opus\",\n\"env\":{\n// ...省略其他配置...\n}\n}这里 opus 是模型的别名，你可以填写完整的模型名称。具体可用的模型名称和配置，请参考 Claude Code 官方文档中关于模型配置的部分：\n5.2 提示词管理\nClaude Code 的提示词分为全局提示词和项目提示词。\n全局提示词：上面已经提到过，在 ~/.claude/CLAUDE.md 中配置。\n项目提示词：如果你希望某个项目有专属的提示词，可以在该项目目录下新增 CLAUDE.md 文件，或者在该项目目录下创建 .claude 文件夹，并在其中新增 CLAUDE.md 文件。\n关于提示词的更多详细信息和最佳实践，可以参考 Claude Code 官方文档中关于记忆（Memory）的部分：\n5.3 （重要）IDE 联动 claude code\n说起来，用过 cursor 的人刚入手 claude code 会发现命令行版始终是不太方便，其中最核心的就是：cursor 中，当前编辑器所打开中的某个文件，会实时的在 cursor AI (暂且叫这个名)中实时关联，我可以直接对这个文件提问，同样的，如果我选中某段代码，它也能实时感知到。相比之下， cc (打 claude code 打累了，就叫这个吧)如果你要对某个文件提问，你就得把文件具体路径告诉它，如果你偷懒只打了文件名，那么好，它会在整个项目中调命令去找到这个文件，耗时间也耗token，针对代码段提问你也得把具体行数告诉它。\n==但其实，这个问题是可以解决的==\ncc 内置功能是可以通过 /ide 命令来选择关联的 ide的，vscode 系列包括 cursor、Jetbrain 等都可以。但是吧，如果你通过这个命令，发现检测不到 ide，那就看下面的解决方法官方解决方案：\nWSL 环境处理\n首先呢，WSL 默认是 NAT 网络，是什么不重要，重要的是，这可能会导致 WSL 环境下安装的 cc 检查不到 windows 系统下的 ide。官方说 “可能”，反正在我这里就是 100% 不得行。然后官方这里提了两种解决方案：\n第一种：配置Windows防火墙：windows 下执行 wsl hostname -I 可以看到 wsl 系统的 IP，然后以管理员身份打开PowerShell并创建防火墙规则：New-NetFirewallRule -DisplayName \"Allow WSL2 Internal Traffic\" -Direction Inbound -Protocol TCP -Action Allow -RemoteAddress 172.21.0.0/16 -LocalAddress 172.21.0.0/16 （根据步骤1中的WSL2子网调整IP范围）其实第一种，我执行了并没什么用，还是不得行，你们可以试试，我是用第二种解决的，但官方推荐这种\n第二种：切换到镜像网络：\n在您的Windows用户目录中的 .wslconfig 中添加（没这个文件就自己加一个）：\n[wsl2]\nnetworkingMode=mirrored然后从PowerShell使用wsl --shutdown重启WSL。（自测发现最好也要重启下 ide 和其他 wsl 窗口）在 cc 中，通过 /ide 命令来选择关联的 ide。\n如果有必要，你可以设置自动连接 ide：输入 /config，将 Auto-connect to IDE (external terminal 改成true。完事5.4 状态栏自定义\n使用 cursor 的 ai 时，输入框旁边是可以显示你当前用的什么模型，也能显示当前上下文的百分百。但你刚用 cc 会发现，这玩意啥都没有\n==好了，其实也是可以有的==\ncc 提供了状态栏的自定义，懒得说了，有兴趣可以直接看文档:\n我这里直接说一个简单版的，有两种选择吧：\n第一种选择（稍微复杂一点，自定义程度高）：\n来自：通过bunx安装（如果没安装bunx就问AI）：bunx ccstatusline然后在 `.claude\\settings.json` 中配置：\n{\n...\n\"statusLine\": \"bunx ccstatusline\"\n...\n}然后 wsl 中执行 bunx ccstatusline，可以自定义配置你要显示的状态栏，配置完按指引保存，下次打开 cc 就能看到效果了第二种选择（极其简单，自定义程度低，够用）：\n来自：在 `.claude\\settings.json` 中配置：\n{\n...\n\"statusLine\": \"npx -y ccusage statusline\"\n...\n}两种都只介绍了最简单的用法，详细可以去对应的 github 仓库看",
+      "author": "HEA",
+      "authorBio": "",
       "score": 21,
       "engagement": {
-        "likes": 21,
-        "comments": 13,
+        "likes": 176,
+        "comments": 56,
         "shares": 0
       },
       "topics": [
+        "出海",
         "AI",
-        "扩展"
+        "开发工具"
       ],
-      "publishedAt": "2026-04-11T11:30:53.419Z"
+      "publishedAt": "2025-10-03T06:03:07.939Z",
+      "readingTime": 12
     },
     {
-      "id": "linuxdo:1808042",
-      "type": "build_log",
-      "title": "【开源】超详细的Openclaw - Obsidian知识库，整理了一周，分享给大家！",
-      "body": "【开源】超详细的Openclaw - Obsidian知识库，整理了一周，分享给大家！\n\n本帖使用社区开源推广，符合推广要求。我申明并遵循社区要求的以下内容：\n\n我的帖子已经打上 开源推广 标签： 是\n我的开源项目完整开源，无未开源部分： 是\n我的开源项目已链接认可 LINUX DO 社区： 是\n我帖子内的项目介绍，AI生成、润色内容部分已截图发出： 是\n以上选择我承诺是永久有效的，接受社区和佬友监督： 是\n\n以下为项目介绍正文内容，AI生成、润色内容已使用截图方式发出\n\n\n感觉审核了好多次，Github上也加LinuxDO友链了啊。（就是发不出去，希望这次可以发出去，呜呜呜）\n\n背景\n最近两个月，OpenClaw 小龙虾的火爆确实让人 FOMO 啊 。从 1 月下旬的初露头角到 3 月的各种流派并起，信息量已经大到了让人疲惫的程度。\n当热潮开始进入冷静期，反而是一次\"补票上车\"的最好时机。与其在焦虑中盲目跟风，不如在看清全貌后再精准入局。\n没有调研，就没有发言权。\n无论佬们对 OpenClaw 的看法怎么样，反正默子就觉得它真的是一个垃圾东西，没有我的 Claude Code 好使。",
-      "author": "默子",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1808042",
+      "id": "linuxdo:656539",
+      "slug": "ld-656539",
+      "type": "tutorial",
+      "title": "假期旅游出行，完全不知道如何做攻略？使用MCP完美规划旅行线路！从零开始的图文教程",
+      "body": "假期旅游出行，完全不知道如何做攻略？使用MCP完美规划旅行线路！从零开始的图文教程使用MCP完美规划旅行线路！从零开始的图文教程本帖使用了AI工具对帖子内容进行美化排版，已针对部分AI话术进行拟人化处理，让各位看起来不那么难受，自己手打的原帖排版实在是没法看。AI引言\n最近计划出去旅游，目的地是一个之前从未做过攻略的地方，一时兴起就决定去了。但行前毫无头绪：不知道要去哪里逛，不清楚旅行线路，不懂如何避坑，更不知道怎样才能省钱、追求高性价比。自己搜索攻略，不仅耗费时间，效率也低下，各路信息繁杂，整理起来令人眼花缭乱。\n解决方案： 使用MCP工具整合多个平台信息！\n直接上成果展示： 规划表示例\n1276×1473 144 KB\n1276×1600 281 KB\n那么，这种内容\n的整合是如何实现的呢？答案就是使用 MCP (Model Context Protocol)，让 AI 将多个工具整合起来协同工作。\nMCP (Model Context Protocol) 是什么？\nMCP 是一种开源协议，旨在以标准化的方式向大型语言模型 (LLM) 提供上下文信息。类比理解：\n可以把 MCP 想象成 AI 领域的“U盘”。我们知道，U盘可以存储各种文件，插入电脑后就能直接使用。类似地，MCP Server 上可以“插”上各种提供上下文的“插件”，LLM 可以根据需要向 MCP Server 请求这些插件，从而获取更丰富的上下文信息，增强自身能力。MCP 的核心优势标准化： MCP 提供了统一的接口和数据格式，使得不同的 LLM 和上下文提供者可以无缝协作。\n模块化： MCP 允许开发者将上下文信息分解为独立的模块（插件），方便管理和复用。\n灵活性： LLM 可以根据自身需求动态选择所需的上下文插件，实现更智能、更个性化的交互。\n可扩展性： MCP 的设计支持未来添加更多类型的上下文插件，为 LLM 的能力拓展提供了无限可能。本次教程使用到的MCP工具\n我主要是在 Windsurf 中用这些 MCP 工具，Cursor 和 CherryStudio 也同样支持。\n用到的MCP工具有：12306-mcp： 用于查询 12306 火车票及车站信息。\nxhs-mcp： 用于获取小红书笔记内容。\namap-amap-sse： 用于通过高德地图规划行程。\n(variflight-mcp)： 使用飞常准-Aviation查询航班信息（备选）。从零开始：如何使用这些强大的工具？【详细教程】\n第一步：获取必要的 MCP 服务授权与链接\n1.1 获取高德地图 MCP 的使用授权（API免费）获取高德地图 MCP 授权步骤重要提示： 此处教程直接引用了来自 飞书作者 成峰 的教程。打开高德开放平台官网：通过支付宝进行登录。\n登录页面1280×868 126 KB扫码登录。\n扫码界面1280×863 74.3 KB勾选同意，然后点击授权。\n授权按钮1280×863 60 KB注册成为高德地图的开发者。输入手机号，进行验证码登录。\n手机号验证1280×822 53.4 KB身份验证。选择个人支付宝扫码认证。\n支付宝认证1280×823 79.5 KB点击快速认证通道。\n快速认证1280×823 80.2 KB再次授权（第一次是登录授权，第二次是身份验证授权）。\n再次授权1280×704 57.4 KB填入邮箱进行验证。输入可接收验证码的邮箱，获取并输入验证码。\n邮箱验证1280×704 69.9 KB注册成功，等待进入控制台。\n注册成功1280×704 42.2 KB创建应用。点击“应用管理” → “我的应用” → “创建新应用”。\n创建应用步骤1280×735 51.1 KB应用名称随便填，应用类型选择第一个“出行”，确认新建。\n填写应用信息1280×665 29 KB添加 Key。点击“添加key”。\n添加Key1280×633 56 KBKey 名称随便填，服务平台选择“Web服务”，勾选同意，提交。\n填写Key信息1194×1280 220 KB复制 Key。提交后会看到生成的 Key，务必复制并妥善保存。\n复制Key1280×281 29.3 KB1.2 获取 ModelScope 平台提供的 MCP 工具链接 (如12306, 非常准等)获取 ModelScope 平台 MCP 工具专属链接步骤\n我们直接访问 ModelScope MCP 平台。\n在这个网站上，你会发现收集了许多 MCP 工具。我们教程中用到的工具有 12306火车票查询 (12306-mcp)、非常准机票查询 (variflight-mcp)，还有高德地图提供的版本（但我们一般都是使用前一步骤中在高德开放平台申请的 Key和高德官方的url）。\n1920×963 118 KB在 ModelScope 官网注册账号并完成必要的验证（需要绑定手机号）。登录后，找到所需的 MCP 工具： “12306-mcp” 和 “variflight-mcp”。进入所需工具的页面后，右侧会展示该工具的 “SSE URL连接服务” 的配置信息。\n1465×848 48.4 KB重要提示： ModelScope 上 Hosted MCP 服务的 SSE URL是为您分配的专属连接地址，为敏感信息，请勿对外泄漏！\n获取到这些专属的 “SSE URL连接服务” 的配置信息 后，你需要在 第二步 中介绍的 MCP 客户端配置文件（如 mcp_config.json）中，将它们添加到对应的配置文件处。第二步：通过 Cursor 使用 MCP通过 Cursor 使用 MCP 步骤重要提示： 此处教程直接引用了来自 飞书作者 成峰 的教程。打开 Cursor，进入设置。按图示顺序点击：1 (设置) → 2 (MCP) → 3 (Add new global MCP server)。\n1280×876 171 KB打开 mcp_config.json 文件。\n1280×343 29 KB粘贴以下代码到 mcp_config.json 文件中。原始教程中的示例 (仅高德):{\n\"mcpServers\": {\n\"amap-amap-sse\": {\n\"url\": \"[\n}\n}\n}包含多个服务的推荐配置：{\n\"mcpServers\": {\n\"amap-amap-sse\": {\n\"url\": \"[\n},\n\"variflight-mcp\": {\n\"url\": \"[\n},\n\"12306-mcp\": {\n\"url\": \"[\n},\n\"xhs-mcp\": {\n\"command\": \"cmd\",\n\"args\": [\n\"/c\",\n\"npx\",\n\"-y\",\n\"/cli\",\n\"run\",\n\"根据自己的链接修改/xhs-mcp\",\n\"--key\",\n\"根据自己的链接修改\",\n\"--profile\",\n\"根据自己的链接修改\"\n]\n}\n}\n}替换 Key。将上一步中复制的高德地图 Key 粘贴到 \"amap-amap-sse\" 配置的 serverUrl 中相应位置。\n1280×385 50.5 KB关闭并保存 mcp_config.json 文件。\n1280×1053 100 KB检查 MCP 设置状态。回到之前的 MCP 设置页面，查看对应服务是否显示为绿色（表示连接正常）。\n1280×494 64.7 KB如果未变绿：点击右边的重启小按钮（在 “Enabled” 和铅笔图标中间）。\n仔细检查 Key 和代码是否正确无误。配置 Features。在 MCP 设置中，点击 (2) Features。\n找到 (3) “Enable auto-run mode”。\n务必不要勾选 “MCP tools protection”。如果勾选，每次 AI 调用工具都需要手动同意。\n1280×921 205 KB第二步（可选）：通过 Windsurf 使用 MCP通过 Windsurf 使用 MCP 步骤进入 Windsurf 后，点击右上角 人头像 按钮。\n578×826 30.1 KB进入 Windsurf 的设置界面，新增 MCP 服务器。\n1344×1081 60.4 KB新建自定义 MCP 服务器。\n1261×646 35.8 KB将以下 JSON 代码粘贴进图内的配置文件中，然后按下 Ctrl+S 保存。\n{\n\"mcpServers\": {\n\"amap-amap-sse\": {\n\"serverUrl\": \"[\n},\n\"variflight-mcp\": {\n\"serverUrl\": \"[\n},\n\"12306-mcp\": {\n\"serverUrl\": \"[\n},\n\"xhs-mcp\": {\n\"command\": \"cmd\",\n\"args\": [\n\"/c\",\n\"npx\",\n\"-y\",\n\"/cli\",\n\"run\",\n\"根据自己的链接修改/xhs-mcp\",\n\"--key\",\n\"根据自己的链接修改\",\n\"--profile\",\n\"根据自己的链接修改\"\n]\n}\n}\n}985×338 20.3 KB注意： 务必将 \"高德地图key输入在这里\" 替换为您真实的高德地图 Key，并根据实际情况修改其他服务的链接。回到 Windsurf Settings 页面，点击 Refresh 按钮。正常情况下，除了 xhs-mcp，另外三个工具应该都变为可用状态。\n1298×1109 86.6 KB如果 xhs-mcp 工具报错，解决方法见后续步骤。第二步（可选）：通过 CherryStudio 使用 MCP通过 CherryStudio 使用 MCP 步骤重要提示： 此处教程部分引用了来自 Cherry AI 官方文档 的教程。准备工作：安装 uv、bun\nCherry Studio 目前只使用内置的 uv 和 bun，不会复用系统中已经安装的 uv 和 bun。在 设置 - MCP 服务器 中，点击 安装 按钮，即可自动下载并安装。\n1200×822 62.5 KB可执行程序安装目录：Windows: C:\\Users\\用户名\\.cherrystudio\\bin\nmacOS、Linux: ~/.cherrystudio/bin\n1057×327 16.8 KB无法正常安装的情况下：可以将系统中的相对应命令使用软链接的方式链接到这里，如果没有对应目录，需要手动建立。\n也可以手动下载可执行文件放到这个目录下面：Bun:\nUV:添加 MCP 工具：在 CherryStudio 的 MCP 工具前置运行环境安装好后，点击“添加服务器”。\n1559×822 46.5 KB参考 Windsurf 的 MCP 配置文件，将内容添加进对应的地方。按照下图格式填写，其他未提到的 MCP 工具可以举一反三进行配置。\n1216×1296 37.6 KB\n1216×1491 40.7 KB提示： 配置文件内容与 Windsurf 部分的 JSON 结构类似，请确保 Key 和相关链接填写正确。第三步：配置 xhs-mcp 的运行环境配置 xhs-mcp 运行环境步骤\n此步骤部分引用了 GitHub 项目原作者的教程：jobsonlook/xhs-mcp环境准备 (如果对以下环境安装不熟悉，可以直接问 GPT)：Node.js\nPython 3.12\nuv (pip install uv)安装依赖：\n方法一：使用 Git (推荐)\n如果你的电脑安装了 Git，请执行以下命令：\ngit clone git.com:jobsonlook/xhs-mcp.git\ncd xhs-mcp\nuv sync方法二：手动下载 ZIP 包 (如果没有安装 Git)前往 jobsonlook/xhs-mcp 的 GitHub 页面。点击绿色的 “Code” 按钮，然后选择 “Download ZIP”。\n835×558 41.2 KB下载完成后，将 ZIP 文件解压到你希望存放项目的文件夹。通过命令行工具 (如 Windows 的 CMD 或 PowerShell，macOS/Linux 的 Termina",
+      "author": "Puppy",
+      "authorBio": "",
       "score": 21,
       "engagement": {
-        "likes": 193,
-        "comments": 95,
+        "likes": 307,
+        "comments": 109,
         "shares": 0
       },
       "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
+        "增长",
+        "出海",
+        "AI"
       ],
-      "publishedAt": "2026-03-24T10:49:26.673Z"
-    },
-    {
-      "id": "linuxdo:1561917",
-      "type": "build_log",
-      "title": "免费低门槛获取一些服务器玩openclaw的途径。（欢迎各位佬补充修改编辑。）",
-      "body": "免费低门槛获取一些服务器玩openclaw的途径。（欢迎各位佬补充修改编辑。）\n\n\n\n\n\n腾讯云cloud studio\n\n\n\n\nCloud Studio_在线编程_在线IDE_WebIDE_CloudIDE_腾讯云\n图片1530×355 48 KB\n腾讯云的配置挺不错的，给的地区是香港的（好像没有了？关掉一会就开不出来了？？！）。\n实测1核2G的配置也可以带的动，建议先使用2核心4G的配置好，再降配，这样可以获得一个凭签到就可以活的更长的openclaw\n图片954×879 100 KB\n图片1917×938 93.6 KB\n如果有佬想用其他版本的，也可以使用它的ubuntu环境来搭建。\n图片909×837 45.3 KB\n注册也送50个积分，当前可以每天签到。\n图片1618×863 191 KB\n还有教程可以使用，按照教程来，一般没什么问题，适合小白处理一些意料之外的问题。同时，内置的CodeBuddy可以鞭策AI帮忙配置。（挺好的，可以作为openclaw自己把自己玩死后的补救手段）\n图片1483×866 110 KB\n50/（2.4-2）=125\n当前来说是腾讯云非常良心的，（",
-      "author": "renran",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1561917",
-      "score": 21,
-      "engagement": {
-        "likes": 241,
-        "comments": 71,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
-        "效率"
-      ],
-      "publishedAt": "2026-02-03T16:05:21.957Z"
-    },
-    {
-      "id": "linuxdo:952503",
-      "type": "build_log",
-      "title": "高强度使用 Codex 的心得(如何让它成为一个乖宝宝🤣)",
-      "body": "高强度使用 Codex 的心得(如何让它成为一个乖宝宝🤣)\n\n更新日志\n\n\n\n\n日期\n更新内容\n\n\n\n\n20250918\n去掉无用参数说明 &amp; 文件/图片引用方式\n\n\n20250917\n补充 serena MCP 配置使用说明\n\n\n20250916\n继续补充使用新版 codex 插件问题\n\n\n20250916\n补充 MCP 配置超时参数与 windows MCP 环境问题 &amp; 新发 gpt-codex 模型问题记录\n\n\n20250914\n补充 node 环境一致性内容 &amp; uv/uvx 包安装\n\n\n20250913\n修正全局配置 AGENTS.md 中对于 serena mcp 的描述\n\n\n20250912\n初始版文档\n\n\n\n\n记录贴\n\n由前文 几家 Claude Code API 中转站使用体验 而来，使用 cc 的成本实在太高了，转向了 Codex\n\nCodex 安装\nnpm i -g @openai/codex\n\nCodex 基础配置\n配置文件位置： ~/.codex/config.toml，没有则自己手动创建一个\nmodel = \"gpt-5\"\n\nmo",
-      "author": "lostsheep",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/952503",
-      "score": 21,
-      "engagement": {
-        "likes": 1339,
-        "comments": 378,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
-      ],
-      "publishedAt": "2025-09-12T08:05:58.945Z"
+      "publishedAt": "2025-05-17T11:40:20.683Z",
+      "readingTime": 20
     },
     {
       "id": "linuxdo:926375",
+      "slug": "ld-926375",
       "type": "build_log",
       "title": "Claude code 一点记录",
-      "body": "Claude code 一点记录\n\n \n看相关claude code记录内内容学习，上面杂乱记录些感想或知识点。 资源部分收集不错的内容。\n11.04 开源配置CC项目\nClaude Code Templates 是一个开源 CLI 工具，用于配置 Claude Code 项目并提供专门的组件来增强您的 AI 驱动开发工作流程。\n安装(官方有了建议)\nimage1268×734 95.2 KB\nClaude code 学习笔记\nclaude code 工具支持 output styles, subagents,command . 这好像是不同层级或者领域的概念.\n\ncommand像是一个简写的指令,减少输入的频繁性.\noutput styles是直接对主干进行了设置,类似最高级层级system设定,比如回复的语言、语气、目的、也可以调用subagent. 相比command更高层级.\nsubagents更像是一个独立的worker或者角色. 他和主干的关系像是成员, 主干如果是队长,subagent像是队员. 优势独立性、针对性、不影响主干context.\n\n对话中引用\ncommand",
+      "body": "Claude code 一点记录\n看相关claude code记录内内容学习，上面杂乱记录些感想或知识点。 资源部分收集不错的内容。\n11.04 开源配置CC项目\nClaude Code Templates 是一个开源 CLI 工具，用于配置 Claude Code 项目并提供专门的组件来增强您的 AI 驱动开发工作流程。\n安装(官方有了建议)\nimage1268×734 95.2 KB\nClaude code 学习笔记\nclaude code 工具支持 output styles, subagents,command . 这好像是不同层级或者领域的概念.command像是一个简写的指令,减少输入的频繁性.\noutput styles是直接对主干进行了设置,类似最高级层级system设定,比如回复的语言、语气、目的、也可以调用subagent. 相比command更高层级.\nsubagents更像是一个独立的worker或者角色. 他和主干的关系像是成员, 主干如果是队长,subagent像是队员. 优势独立性、针对性、不影响主干context.对话中引用\ncommand引用\noutput styles设置后引用,比如每次回复都是用xyz agent.memory\n私有项目内存\n已经废弃了 ./CLAUDE.local.md 的项目私有内存文件。\n将这个文件放在自己的用户目录下~/.claude/project-xxx.md 。 然后再将这个文件通过。\n注意引入文件不要通过.md 和 .md 。 这种文件避免歧义会被pass 。Individual Preferences- @~/.claude/project-xxx.md最佳实践“使用2空间缩进”比“正确格式代码”要好。\n使用结构来组织：将每个单独的内存格式化为标志性标题下的子弹点和组相关的记忆。\n定期审查：随着项目的发展，更新记忆力，以确保Claude始终使用最新的信息和上下文。memory 记录常用配置或指令\n为了简便自己常使用的对话，创建command。创建command 在项目创建commands 文件夹。\n每个命令在目录下创建一个md文件。\n文件名称第一行是命令，内容进行描述。Claude Code 只有一个主线程。它会周期性地使用几种不同类型的提示词，比如总结 git 历史、将消息历史压缩成一条消息，或者搞出一些有趣的用户体验元素。维护一个扁平的消息列表。\n如果有一个或多个复杂任务，主智能体就会创建自己的克隆体。这种“最多一个分支”的设计与待办事项列表相结合，确保了智能体既能将问题分解为子问题，又能始终关注最终的预期结果。\nANTHROPIC团队表示，你在 Claude.md 文件中将工作流程、工具和期望文档化得越好，Claude Code 的表现就越出色。当你拥有现成的设计模式时，这使得 Claude Code 在设置新数据管道等常规任务上表现卓越。\n处理敏感数据时使用 MCP 服务器而非命令行界面\n他们建议使用 MCP 服务器而不是 BigQuery 命令行界面，以便更好地控制 Claude Code 的访问权限，尤其是在处理需要日志记录或存在潜在隐私问题的敏感数据时。\n自动编辑模式\n自动编辑会列出来计划和修改代码。\nplan 模式\n设计方案,需要思考时加入 think等关键词。\n资料\n入门：\n视频：Claude Code 入门保姆级教程！从安装到使用全流程讲解\nClaude Code必备实用技巧合集：狂飙模式、文件引用、图片插入、MCP全局安装、模型切换全流程\n新手Claude Code入门实战: 开发一个超赚钱的AI编程文档工具文章:Claude Code是什么？如何使用Claude Code｜Claude Code使用教程与完整指南 - 阿小信的博客\nClaude Code: Best practices for agentic coding\n官方教程:进阶：\n视频:code with claudeClaude Code 入門：Windows, Mac 安裝、 AI 專案初始化模板、Gemini CLI適用、九大必學技巧、並列執行加速器Claude Code: From Beginner to Expert in 19 Minutes)别人还在入门，你已经精通！Claude Code进阶必备14招Claude Code的超能力解锁！一文看懂MCP是如何让AI无所不能的)0基础学Claude Code项目存档+回退+对话恢复，操作不怕错，完整教学超简单Claude Code + Cursor 实战：破解加密Cookie并采集数据用最少 token 做最多事：Agent tools 设计指南逆向CLaude,获取更多技巧文章：克劳德代码开发命令套件Claude Code Sub-Agents：从手工作坊到自动化工厂原文 Claude Code 究竟牛在哪里？\n译文  Claude Code 究竟牛在哪里？（以及如何在你的 AI 智能体中复刻它的魔法！）接入配置方式一：export ANTHROPIC_BASE_URL=xxx\nexport ANTHROPIC_AUTH_TOKEN=xxx方式二：\"env\": {\"ANTHROPIC_BASE_URL\": \"\",\"ANTHROPIC_AUTH_TOKEN\": \"\"}方式三：\n使用 claude code router 接入可以支持OpenAI类型API，Gemini等功能。sub agents\nsub agents 可以减少主contex 的长度，通过sub agent模式建立agent去实现动作，将最后得到的信息给到主 context中。减少主context中的脏上下文占用。\n文档：Create custom subagents - Claude Code Docs视频：Master Claude Code Sub‑Agents in 10 Minutes\nClaude Code 逆向下集，Sub Agent 等多种技巧解密\nBuild an AI Army With Claude Code’s New Sub-Agents\nI was using sub-agents wrong… Here is my way after 20+ hrs资源：Claude Code AgentsGitHub - zhsama/claude-sub-agent: AI-driven development workflow system built on Claude Code Sub-Agents. · GitHub\n如何好好利用Claude Code，这是我的三个见解👇分享：Zyhlearning:在的基础上推荐自认为受益的：这篇文章总结的不错：详细介绍了 Git Worktree 和 CC 的结合；并行开发和回滚代码很方便；\n另外吴恩达老师的claude的课程，由浅入深，而且课程也不长，也很推荐： 吴恩达同步最新AI课，第86讲：Claude Code-高智能的编程助手-A Highly Agentic Coding Assistant_哔哩哔哩_bilibili\n官方文档：内置AI问答，使用AI配置自己的Claude,会事半功倍；AI内嵌在官方文档的搜索框中；skills 新功能\n文档官方文档 skills视频Claude 的这项新功能将使您的工作效率提高 10 倍How Claude Solved AI’s Biggest ProblemStop Using MCP… Use NEW Claude Skills InsteadClaude Skills：被 90% 的人低估的自动化超能力 | 三周深度实测 | 回到大致看了一遍，简单理解\"即用工作流功能\"，即插即用的workflow,小型工具或工作流的感觉。也有不污染主context的作用。\n他是一个\"文件夹\"，里面包含了提示内容的MD文件。skills 渐进式加载，需要才会调用某个技能。 先加载介绍，所以介绍太雷同容易让她混淆。\n结构\npdf-processing/\n├── SKILL.md\n├── FORMS.md\n├── REFERENCE.md\n└── scripts/\n├── fill_form.py\n└── validate.py至少有个SKILL.md ，此文件支持配置工具权限。allowed-tools: Read, Grep, Glob\n存放位置：\n个人 Skills：~/.claude/skills/skill-name/SKILL.md\n项目 Skills ：.claude/skills/skill-name/SKILL.md",
       "author": "豆包",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/926375",
+      "authorBio": "",
       "score": 21,
       "engagement": {
         "likes": 207,
@@ -4600,39 +4486,41 @@
         "shares": 0
       },
       "topics": [
+        "变现",
         "AI",
-        "开发工具",
-        "效率"
+        "开发工具"
       ],
-      "publishedAt": "2025-09-03T02:04:08.919Z"
+      "publishedAt": "2025-09-03T02:04:08.919Z",
+      "readingTime": 12
     },
     {
-      "id": "linuxdo:1108766",
-      "type": "build_log",
-      "title": "Cursor & Claude Code 使用 MiniMax M2 模型",
-      "body": "Cursor & Claude Code 使用 MiniMax M2 模型\n\nCursor &amp; Claude Code 使用 MiniMax M2 模型\n\n接入教程与效果对比\n\nCursor 接入\n\n此部分由 MiniMax M2 官方文档 提供，以下内容大部分引用，个别补充\n安装 Cursor\n\n\n通过 Cursor 官网 下载并安装 Cursor\n\n\n打开 Cursor，右上角“设置”按钮，进入设置界面。点击“Sign In”按钮，登录自己的 Cursor 账户\n\n\nsign-in2934×1840 285 KB\nbrowser-web2304×1106 165 KB\n在 Cursor 中配置 MiniMax API\n\n\n点击左侧栏的 “Models”，进入模型配置页面\n\n\n展开 “API Keys” 部分，配置 API 信息：\n\n\n\n勾选 “Override OpenAI Base URL”\n在下方输入 MiniMax 的调用地址： https://api.minimaxi.com/v1\n\n\n\n额外补充 MiniMax 开放平台获取 API Key 的内容：\n\n\n点击开放",
-      "author": "lostsheep",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1108766",
+      "id": "linuxdo:697218",
+      "slug": "ld-697218",
+      "type": "tutorial",
+      "title": "【教程】在Cursor中安装Augment Code插件",
+      "body": "【教程】在Cursor中安装Augment Code插件起因：最近看到很多人说Augment插件比Cursor好用，所以想要亲自测试一下，又不想下载Vscode了，但是Cursor中搜索插件又找不到Augment，看到有些人和我一样，不知道怎么在Cursor中使用，于是研究了5分钟，成功安装放思路：\n1. 尝试找到代理离线下载vscode插件功能的网站，耗时3分，放弃\n2.尝试从Vscode插件官网寻找Download链接，耗时1分，放弃\n3.尝试查看唤起的Scheme链接，耗时1分，成功\n重点！！！\n如何在Cursor中安装搜索不到的Vscode插件：打开Vscode插件市场网页\n搜索Augment插件，鼠标右键Install按钮，点击复制链接地址\nimage2396×820 171 KB\n新开标签页，将复制的\nvscode:extension/augment.vscode-augment\n改成：\ncursor:extension/augment.vscode-augment\n即可成功安装插件到cursor中！！！PS： 如果你能直接搜索到，就当我没说！求赞！！！\n最新补充：把中间的版本号替换成最新版本，比如492，就可以下载vscode插件了，然后拖动到vscode的插件窗口中，就自动安装了",
+      "author": "shunzi",
+      "authorBio": "",
       "score": 21,
       "engagement": {
-        "likes": 51,
-        "comments": 49,
+        "likes": 127,
+        "comments": 56,
         "shares": 0
       },
       "topics": [
-        "AI"
+        "开发工具"
       ],
-      "publishedAt": "2025-10-30T16:44:40.545Z"
+      "publishedAt": "2025-06-03T12:49:48.178Z",
+      "readingTime": 2
     },
     {
       "id": "jike:69aa9a3d8d89fac05c6ccae9",
+      "slug": "jike-69aa9a3d",
       "type": "build_log",
       "title": "",
-      "body": "这篇文章是我亲自烧Token的踩坑经验，覆盖 Reddit、Amazon、TikTok 等10个跨境电商高频场景，每个都说清楚怎么配、怎么用、坑在哪。\n\n等不及的可以看文末的结论\n\nImage\n\n模块一：跨境电商核心场景\n01 Reddit 舆情监控与选品情报\n❌ Reddit 去年10月开始开发者API没了，很多服务器 IP 容易被封 403，抓评论还得处理分页和懒加载，非常麻烦\n\n目前解决方案有两个。\n\n路线 A：免费\n\n用 reddit-readonly Skill，底层直接打 old.reddit.com 的公开 .json 接口，无需任何 API Key。支持读版块热帖、搜帖子、读评论串。\n\n项目地址：https://lobehub.com/skills/openclaw-skills-reddit-scraper\n\n它这个非常好啊，直接有个prompt，扔给openclaw自己去安装就好了\n\n也确实能抓到数据\n\nClawhub上也有类似的Skill\n\n📎 https://clawhub.ai/buksan1950/reddit-readonly\n\n同理，你还可以在Claw",
+      "body": "这篇文章是我亲自烧Token的踩坑经验，覆盖 Reddit、Amazon、TikTok 等10个跨境电商高频场景，每个都说清楚怎么配、怎么用、坑在哪。等不及的可以看文末的结论Image模块一：跨境电商核心场景\n01 Reddit 舆情监控与选品情报\n❌ Reddit 去年10月开始开发者API没了，很多服务器 IP 容易被封 403，抓评论还得处理分页和懒加载，非常麻烦目前解决方案有两个。路线 A：免费用 reddit-readonly Skill，底层直接打 old.reddit.com 的公开 .json 接口，无需任何 API Key。支持读版块热帖、搜帖子、读评论串。项目地址：它这个非常好啊，直接有个prompt，扔给openclaw自己去安装就好了也确实能抓到数据Clawhub上也有类似的Skill📎同理，你还可以在ClawHub里找到更多特定平台的数据抓取Skills路线 B：结构化方案用 Decodo OpenClaw Skill，reddit_post 和 reddit_subreddit 两个工具，返回干净的 JSON，Decodo 后端有 IP 轮换，稳定性更高。项目地址： 📎直接口喷安装：跑调研报告非常给力如果你不想费劲自己研究这些我们也有提供品牌Reddit 代运营服务，累计服务了40+头部品牌，沉淀了一套非常能打的方法论咨询微信：CeciliaNGS02 Amazon 商品数据结构化提取\n❌ Amazon 反爬机制复杂，IP 封锁、JS 渲染、价格动态刷新，自己写爬虫维护成本极高，Amazon 页面结构一更新脚本就挂。解决方案还是 Decodo Skill，里面内置了 amazon（解析单个商品页）和 amazon_search（按关键词批量搜索）两个工具，Decodo 专门维护 Amazon 解析规则，省去了所有 CSS Selector 的维护工作。返回字段：价格、评分、评论数、ASIN、Best Seller 标志、卖家信息按前面安装Decodo OpenClaw Skill后，直接对 OpenClaw 说：用 amazon_search 搜 \"portable blender\"，抓前 30 个结果，提取价格区间、评分分布、有无 Best Seller 标志，生成选品报告一句话出一份竞品分析，以前得手动整理半天。升级玩法：搭配 Reddit 方案，先从 r/AmazonSeller 抓竞品差评 → 再用 amazon_search 验证这些问题产品的真实评分数据 → 交叉分析找选品机会03 YouTube / TikTok — 多模态内容\n❌ 看竞品视频要手动记笔记，看评论区要自己刷，TikTok 上的带货视频更没法批量分析，人工处理成本太高。解决方案YouTube 用字幕：可以用前面Decodo Skill 的 youtube_subtitles 工具，输入视频 ID，直接返回完整字幕文本，不需要 YouTube API，解析字幕文件即可。工作流：先用 google_search 找目标视频 ID → youtube_subtitles 拿字幕 → AI 提炼竞品卖点和用户痛点至于TikTok + B站：可以用Agent-Reach 项目里的 yt-dlp 方案。Agent-Reach 就是把已经被验证过的爬虫方案打包进同一个项目，统一管理。推特用 xreach（Cookie 登录，免费）、视频用 yt-dlp（148K Stars，YouTube 和 B站通吃）、网页用 Jina Reader（免费转 Markdown）、GitHub 用官方 gh CLI。项目地址 📎一句话安装所有工具（包括小红书、Reddit）：帮我安装 Agent Reach：\nAI 自己读文档、自动配置，不用你手动操作。测试一下：找3个 YouTube 上关于 \"camping folding table review\" 的视频，抓取字幕，提炼用户最常提到的产品问题非常丝滑抓到数据：04 GitHub — 技术产品情报\n❌ 跨境电商的工具型竞品（比如竞品 SaaS、插件、开发者工具）在 GitHub 上有大量真实用户反馈，Issue 区就是免费的竞品缺陷报告，大多数人根本不会去看。解决方案Agent-Reach 内置 gh CLI（GitHub 官方工具），让 OpenClaw 直接搜索仓库、读 Issue、分析 Star 增长趋势，比爬网页稳定得多。先安装：brew install gh\n接着完成 GitHub 账号授权gh auth login\n在弹出浏览器登陆授权即可：测试：搜索 GitHub 上 star 数最高的跨境电商选品工具，读取它的 issue 列表，看看用户反映最多的 bug 是什么卧槽，这个很利好跨境电商开发者啊，直接让小龙虾去找别人项目的bug，就是自己的机会了，然后让它直接原地开发新项目。。好癫。。05 Twitter/X — 热点与舆情\n❌ Twitter API 现在要付费才能读数据，用浏览器自动化又频繁断线，因为 Twitter 会话保持很麻烦。解决方案：xreach Cookie 登录（Agent-Reach 内置）用浏览器扩展（ 如Cookie-Editor 或 Get cookies.txt LOCALLY ）导出 Twitter Cookie配置到 xreach，免费读取推文和用户时间线。这是我在推特X上，用浏览器插件`Cookie-Editor`导出的JSON Cookie：刚到出的JSON参考这个方式配置到agent-reach里：\nagent-reach configure twitter-cookies \"此处粘贴你复制的Cookie内容\"避坑：xreach 的 Cookie 通常 7-30 天过期，需要定期重新导出。试下：到推特，搜索过去48小时内提到 \"Amazon FBA policy change\" 的推文，整理出主要讨论点现在说一点障碍都没有是假的，还有一些动态网站很麻烦。06 动态 SPA 网站 — 几乎任意网页都能爬\n❌ 速卖通商品页、独立站产品列表，大量数据都是 JavaScript 异步加载的，web_fetch 拿到的是空 HTML解决方案就是用带真实profile的浏览器去访问。这里就有两个常用工具Skill1是playwright-npx，逻辑是让AI编写爬虫脚本并依靠传统 CSS 选择器执行操作，一旦跑通了，就适合持续跑，但前提是能写通。2是browser-use ，逻辑是视觉，让AI跟人一样去看网页点选，Token消耗很大，适合未知结构的网站。以前者为例，安装：访问并安装这个skill在你项目文件夹里：\n碰到 Cloudflare 或其他反爬检测的网站，换 stealth-browser Skill，底层用 playwright-extra 模拟真实用户特征（User-Agent、WebGL 指纹、Timezone）。如果不想在本地装 Chromium，或者要跑大量网站，Firecrawl skill是另一个选项——它在远程沙盒里跑浏览器，本机零压力，返回干净 Markdown，直接喂给 AI 分析。免费额度 500 次，加 cache: 2d 配置避免重复消耗。典型案例：某展会议程网站（单页 SPA，5 个日期 Tab，点一个加载一个）。直接告诉 OpenClaw：帮我爬这个网站的完整议程，页面有5个Tab，点击每个Tab后等JS加载，把所有展商数据按Tab分文件存成 Markdown模块二：联网大脑 —— 搜索引擎配置 + 工业级爬虫接入\n光有爬取能力不够。很多场景下，OpenClaw 需要先\"搜\"、再\"爬\"、再\"分析\"，搜索工具的质量直接决定整个链路的上限。这个模块解决\"让 AI 真正联网\"的问题。07 搜索工具配置\n❌ OpenClaw 默认没有实时联网能力，只靠模型训练数据，问最新价格、最新政策、刚发生的竞品动作，全是瞎猜。三个方案对比：国内首选：Tavily。专门为 AI Agent 设计，无信用卡验证，国内直连，免费额度够个人用。\nBrave Search 数据质量更高，但需要海外信用卡注册。如果你有条件，优先 Brave。\nExa 适合意图明确的研究型查询，比如\"找真实买家写的便携榨汁机独立评测\"。关键词匹配类的查询用 Brave/Tavily，意图型查询用 Exa，两者互补。进阶技巧：多条窄查询远比一条宽查询有效。与其搜一次\"蓝牙耳机市场分析\"，不如分三次搜：\"bluetooth earbuds under 30 site:reddit.com complaints 2025\"\n\"bluetooth earbuds amazon best seller negative reviews\"\n\"bluetooth earbuds temu competitor comparison\"\n三次结果合并，质量差距极大。以Brave Search为例，还是口喷安装：访问  把这个skill安装到你文件夹下，然后配置api key是BSAl2YP5xxxxx\n测试一下：分别搜索\"portable blender complaints reddit 2026\"和\"portable blender amazon negative reviews\"，对比两个来源的用户痛点有什么差异基于拿到的信息源来回答，质量高10倍。08 Apify 集成 — 工业级确定性爬虫\n❌ 前面Playwright 方案需要 OpenClaw 实时生成和调试脚本，碰到复杂页面容易翻车。大规模抓取时（比如一次抓 500 家竞品）效率低，也不稳定。解决方案Apify 做了 20 年网页抓取，有海量已经调试好的 Actor（类似云端爬虫程序），覆盖 Google Maps、YouTube、Instagram、TikTok、Amazon 等主流平台。Image\n到Apify 官网新建KEY📎然后口喷安装：访问  skills用于数据抓取api key是apify_api_5kIYzpxxxx\n不得不感叹好全能跨境电商实战，直接对 OpenClaw 说自然语言：\"搜索美国德州所有做'electronics wholesale'的商家 Google Maps 数据，然后从这些商家网站里提取邮箱\"它会自动调用 Google Places Actor → 输出结构化 CSV → 再调用 Contact Info Scraper 追加邮箱列。所以还是费点时间的，但效果非常好：Image\n这样客户的邮箱不就到手了吗？很难吗？模块三：自动化情报流水线\n前两个模块是\"工具\"，这个模块是\"用法\"。把前面的能力组合起来，跑真正的自动化场景。09 价格监控 / 竞品自动化\n❌ 竞品调价、上新、促销，往往是在凌晨悄悄改的。等你发现，黄金窗口期已经过了。人工盯没有成本效益，跑不了长期。解决方案提示词：# 任务：建立电商竞品价格自动监控哨兵\n# 触发机制：配置 cron 任务，每天凌晨 03:00 自动执行本提示词。**执行工作流：**\n1.**抓取最新数据**：使用 `playwright-npx` 或 `web_fetch` 访问以下竞品链接列表：[填入竞品链接1, 链接2...]，提取当前售价和库存状态。\n2.**快照比对**：读取本地 `price_memory.txt` 文件中保存的昨日数据快照，将新数据与旧数据进行逐一比对。\n3.**条件触发**：\n- 若价格和状态无变化，静默终止任务。\n- 若发现价格变动（如降价、大促标记、断货），立刻生成警报信息（包含：商品名、原价、现价、变动幅度、链接）。\n4.**消息推送**：将生成的警报信息通过 Webhook 发送到我的 [飞书/Telegram] 接收群。\n5.**记忆更新**：将今日最新的价格快照覆盖写入 `price_memory.txt`，供明日比对使用。\n升级版：搭配 Firecrawl 做大规模独立站监控（本地",
       "author": "饼干哥哥",
-      "source": "jike",
-      "sourceUrl": "https://web.okjike.com/originalPost/69aa9a3d8d89fac05c6ccae9",
+      "authorBio": "10 年数据分析师，现在专注 AI 编程与 agent",
       "score": 20,
       "engagement": {
         "likes": 7,
@@ -4640,20 +4528,21 @@
         "shares": 3
       },
       "topics": [
-        "AI",
-        "出海",
-        "开发工具"
+        "增长",
+        "产品思维",
+        "出海"
       ],
-      "publishedAt": "2026-03-06T09:11:25.141Z"
+      "publishedAt": "2026-03-06T09:11:25.141Z",
+      "readingTime": 20
     },
     {
       "id": "jike:641d6715d9519fa8bcea34d9",
+      "slug": "jike-641d6715",
       "type": "build_log",
       "title": "",
-      "body": "其实关于 ChatGPT plugins 的大部分 myth，读 OpenAI 这个简短的开发文档都可以得到解答 [1]。\n\n比如说，这是不是意味着 ChatGPT 变成了一个操作系统？从操作系统的经典定义 [2] 来说，肯定不是。ChatGPT plugins 做的事情，是在「适当时候」让 ChatGPT 可以和外界打交道。现在的 ChatGPT 是一个受过良好本科教育的知识工作者，不幸在 2021 年 9 月就被你抓到了一个白房子里面关着，就跟美国那个 Jony Ive 一样。你问它的很多问题它凭借自己的积累是可以解答的，只是不知有汉，无论魏晋。\n\n现在，你和它说，我问你某些问题的「适当时候」我允许你出去走走，看看外面的世界是不是有更好的答案、更好的办法。比如，机票价格怎么样了？Tik Tok 的听证会怎么样了？你不是理科不好吗，让人帮忙解个方程怎么样？有些事情，干脆你也帮我办了吧。比如，既然问了机票价格，就顺便订个机票吧！[3]\n\n它说好啊，但我怎么知道应该去哪儿解决你的问题呢？其实世界上这些工作都已经有不同的仆人做得很好了，让这些仆人先来我们这儿登记一下。这样我们就知道，机票可",
+      "body": "其实关于 ChatGPT plugins 的大部分 myth，读 OpenAI 这个简短的开发文档都可以得到解答 [1]。比如说，这是不是意味着 ChatGPT 变成了一个操作系统？从操作系统的经典定义 [2] 来说，肯定不是。ChatGPT plugins 做的事情，是在「适当时候」让 ChatGPT 可以和外界打交道。现在的 ChatGPT 是一个受过良好本科教育的知识工作者，不幸在 2021 年 9 月就被你抓到了一个白房子里面关着，就跟美国那个 Jony Ive 一样。你问它的很多问题它凭借自己的积累是可以解答的，只是不知有汉，无论魏晋。现在，你和它说，我问你某些问题的「适当时候」我允许你出去走走，看看外面的世界是不是有更好的答案、更好的办法。比如，机票价格怎么样了？Tik Tok 的听证会怎么样了？你不是理科不好吗，让人帮忙解个方程怎么样？有些事情，干脆你也帮我办了吧。比如，既然问了机票价格，就顺便订个机票吧！[3]它说好啊，但我怎么知道应该去哪儿解决你的问题呢？其实世界上这些工作都已经有不同的仆人做得很好了，让这些仆人先来我们这儿登记一下。这样我们就知道，机票可以去找这个叫 KAYAK 的，新闻可以去问 Bing，解方程可以找 Wolfram Alpha。它在「适当时候」照着登记册出去问了问题，然后回来用它的语言告诉我答案。这里还有一个厉害的地方是，在这个世界中这些仆人是不说人话的。它们用一种叫 API 的机读语言和其他人进行交互。过去，我们日常用的手机 app 可以代替我们将界面上的操作转化成这种特殊的语言，但我们这位被关了两年的朋友，却能自动把我们说的人话自动翻译成这种语言。这不是操作系统，而是一种对世界上已有服务的 API 通过自然语言进行索引和整合的方式，也给所有已有服务提供了自然语言界面。通过它你可以利用已有的服务获取数据，也进行少量的行动（这一点实际上是出于安全的限制）。当然，你可以说着这有点儿像一个操作系统，毕竟用户可以交付任务给它……那么它也有点像一个浏览器，有点像一个应用商店，有点像手机桌面，有点像搜索引擎，虽然我觉得它最像的还是……3721 中文网址导航。用比喻来讨论问题总是不精准的，取决于你关心什么方面，希望获得什么样的隐含暗示。就好像说现在到底是 AI 的 BlackBerry 时刻还是 iPhone 时刻还是 iPhone 3GS 时刻还是 iPhone 4 时刻……Depends。至于说这个 plugins 系统可以自己给自己写 plugin……至少在目前是不准确的。OpenAI 联合创始人 Greg 在 Twitter 上说的不错，一个 plugin 的开发很简单，你就是为一个自然语言模型来写 API 文档。但这个前提是你得先有 API。如果你已经做出一个 Wolfram Alpha 了，要接入的确是很简单的。就好像给 Chrome 写一个 web app 其实也很简单，因为本质上那只是一个已有网站的书签。当然了，既然 GPT 已经可以帮忙写代码了，所以你用 GPT 从 0 开始写出一个 plugin 理论上是可能的，但这不是 plugins 系统的开箱体验。Greg 说的「为自然语言模型写 API」，并不是大家所理解的「用自然语言模型来写 API」。目前 plugin 的接口仍然需要写成机读语言——尽管理论上，如果你写出足够详细的 prompt，也可以让 GPT 来生成。这中间的区别也许没有那么重要，也许就是差一层窗户纸。但总之，描述的还不是已经实现的体验。ChatGPT 的 plugin 系统的设计和之前类似系统比，真的新颖之处在哪里呢？前面说到「适当时候」，在接口中，你可以用自然语言告知 ChatGPT 你这个 API 能干啥，ChatGPT 用自然语言理解了这一点后，就可以自动根据用户的输入来判断什么时候应该找谁来满足用户的需求。你只需要告诉它一次「买机票去 KAYAK」，它就知道下次你问它 UA888 的时候可以去找 KAYAK。这是不是就是我们中国人熟悉的……流量分发？大家都很熟悉，在 PC 时代我们抢注文件扩展名、Android 上我们抢注 Intent、iOS 上抢注 schema、搜索引擎上做竞价排名……干的是同一件事情。ChatGPT 想用自然语言来解决流量分发的问题。所以，套用一句话，这是流量分发机制的自然语言界面。这么一想，什么 SEO、growth hacking……说不定还有用武之地。振作吧！（给不熟的人：这是开玩笑... 我不喜欢这些事情）其实这也不是 ChatGPT 首创。Google Assistant 接入第三方服务的方式也是类似的，只是开发者体验要复杂一些。说时迟那时快，写这段的时候去查了 Google 的文档，发现这个服务即将在 6 月 13 日被 Google 亲手干掉。[4]这也不是否定 plugins 的创新。事实上，大部分革命性的创新也就是在前人的基础上稍作改动而已。OpenAI 的研究和工程能力当然是让人惊叹的，但我越来越觉得他们的产品和市场能力也是让人惊叹的。MIT Tech Review 关于 ChatGPT 开发过程的访谈非常值得一读 [5]，ChatGPT 本身也许可以称之为有史以来最成功的 hackathon 项目（虽然远比一般的 hackathon 要昂贵，但相比于 GPT 本身的投入相信只是个零头）。ChatGPT 把 GPT 重新包装成了人人都能看懂的能力，也许是其意外成功让 OpenAI 不甘于只做基础设施了，他们现在看起来决心直接面向消费者，不给中间商赚差价的机会了。也许，OpenAI 就是第四次工业革命的 Google 或 Apple 了。Plugins 这个系统相信是在很短时间内拼凑出来的，却足够优雅、有想象力。Go-to market 的能力、连接用户需求和技术的能力、商业化的能力、设计生态系统的能力... 不就是古典产品经理的核心能力么？怪不得老王也要招产品经理 [6]。可惜，想来想去好像不认识什么活人有这个能力。你看，为了拖延写稿我宁愿写这么大一段 [7]。没有仔细校对，有错漏请指正。[1]:[2]:[3]:[4]:[5]:[6]:[7]:",
       "author": "junyu",
-      "source": "jike",
-      "sourceUrl": "https://web.okjike.com/originalPost/641d6715d9519fa8bcea34d9",
+      "authorBio": "👆前\n.\n.\n.\n.\n.",
       "score": 20,
       "engagement": {
         "likes": 625,
@@ -4661,81 +4550,59 @@
         "shares": 390
       },
       "topics": [
-        "AI",
-        "开发工具",
-        "扩展"
+        "SEO",
+        "增长",
+        "AI"
       ],
-      "publishedAt": "2023-03-24T09:02:13.480Z"
-    },
-    {
-      "id": "v2ex:1198175",
-      "type": "strategy_insight",
-      "title": "[发码]一个在手机上用 Claude Code 的 iOS App，并聊一聊使用感受",
-      "body": "[发码]一个在手机上用 Claude Code 的 iOS App，并聊一聊使用感受\n\n整了一个在手机上通过 SSH 登录到自己电脑/服务器的，使用 Claude Code 的 App 。名字叫作 ServerCC https://servercc.llpsh.com\r\n\r\nApp Store 搜索 ServerCC 或者直接访问: https://apps.apple.com/cn/app/servercc/id6759306046\r\n\r\n![image]( https://i.v2ex.co/CtG7fU2E.png)\r\n\r\n\r\n主要有的几个特点：\r\n1. 操作原生的 Claude Code TUI ，争取跟桌面版 Claude Code 的体验一致\r\n2. 内置了 worktree 功能，可以在 App 中同时跑多个 Claude Code 实例，多个项目同时开发，或者是在一个项目中使用 worktree 同时开发不同功能。\r\n3. App 中可以使用文件浏览的形式查看工作目录中的文件，管理 Skill 和 MCP 等等\r\n4. 内置了 tailscale ，使用 auth_ke",
-      "author": "cadl",
-      "source": "v2ex",
-      "sourceUrl": "https://www.v2ex.com/t/1198175",
-      "score": 20,
-      "engagement": {
-        "likes": 0,
-        "comments": 23,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "效率",
-        "App"
-      ],
-      "publishedAt": "2026-03-13T15:33:50.000Z"
+      "publishedAt": "2023-03-24T09:02:13.480Z",
+      "readingTime": 9
     },
     {
       "id": "v2ex:1203843",
+      "slug": "v2ex-1203843",
       "type": "build_log",
       "title": "土拨鼠大屏助手: 政府出手都治不好的“电视套娃” “电视 VIP 收费“，被这款神器彻底终结了",
-      "body": "土拨鼠大屏助手: 政府出手都治不好的“电视套娃” “电视 VIP 收费“，被这款神器彻底终结了\n\n近几年，大家是不是都有一个共同的感受：**现在的电视，简直没法看了！**\r\n\r\n明明国家已经大力整治智能电视的“套娃式”收费，但为何大家的感觉还是没啥变化？\r\n\r\n原因很简单：电视系统平台和视频大厂早就抱团了。他们的潜台词就是：“**我就这么干了，你不开会员还能看啥？你能奈我何！**”\r\n\r\n看个电影，要开“超级影视 VIP”；\r\n\r\n孩子看个动画，还得额外买“少儿 VIP”；\r\n\r\n如果还要看个体育比赛，对不起，请再充“体育套餐”！\r\n\r\n一年算下来，七七八八的会员费动辄 **780 元、上千元**，简直把用户当成了割韭菜的绿油油草场。\r\n\r\n除了这让人崩溃的吃相，更反人类的是**电视遥控器的操作体验**。\r\n\r\n想搜一部老剧，你得拿着遥控器在那反人类的全键盘上“上下左右”苦苦按半天。打错一个拼音，心态瞬间爆炸。\r\n\r\n难道我们花几千块买的大屏电视，真的只能放在客厅当摆设落灰吗？\r\n\r\n**不！今天，我们要向这种霸王条款说“不”！**\r\n\r\n今天要给大家安利一款最近爆火的“破局黑科技”—",
+      "body": "土拨鼠大屏助手: 政府出手都治不好的“电视套娃” “电视 VIP 收费“，被这款神器彻底终结了近几年，大家是不是都有一个共同的感受：**现在的电视，简直没法看了！**明明国家已经大力整治智能电视的“套娃式”收费，但为何大家的感觉还是没啥变化？原因很简单：电视系统平台和视频大厂早就抱团了。他们的潜台词就是：“**我就这么干了，你不开会员还能看啥？你能奈我何！**”看个电影，要开“超级影视 VIP”；孩子看个动画，还得额外买“少儿 VIP”；如果还要看个体育比赛，对不起，请再充“体育套餐”！一年算下来，七七八八的会员费动辄 **780 元、上千元**，简直把用户当成了割韭菜的绿油油草场。除了这让人崩溃的吃相，更反人类的是**电视遥控器的操作体验**。想搜一部老剧，你得拿着遥控器在那反人类的全键盘上“上下左右”苦苦按半天。打错一个拼音，心态瞬间爆炸。难道我们花几千块买的大屏电视，真的只能放在客厅当摆设落灰吗？**不！今天，我们要向这种霸王条款说“不”！**今天要给大家安利一款最近爆火的“破局黑科技”——** [土拨鼠大屏助手] **。正是它的出现，让你不仅能**彻底摆脱电视 VIP 的割韭菜套路**，还能把你家普普通通的电视，瞬间点亮成一台 **75 英寸的巨型触控平板**！### 🌟 核心神技一：用手机 VIP ，畅享大屏巨幕！你知道吗？手机版的会员通常只要十几块钱，而电视端由于需要授权，价格直接翻上几倍。而有了土拨鼠大屏助手，你现在可以**在电视上任意安装“手机版”或是“车机版”的应用！**（无需复杂的刷机，只要是 64 位系统统统支持）。装好之后，通过超灵敏的触控光标，可以直接登录你原本就有的手机端 VIP 。**几百块的电视专属 VIP ，从此永久和你说拜拜！** 每年省下一大把真金白银。### 🌟 核心神技二：手机秒变无线触控板，光标指哪打哪！把手机当成电视的遥控器？不，格局打开！扫码配对之后，你的手机屏幕会瞬间化身成为一块超大、超灵敏的**触摸板**。电视上会出现一个灵动的光标，不论是点击、长按、还是丝滑滚动，全部支持！这自由度，简直爽翻天。从此在大屏上刷短视频、逛网页，就像操作平板一样自然。### 🌟 核心神技三：零延迟输入，告别“九宫格反人类折磨”想搜大片？点击电视上的搜索框，你的手机键盘会立刻自动弹出！**手机打字，大屏秒出。** 就像在手机上打字一样简单。您输入的每一个字，光标的每一次移动，都会实时显示在电视上，完全同步，毫无延迟。再也不用拿着遥控器像做视力测试一样找字母了。实时输入，零延迟反馈，发弹幕都比别人快人一步！### 🌟 核心神技四：一键启动，告别极乱的开机桌面它还自带极简应用面板。一键直达你想看的 APP ，把那满屏横幅和广告的电视原生桌面彻底抛在脑后！### 💡 进阶指南：如何畅快拉满大屏体验？为了让大家玩得更爽，这里附送几条实战避坑指南：1. **基础前提**：电视端需要提前开启** [ ADB 调试] **功能，这是让手机接管电视的核心开关。2. **应用版本怎么选？**- **32 位电视系统**：建议安装各大视频平台的“小爱音箱版”或是“车机版”软件，占用极小、运行流畅不卡顿；- **64 位电视系统**：直接放飞自我！畅玩各种“手机版”软件。这里强烈建议优先安装“**Pad （平板）版**”，排版更贴合大屏，体验翻倍！3. **🔥 终极性能方案**：如果你手里有一部支持**“全功能 Type-C”**的智能手机（比如三星手机等），用一根全功能数据线直接连接电视......此时性能将达到极致！**极速交互、畅享大屏！！！**4. **⚠️ 特别提醒（关于系统兼容性）**：由于国内的特殊环境，部分电视深度定制系统**可能直接阉割了“ADB 功能”**。据目前实测反馈，土拨鼠大约能顺利兼容市面上 **50%~60%** 的国内系统。如果您在使用时遇到兼容问题，非常欢迎向我们积极反馈；但也要客观说明，受制于硬件和底层限制，我们确实无法保证在所有魔改系统上都一定可行。建议大家先下载试试，万一你正好属于那一大多伴呢！---**总结一下：**不刷机，不折腾，一招打破电视平台的霸王约束。**世界再无电视套娃！**还在对着 780 一年的“超级钻石套餐”叹气吗？别当乖乖挨宰的肥羊啦！盘活家里的大屏幕，这波不赚差价只省钱的黑科技，你必须拥有。👇 **那么，这款“电视的救星”在哪里获取呢？**> **唯一获取方式：** 访问土拨鼠官方网站 **[vonchange.com](  即可立即下载体验！> **相关视频**  [哔哩哔哩宣传视频](> V 友专享永久优惠码: 土拨鼠大屏助手祝 V 友财源滚滚发大财 (在订阅那输入优惠码即可领取永久会员!)",
       "author": "WLYsYs",
-      "source": "v2ex",
-      "sourceUrl": "https://www.v2ex.com/t/1203843",
+      "authorBio": "",
       "score": 20,
       "engagement": {
         "likes": 0,
         "comments": 40,
         "shares": 0
       },
-      "topics": [
-        "App",
-        "SaaS"
-      ],
-      "publishedAt": "2026-04-06T13:43:16.000Z"
+      "topics": [],
+      "publishedAt": "2026-04-06T13:43:16.000Z",
+      "readingTime": 7
     },
     {
-      "id": "v2ex:1200811",
-      "type": "build_log",
-      "title": "「抽终身兑换码」WorkValue — Vibe Coding 做的全自动记录工作时间 App，算算你的真实时薪",
-      "body": "「抽终身兑换码」WorkValue — Vibe Coding 做的全自动记录工作时间 App，算算你的真实时薪\n\n做这个 App 的起因很简单 —— 自己加班太多了，想量化一下加班情况，以及知道自己加班后真实时薪到底是多少。\r\n\r\n  **WorkValue** 基于苹果的 CLVisit 框架，系统级别记录你到达和离开某个地点的时间，App 不需要在后台运行，极度省电。设好工作地点之后完全不用管，每天自动出记录。然后把你的月薪、奖金什么的除以实际工作时长，得出一个真实时薪。加班越多这个数字越难看，很有减少加班的动力（笑）。\r\n\r\n  其他功能：周报月报看加班趋势、桌面小组件、无服务器，数据在本地。\r\n\r\n  ![WorkValue]( https://img.yeyuhao.uk/combined.webp)\r\n\r\n  \r\n  App Store: https://apps.apple.com/cn/app/workvalue/id6753736776\r\n  \r\n  \r\n  产品落地页面： https://workvalue.bolt.host/cn\r\n\r\n  ---\r\n\r\n  #",
-      "author": "yuhoye",
-      "source": "v2ex",
-      "sourceUrl": "https://www.v2ex.com/t/1200811",
+      "id": "linuxdo:1056914",
+      "slug": "ld-1056914",
+      "type": "tutorial",
+      "title": "[教程] 使用 ccursor 在服务器搭建 cursor tab 共享服务",
+      "body": "[教程] 使用 ccursor 在服务器搭建 cursor tab 共享服务原理说明\n本教程是基于 ccursor 在服务器上搭建 cursor tab 共享服务，在服务器上登录一个 cursor PRO 账号，然后通过 cursor-rp 共享给其他用户使用.\n由于 PRO 用户的 tab 是无限量的, 所以我们可以通过这个方式来共享给其他用户一起使用。本地用户只需要对本地 cursor tab 的请求地址进行代理，就可以实现 cursor tab 的共享。\n前提条件需要一个域名\n需要一个服务器(如在国内使用, 需要一个转发延迟较小的服务器)\n需要一个可以正常使用的 cursor PRO 账号服务器端准备工作下载 ccursor, 是对于 cursor-rp 的封装, 一个文件就可以启动转发服务\n下载地址, 注意服务器的架构需要与下载的文件的架构一致上传 ccursor 到服务器, 并赋予执行权限 chmod +x ./ccursor第一次运行 ./ccursor 会在同目录下生成授权许可文件eula.txt, 需要修改 eula.txt 文件中的 eula=false 为 eula=true第二次运行 ./ccursor 会生成一个配置文件 config.toml.example, 将其复制为 config.toml, 并修改其中的配置config.toml 文件是整个服务的核心, 其中会记录对外服务的配置(如端口, IP 地址, 证书路径等), 以及共享的 PRO 账号的信息关键配置修改说明# ========== 基础配置 ==========# 启动时是否检查更新（建议设为false避免不必要的网络请求）check-updates = false# GitHub Token（可选，用于检查更新，建议注释掉）# github-token = \"gh_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"[service-config]# ========== TLS/SSL 证书配置 ==========tls = { cert-path = \"cert.pem\", key-path = \"key.pem\" }# ========== 网络配置 ==========# 服务监听端口（可自定义）port = 22658# 服务监听IP地址配置# ipv4 = \"0.0.0.0\": 监听所有IPv4地址，允许外部客户端访问# ipv4 = \"127.0.0.1\": 仅监听本地回环地址，只允许本机访问# ipv6 = \"::\": 监听所有IPv6地址（IPv6版本的0.0.0.0）# ipv6 = \"::1\": 仅监听IPv6本地回环地址（IPv6版本的127.0.0.1）ip-addr = { ipv4 = \"0.0.0.0\", ipv6 = \"::1\" }# 如果不用ipv6可以去除# DNS解析器选择# \"hickory\": 使用Rust实现的DNS解析器（推荐，性能更好）dns-resolver = \"hickory\"# ========== 更新控制 ==========# 锁定更新功能（设为true时始终返回无更新状态）lock-updates = false# ========== 虚假邮箱配置 ==========# 用于模拟用户登录状态的虚假邮箱信息fake-email = { email = \"admin.sh\", sign-up-type = \"github\", enable = true }# ========== 服务地址配置 ==========# 客户端访问服务的地址配置, 如不使用反向代理, 需要填写port参数, 与之后modifier中的参数统一service-addr = { scheme = \"https\", suffix = \".yourdomain.com\" }[proxies]# 代理池配置# 键名用于标识不同的代理配置，与 [overrides.键名] 一一对应_ = \"\"[override-mapping]# Bearer Token映射规则# 格式: \"Bearer Token前缀\" = \"配置名称\"# 配置名称必须在 [proxies] 和 [overrides] 中存在_ = \"default\"[overrides.default]token = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..\"traceparent = falseclient-key = \"0000000000000000000000000000000000000000000000000000000000000000\"client-version = \"0.45.15\"config-version = \"00000000-0000-4000-8000-000000000000\"timezone = \"Asia/Shanghai\"privacy-mode = truesession-id = \"00000000-0000-4000-8000-000000000000\"[overrides.default.checksum]first = \"0000000000000000000000000000000000000000000000000000000000000000\"second = \"0000000000000000000000000000000000000000000000000000000000000000\"上述配置中, yourdomain.com 需要替换为你自己的域名, [overrides.default] 中所有的配置项均来自于原 cursor-api 项目. 已经熟悉的可以跳过这一章节, 自行配置.\n账户相关配置信息获取\n以下操作均可以在本地进行下载 cursor-api 工具, 下载地址\n赋予执行权限 chmod +x ./cursor-api\n下载对应的前端页面资源, 下载地址, 放在同一文件夹下, 无需解压\n添加环境变量文件 .env, 内容如下:# 服务器监听端口(默认3000)\nPORT=3000# 页面认证令牌，必填, 随意填写\nAUTH_TOKEN=ADMIN启动服务 ./cursor-api, 访问  即可看到页面, 在页面内填入认证令牌进行后续操作\n点击添加 TOKEN 按钮, TOKEN 来源于 PRO 账号, 详见 如何获取\n对于成功添加的 TOKEN, 点击右键分别执行 [刷新Config Version] 和 [刷新Profile] 操作, 这一步会大大提高之后的成功率\n点击导出列表按钮, 导出 tokens_export.json 文件, 该文件中包含了所有config.toml 文件中需要的账号配置信息, 按照对应字段复制到 config.toml 文件中对应的位置即可图片2340×2256 293 KB\n反向代理配置\nccursor的服务我们使用反向代理的方式对外提供, 这样在服务器端无需开放额外的端口, 只需将域名解析到服务器的 IP 地址即可.\n本教程基于 1panel 面板进行操作, 其他方案请自行参考.在 1panel 网页面板中添加反向代理, 域名为 tabs.yourdomain.com, 代理地址为  这里的端口需要与 config.toml 文件中的 port 配置项一致图片3700×2122 485 KB在 1panel 证书面板中添加 SSL 证书, 这里一共要配置以下7个域名us-only.gcpp.cursor.sh.yourdomain.com\nus-eu.gcpp.cursor.sh.yourdomain.com\nus-asia.gcpp.cursor.sh.yourdomain.com\nrepo42.cursor.sh.yourdomain.com\napi4.cursor.sh.yourdomain.com\napi3.cursor.sh.yourdomain.com\napi2.cursor.sh.yourdomain.com图片1920×1113 76.7 KB证书生成成功后, 复制对应的证书和私钥保存为 cert.pem 和 key.pem 文件\n回到网页面板, 为 tabs.yourdomain.com 配置 SSL 证书, 选择刚刚生成的证书\n将 cert.pem 和 key.pem 文件复制到服务器上的 config.toml 文件所在目录\n注意检查 config.toml 文件中 tls 配置项的 cert-path 和 key-path 配置项为 cert.pem 和 key.pem 文件的路径启动验证\n运行 ./ccursor 命令, 如果出现以下日志, 则表示启动成功\nINFO ccursor: Config initialized successfully\nINFO ccursor: Listening on 0.0.0.0:22658本地客户端配置这里以 macOS 为例, windows 下操作类似下载 modifier 工具, 下载地址\n赋予执行权限, chmod +x ./modifier\n运行命令, 注意修改其中的 yourdomain.com 为你的实际域名, 只需要运行一次, 作用是修改本地 cursor 的请求地址为代理地址./modifier -C /Applications/Cursor.app --suffix .yourdomain.com --scheme https --skip-hosts --pass-token注意: 如果你没有使用反向代理的方案, 那么还需要增加--port参数\nPS: 如果需要恢复, 将命令再运行一次即可\n测试验证打开 cursor, 切换到输出面板, 选择 cursor tab 日志, 尝试在文件中进行补全操作, 查看是否出现错误, 下图为无服务(502)->正常(204)\n图片2328×1246 435 KB查看服务器日志, 确认是否成功进行了代理转发\n图片1708×406 77.8 KB如出现错误, 请检查是否配置正确参考项目\n感谢  大佬的贡献cursor-rp 项目仓库\ncursor-api 项目仓库\n参考教程1:\n参考教程2:Checklist\n最后给大家整理了一份 Checklist, 方便大家进行配置:\n服务器端下载 ccursor, 并赋予执行权限\n获取 PRO 账号的 TOKEN, 并导出 tokens_export.json 文件\n完整填写 config.toml 文件, 注意替换其中的 yourdomain.com 为实际的域名\n配置7个域名的 SSL 证书+反向代理\n复制 cert.pem 和 key.pem 文件到 config.toml 文件所在目录\n启动 ccursor 服务, 可以成功启动并监听端口本地客户端下载 modifier, 并赋予执行权限\n运行修改命令, 注意修改其中的 yourdomain.com 为你的实际域名\n打开 cursor, 切换到输出面板, 选择 cursor tab 日志, 尝试在文件中进行补全操作最后, 预祝各位 TAB 星人玩的开心~\nPS: 目前我也只是拿了今天收的测试账号进行了部署测试, 可能很快就被回收了, 之后如果找到稳定的cursor账号, 会邀请需要的一起使用~",
+      "author": "半糖人类",
+      "authorBio": "",
       "score": 20,
       "engagement": {
-        "likes": 0,
-        "comments": 25,
+        "likes": 74,
+        "comments": 26,
         "shares": 0
       },
       "topics": [
-        "AI",
-        "App"
+        "开发工具"
       ],
-      "publishedAt": "2026-03-24T11:50:07.000Z"
+      "publishedAt": "2025-10-18T01:04:37.746Z",
+      "readingTime": 16
     },
     {
       "id": "linuxdo:893210",
+      "slug": "ld-893210",
       "type": "build_log",
       "title": "🔨 焊个轮子，Python 单文件本地 RAG 语义检索。",
-      "body": "🔨 焊个轮子，Python 单文件本地 RAG 语义检索。\n\n(\\ _ /)\n(  ･-･)\n/っ  前文提要：除了 Cherry Studio，还有什么本地 RAG 的常见方式吗？\n因为 Windows 7 安装不了任何现代 IDE （问就是第一工作需求 Photoshop CS6 只在 Windows 7 性能最屌，所以），而 ↑ 上面那些 RAG 项目太大了，我 512M 的搬瓦工跑不起来。\n我的需求就两个：\n\n能通过语义检索项目代码，就普通搜索那样。\n能自定义嵌入式模型 API，硅基余额太多了不用浪费。\n\n所以压榨 Opus 写了个轮子 ↓\n0011061×650 18 KB\n002234×134 10 KB\n↑ 迭代了，改成用 .pyw 了，建索引时改下后缀名，之后要检索就双击文件即可。\n检索完成后会将结果塞进剪贴板，粘贴到 NextChat 之类问就行。\nimage624×295 9.02 KB\n0041920×1080 177 KB\n\n再压榨一下写成 Function Calling 丢 VPS 应该也行得通，但我没这需求。\n\n(\\ _ /)\n(  ･-･)\n/っ  &",
+      "body": "🔨 焊个轮子，Python 单文件本地 RAG 语义检索。(\\ _ /)\n(  ･-･)\n/っ  前文提要：除了 Cherry Studio，还有什么本地 RAG 的常见方式吗？\n因为 Windows 7 安装不了任何现代 IDE （问就是第一工作需求 Photoshop CS6 只在 Windows 7 性能最屌，所以），而 ↑ 上面那些 RAG 项目太大了，我 512M 的搬瓦工跑不起来。\n我的需求就两个：能通过语义检索项目代码，就普通搜索那样。\n能自定义嵌入式模型 API，硅基余额太多了不用浪费。所以压榨 Opus 写了个轮子 ↓\n0011061×650 18 KB\n002234×134 10 KB\n↑ 迭代了，改成用 .pyw 了，建索引时改下后缀名，之后要检索就双击文件即可。\n检索完成后会将结果塞进剪贴板，粘贴到 NextChat 之类问就行。\nimage624×295 9.02 KB\n0041920×1080 177 KB再压榨一下写成 Function Calling 丢 VPS 应该也行得通，但我没这需求。(\\ _ /)\n(  ･-･)\n/っ  &nbsp; 就是这样。Python 脚本：LocalRAG.pyw\n#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\"\"\"\n代码语义检索工具 - 硅基流动 API 版本（无控制台版）\n使用方法：\n1. 首次运行或更新索引：python LocalRAG.pyw index\n2. 搜索：直接双击运行\n\"\"\"import os\nimport sys\nimport json\nimport time\nimport uuid\nimport glob\nimport sqlite3\nimport subprocess\nimport requests\nimport numpy as np\nfrom datetime import datetime\nfrom collections import defaultdict, Counter\nimport tkinter as tk\nfrom tkinter import ttk, messagebox, scrolledtext\nimport concurrent.futures\nimport threading\nimport pyperclip\nimport queue\nimport msvcrt  # Windows专用，用于检测按键# ==================== 配置区域 - 请修改这里 ====================# 硅基流动 API 密钥\nAPI_KEY = \"sk-*\"  # ← 在这里填入你的 API Key# 嵌入模型\nEMBEDDING_MODEL = \"Qwen/Qwen3-Embedding-8B\"# 嵌入向量维度 - 512 维（速度和准确度平衡）\nEMBEDDING_DIM = 512# 重排模型 - 关闭\nRERANK_MODEL = \"\"# 项目路径（固定）\nPROJECT_ROOT = r\"D:\\Studio\\Workshop\"# 数据库文件位置\nDB_PATH = \"LocalRAG.sqlite\"# 代理设置（如果需要）\nPROXIES = {\n# 'http': '\n# 'https': '\n}# 搜索返回数量\nTOP_K = 15  # 返回前 15 个结果# 忽略的文件扩展名（多媒体和二进制文件）\nIGNORE_EXTENSIONS = {\n# 多媒体文件\n'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.ico', '.webp',\n'.mp3', '.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv', '.webm',\n'.wav', '.flac', '.aac', '.ogg', '.wma',\n# 压缩文件\n'.zip', '.rar', '.7z', '.tar', '.gz', '.bz2', '.xz',\n# 二进制和编译文件\n'.exe', '.dll', '.so', '.dylib', '.bin', '.dat',\n'.pyc', '.pyo', '.class', '.jar', '.war', '.ear',\n'.wasm', '.o', '.obj', '.lib', '.a',\n# 办公文档\n'.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.pdf',\n# 字体文件\n'.ttf', '.otf', '.woff', '.woff2', '.eot',\n# 数据库文件\n'.db', '.sqlite', '.sqlite3', '.mdb',\n# 其他\n'.iso', '.dmg', '.pkg', '.deb', '.rpm',\n'.DS_Store', '.gitignore', '.dockerignore'\n}# 忽略的目录\nIGNORE_DIRS = {\n\".git\", \".hg\", \".svn\", \"node_modules\", \"dist\", \"build\",\n\"target\", \".venv\", \"venv\", \"__pycache__\", \".idea\", \".vscode\",\n\"vendor\", \"packages\", \".nuget\", \"bin\", \"obj\", \".cache\",\n\"coverage\", \".pytest_cache\", \".tox\", \"eggs\", \".eggs\"\n}# 代码分片设置（优化后）\nCHUNK_LINES = 150  # 每个片段 150 行（平衡）\nCHUNK_OVERLAP = 30  # 重叠 30 行\nMAX_CHUNK_CHARS = 12000  # 单个片段最大 12000 字符\nMAX_FILE_SIZE = 10 * 1024 * 1024  # 最大文件大小 10MB# API 并发设置（拉满配额）\nMAX_WORKERS = 10  # 10 个并发线程\nBATCH_SIZE = 50  # 每批 50 个文本（TPM 限制下的合理值）\nAPI_CALLS_PER_MINUTE = 1800  # 设置为 1800（留一点余量）\nRATE_LIMIT_DELAY = 60.0 / API_CALLS_PER_MINUTE  # 最小间隔时间# ==================== 以下是功能代码 ====================# 速率限制器（优化版）\nclass RateLimiter:\ndef __init__(self, calls_per_minute):\nself.calls_per_minute = calls_per_minute\nself.min_interval = 60.0 / calls_per_minute\nself.last_call = 0\nself.lock = threading.Lock()\nself.call_times = []  # 记录调用时间\nself.total_calls = 0  # 总调用次数\ndef wait_if_needed(self):\nwith self.lock:\nnow = time.time()\n# 清理一分钟前的记录\nself.call_times = [t for t in self.call_times if now - t < 60]\n# 如果一分钟内调用次数接近限制，等待\nif len(self.call_times) >= self.calls_per_minute * 0.95:  # 95% 阈值\nwait_time = 60 - (now - self.call_times[0]) + 0.5  # 多等0.5秒\nif wait_time > 0:\nreturn wait_time  # 返回需要等待的时间\n# 记录本次调用\nself.call_times.append(now)\nself.total_calls += 1\n# 保持最小间隔\ntime_since_last = now - self.last_call\nif time_since_last < self.min_interval:\ntime.sleep(self.min_interval - time_since_last)\nself.last_call = time.time()\nreturn 0  # 不需要等待rate_limiter = RateLimiter(API_CALLS_PER_MINUTE)class APIStats:\n\"\"\"API 调用统计\"\"\"\ndef __init__(self):\nself.total_calls = 0\nself.success_calls = 0\nself.retry_counts = defaultdict(int)  # 每个批次的重试次数\nself.rate_limit_hits = 0  # 429 次数\nself.last_429_time = 0  # 上次 429 的时间\nself.consecutive_429 = 0  # 连续 429 次数\napi_stats = APIStats()# 检测按键（Windows）\ndef check_for_enter():\n\"\"\"检查是否按下回车键（非阻塞）\"\"\"\nif sys.platform == 'win32':\ntry:\nif msvcrt.kbhit():\nkey = msvcrt.getch()\nif key in [b'\\r', b'\\n']:  # 回车键\nreturn True\nexcept:\npass\nreturn False# 智能等待函数\ndef smart_wait(seconds, message=\"等待中\"):\n\"\"\"智能等待，可以按回车跳过\"\"\"\nstart_time = time.time()\nwhile time.time() - start_time < seconds:\nremaining = int(seconds - (time.time() - start_time))\n# 显示倒计时\ntimestamp = datetime.now().strftime(\"%H:%M:%S\")\nprint(f\"\\r[{timestamp}] {message} (剩余 {remaining} 秒，按回车立即继续)...\", end='', flush=True)\n# 检查是否按下回车\nif check_for_enter():\nprint(f\"\\n[{timestamp}] 检测到回车，立即继续\")\nreturn True  # 返回 True 表示被手动中断\ntime.sleep(0.1)  # 每 0.1 秒检查一次\nprint()  # 换行\nreturn False  # 返回 False 表示正常等待完成def log_print(message):\n\"\"\"控制台输出（带时间戳）\"\"\"\ntimestamp = datetime.now().strftime(\"%H:%M:%S\")\nprint(f\"[{timestamp}] {message}\")\nsys.stdout.flush()def scan_project_files():\n\"\"\"扫描项目文件并收集统计信息\"\"\"\nall_files = []\nfile_stats = defaultdict(list)  # 按扩展名分组\nignored_stats = defaultdict(int)  # 忽略的文件统计\n# 遍历所有文件\nfor root, dirs, files in os.wa",
       "author": "林黛玉倒拔垂杨柳",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/893210",
+      "authorBio": "",
       "score": 20,
       "engagement": {
         "likes": 43,
@@ -4743,58 +4610,39 @@
         "shares": 0
       },
       "topics": [
-        "AI",
         "出海",
-        "扩展"
-      ],
-      "publishedAt": "2025-08-23T07:38:39.408Z"
-    },
-    {
-      "id": "linuxdo:1189324",
-      "type": "strategy_insight",
-      "title": "【大量UI风格+AI提示词的模板库】快速地使用AI生成高质量的UI",
-      "body": "【大量UI风格+AI提示词的模板库】快速地使用AI生成高质量的UI\n\n佬友好 今天想介绍自己制作的一个项目吧 → 提供一站式的UI 风格提示模板库，可帮助开发人员使用AI生成更高质量的Web界面。 \n很多时候我们使用AI生成网站ui，他们的设计太像’AI’了。所以就想到开发一个网站，集中很多核心的UI风格的提示词，可以方便我们产生出我们想要的界面。\n\n风格 : 提供 UI 设计风格网站模板 eg 扁平化设计, 极简主义\n组件 (提示词未完成 + 还有很多bug): 提供可复用的 UI 组件模板 eg 导览, 模态对话框, 加载骨架 etc\n布局 (未完成): 提供功能允许用户使用拖拽的方法拖拽元件组成基本的网页设计布局方案，从而生成关于布局安排的AI提示词\n\n在线演示 : www.uiprompt.site\nGithub 源码 (觉得有兴趣 不妨加个star? ) : GitHub - TonnyWong1052/UI-Prompt: A carefully crafted UI-style prompt template library that helps developers g",
-      "author": "Dog",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1189324",
-      "score": 20,
-      "engagement": {
-        "likes": 337,
-        "comments": 80,
-        "shares": 0
-      },
-      "topics": [
-        "AI",
-        "开发工具",
-        "SaaS"
-      ],
-      "publishedAt": "2025-11-19T17:36:08.539Z"
-    },
-    {
-      "id": "linuxdo:1148954",
-      "type": "failure_postmortem",
-      "title": "【已解决】Claude Code WebFetch 调用失败问题 - skipWebFetchPreflight 配置",
-      "body": "【已解决】Claude Code WebFetch 调用失败问题 - skipWebFetchPreflight 配置\n\n问题背景\n最近在使用 Claude Code 的 WebFetch 功能时，一直遇到这个错误：\nUnable to verify if domain xxx is safe to fetch. This may be due to network restrictions or enterprise security policies blocking claude.ai.\n\n不管是抓 Wikipedia、Hacker News 还是普通网站都不行，看到 佬友的帖子 也遇到了同样的问题，即使开了代理、配置了 Clash TUN 模式都不行。\n原因分析\n翻了下 GitHub，在 Issue #6388 找到了根本原因：\nWebFetch 在抓取目标网站之前，会先调用 https://claude.ai/api/web/domain_info?domain= 做安全验证。如果你的网络环境下 claude.ai 被墙或者被企业防火墙拦了，这个预检查就会失败，即使目标网站本",
-      "author": "rocsy",
-      "source": "linuxdo",
-      "sourceUrl": "https://linux.do/t/topic/1148954",
-      "score": 20,
-      "engagement": {
-        "likes": 113,
-        "comments": 41,
-        "shares": 0
-      },
-      "topics": [
         "AI",
         "开发工具"
       ],
-      "publishedAt": "2025-11-08T14:54:12.182Z"
+      "publishedAt": "2025-08-23T07:38:39.408Z",
+      "readingTime": 20
+    },
+    {
+      "id": "linuxdo:518264",
+      "slug": "ld-518264",
+      "type": "failure_postmortem",
+      "title": "🎉全站首个DeepSeek查余额震撼来袭",
+      "body": "🎉全站首个DeepSeek查余额震撼来袭<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>DeepSeek 余额查询</title>\n<link rel=\"stylesheet\" href=\"\n<style>\n:root {\n--primary-color: #2563eb;\n--secondary-color: #1e40af;\n--background-color: #f8fafc;\n--card-color: #ffffff;\n--text-color: #1e293b;\n--text-light: #64748b;\n--success-color: #10b981;\n--error-color: #ef4444;\n}\n* {\nmargin: 0;\npadding: 0;\nbox-sizing: border-box;\nfont-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n}\nbody {\nbackground-color: var(--background-color);\ncolor: var(--text-color);\nmin-height: 100vh;\ndisplay: flex;\njustify-content: center;\nalign-items: center;\npadding: 20px;\n}\n.container {\nwidth: 100%;\nmax-width: 480px;\n}\n.card {\nbackground-color: var(--card-color);\nborder-radius: 16px;\nbox-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);\npadding: 32px;\ntransition: transform 0.3s ease, box-shadow 0.3s ease;\n}\n.card:hover {\ntransform: translateY(-5px);\nbox-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);\n}\n.logo {\ndisplay: flex;\njustify-content: center;\nmargin-bottom: 0px;\nmargin-left: 16px;\n}\n.logo svg {\ntransform: translateX(-20px);\n}\nh1 {\ntext-align: center;\nfont-size: 1.8rem;\nmargin-bottom: 32px;\ncolor: var(--primary-color);\nfont-weight: 700;\n}\n.form-group {\nmargin-bottom: 24px;\n}\nlabel {\ndisplay: block;\nmargin-bottom: 8px;\nfont-weight: 600;\ncolor: var(--text-color);\n}\n.input-group {\nposition: relative;\ndisplay: flex;\nalign-items: center;\n}\ninput {\nwidth: 100%;\npadding: 14px 16px;\nborder: 2px solid #e2e8f0;\nborder-radius: 10px;\nfont-size: 1rem;\ntransition: all 0.3s ease;\noutline: none;\npadding-right: 45px;\n}\ninput:focus {\nborder-color: var(--primary-color);\nbox-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);\n}\n.toggle-password {\nposition: absolute;\nright: 12px;\nbackground: none;\nborder: none;\ncursor: pointer;\ncolor: var(--text-light);\npadding: 4px;\nfont-size: 1.1rem;\n}\n.toggle-password:hover {\ncolor: var(--primary-color);\n}\n.btn {\nwidth: 100%;\npadding: 14px;\nbackground-color: var(--primary-color);\ncolor: white;\nborder: none;\nborder-radius: 10px;\nfont-size: 1rem;\nfont-weight: 600;\ncursor: pointer;\ntransition: all 0.3s ease;\ndisplay: flex;\njustify-content: center;\nalign-items: center;\ngap: 8px;\n}\n.btn:hover {\nbackground-color: var(--secondary-color);\n}\n.btn:active {\ntransform: scale(0.98);\n}\n.btn:disabled {\nbackground-color: #94a3b8;\ncursor: not-allowed;\n}\n.result {\nmargin-top: 32px;\npadding: 24px;\nborder-radius: 12px;\nbackground-color: #f1f5f9;\ndisplay: none;\n}\n.result.show {\ndisplay: block;\nanimation: fadeIn 0.5s ease;\n}\n.result-title {\nfont-size: 1.2rem;\nfont-weight: 600;\nmargin-bottom: 16px;\ndisplay: flex;\nalign-items: center;\ngap: 8px;\n}\n.balance-info {\ndisplay: flex;\njustify-content: space-between;\npadding: 12px 0;\nborder-bottom: 1px dashed #cbd5e1;\n}\n.balance-info:last-child {\nborder-bottom: none;\n}\n.balance-label {\ncolor: var(--text-light);\nfont-weight: 500;\n}\n.balance-value {\nfont-weight: 700;\n}\n.loading {\ndisplay: none;\nanimation: spin 1s linear infinite;\n}\n.error-message {\ncolor: var(--error-color);\nmargin-top: 8px;\nfont-size: 0.9rem;\ndisplay: none;\n}\n.footer {\ntext-align: center;\nmargin-top: 24px;\ncolor: var(--text-light);\nfont-size: 0.9rem;\n}\nfadeIn {\nfrom { opacity: 0; transform: translateY(10px); }\nto { opacity: 1; transform: translateY(0); }\n}\nspin {\n0% { transform: rotate(0deg); }\n100% { transform: rotate(360deg); }\n}\n(max-width: 480px) {\n.card {\npadding: 24px;\n}\n}\n</style>\n</head>\n<body>\n<div class=\"container\">\n<div class=\"card\">\n<div class=\"logo\">\n<svg width=\"240\" height=\"60\" viewBox=\"0 0 180 60\" fill=\"none\" xmlns=\"\n<path d=\"M40 10L20 20V40L40 50L60 40V20L40 10Z\" fill=\"#2563eb\"/>\n<text x=\"65\" y=\"38\" font-family=\"Arial\" font-size=\"24\" font-weight=\"bold\" fill=\"#1e293b\">DeepSeek</text>\n</svg>\n</div>\n<h1>余额查询系统</h1>\n<div class=\"form-group\">\n<label for=\"api-key\">API 密钥</label>\n<div class=\"input-group\">\n<input type=\"password\" id=\"api-key\" placeholder=\"请输入您的 DeepSeek API Key\" required>\n<button type=\"button\" class=\"toggle-password\" id=\"toggle-password\">\n<i class=\"fas fa-eye\"></i>\n</button>\n</div>\n<div class=\"error-message\" id=\"error-message\"></div>\n</div>\n<button class=\"btn\" id=\"check-balance\">\n<span>查询余额</span>\n<i class=\"fas fa-spinner loading\" id=\"loading-icon\"></i>\n</button>\n<div class=\"result\" id=\"result\">\n<div class=\"result-title\">\n<i class=\"fas fa-wallet\"></i>\n<span>账户余额详情</span>\n</div>\n<div class=\"balance-info\">\n<div class=\"balance-label\">总余额</div>\n<div class=\"balance-value\" id=\"total-balance\">-- 元</div>\n</div>\n<div class=\"balance-info\">\n<div class=\"balance-label\">赠送余额</div>\n<div class=\"balance-value\" id=\"granted-balance\">-- 元</div>\n</div>\n<div class=\"balance-info\">\n<div class=\"balance-label\">充值余额</div>\n<div class=\"balance-value\" id=\"topped-up-balance\">-- 元</div>\n</div>\n<div class=\"balance-info\">\n<div class=\"balance-label\">账户状态</div>\n<div class=\"balance-value\" id=\"account-status\">--</div>\n</div>\n<div class=\"balance-info\">\n<div class=\"balance-label\">查询时间</div>\n<div class=\"b",
+      "author": "𝓕-𝓓𝓻𝓸𝓲𝓭",
+      "authorBio": "",
+      "score": 20,
+      "engagement": {
+        "likes": 120,
+        "comments": 28,
+        "shares": 0
+      },
+      "topics": [
+        "开发工具",
+        "设计"
+      ],
+      "publishedAt": "2025-03-28T03:36:32.854Z",
+      "readingTime": 20
     }
   ],
   "meta": {
-    "generatedAt": "2026-04-12T07:37:41.185Z",
-    "projectCount": 127,
-    "postCount": 31,
+    "generatedAt": "2026-04-12T12:07:19.964Z",
+    "projectCount": 129,
+    "postCount": 23,
     "sources": {
       "jike": 2613,
       "v2ex": 411,
