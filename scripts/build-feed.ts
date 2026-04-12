@@ -70,19 +70,83 @@ interface FeedCache {
 // ═══════════════════════════════════════════════════════════════
 
 const REJECT_HOSTS = new Set([
+  // 社交/社区
   'twitter.com', 'x.com', 'youtube.com', 'youtu.be', 'bilibili.com',
-  'reddit.com', 'news.ycombinator.com',
+  'reddit.com', 'news.ycombinator.com', 'weibo.com', 'douban.com',
+  'web.okjike.com', 'm.okjike.com', 'okjike.com', 'jike.city',
+  'linux.do', 'v2ex.com', 'coolapk.com', 'xiaoyuzhoufm.com',
+  'xiaohongshu.com', 'facebook.com', 'instagram.com', 'tiktok.com',
+  'taou.cn',  // 脉脉
+  // 内容/媒体/博客
   'wired.com', 'sspai.com', 'zhihu.com', 'juejin.cn',
-  'medium.com', 'substack.com', 'arxiv.org',
-  'web.okjike.com', 'm.okjike.com', 'okjike.com',
-  'linux.do', 'v2ex.com',
-  'image-qiniu.jellow.site',
+  'medium.com', 'substack.com', 'arxiv.org', 'infoq.cn',
+  'mp.weixin.qq.com', 'weixin.qq.com', 'blog.google',
+  'searchengineland.com', 'xiaobot.net', 'zhubai.love',
+  'bearblog.dev', 'barretlee.com', 'cnfeat.github.io',
+  'ezindie.com', 'lennysproductpass.com',
+  'bestblogs.dev', 'karpathy.bearblog.dev',
+  // 大平台（不是独立产品）
+  'apple.com', 'google.com', 'microsoft.com', 'baidu.com',
+  'pan.baidu.com', 'docs.cursor.com', 'sdk.vercel.ai',
+  'schema.org', 'testflight.apple.com',
+  'job.toutiao.com', 'bytedance.com', 'larkoffice.com',
+  'applink.feishu.cn', 'miracleplus.feishu.cn',
+  'openai.com', 'anthropic.com', 'skillhub.tencent.com',
+  'magecdn.com', 'opensource.guide',
+  'workflowy.com', 'promptbase.com', 'quickposes.com',
+  // 开发平台（别人的产品）
+  'vercel.com', 'netlify.app', 'huggingface.co',
+  'coze.cn', 'coze.com', 'poe.com', 'chat.openai.com',
+  'producthunt.com', 'starterstory.com', 'indiehackers.com',
+  'lobehub.com', 'monica.im', 'gitee.com',
+  'element-plus.org', 'opentiny.design', 'heroui.com',
+  'dora.run', 'gitpod.io', 'trello.com', 'youmind.com',
+  'nodejs.org', 'vitejs.cn', 'vitejs.dev',
+  'wordpress.com',  // 博客平台
+  'glitch.me',      // demo 平台
+  'zhipuai.cn',     // 智谱 AI
+  'stephenwolfram.com', 'lovable.app',
+  'bysocket.com',   // 个人博客
+  // 资源/下载
+  'greasyfork.org', 'packagecontrol.io', 'npmjs.com',
+  // 短链/中转/占位
+  'url.cn', 'b23.tv', 't.cn', 'dwz.cn', 'xurl.run',
+  'your-n8n-instance.com',
+  // App 下载直链
+  'android-release.jellow.site',
+  // 表单
+  'mikecrm.com',
+  // CDN / 云服务子域
+  'image-qiniu.jellow.site', 'aliyun-esa.net',
+])
+
+// GitHub 大厂/知名组织 — 他们的仓库不是独立开发者的产品（全小写比较）
+const GITHUB_ORG_BLACKLIST = new Set([
+  'ant-design', 'microsoft', 'google', 'facebook', 'meta',
+  'anthropics', 'openai', 'deepseek-ai', 'huggingface',
+  'paddlepaddle', 'langchain-ai', 'mui-org', 'immich-app',
+  'chromiumos', 'chromedevtools', 'nicegui',
+  'vercel', 'supabase', 'puppeteer', 'nodejs', 'nicegoodvibe',
+  'datawhalechina', 'github', 'roboflow',
+  'thu-sigs-aiid',
 ])
 
 function isProductUrl(url: string): boolean {
   try {
-    const host = new URL(url).hostname.replace('www.', '').toLowerCase()
-    return ![...REJECT_HOSTS].some(r => host.includes(r))
+    const u = new URL(url)
+    const host = u.hostname.replace('www.', '').toLowerCase()
+    if ([...REJECT_HOSTS].some(r => host.includes(r))) return false
+    // 拒绝纯 IP 或 localhost
+    if (/^\d+\.\d+\.\d+\.\d+/.test(host) || host === 'localhost') return false
+    // GitHub 大厂仓库 + GitHub Pages 个人站
+    if (host === 'github.com') {
+      const org = u.pathname.split('/').filter(Boolean)[0]?.toLowerCase()
+      if (org && GITHUB_ORG_BLACKLIST.has(org)) return false
+    }
+    if (host.endsWith('.github.io')) return false
+    // 拒绝 .apk / .zip / .pdf 直接下载链接
+    if (/\.(apk|zip|pdf|exe|dmg)$/i.test(u.pathname)) return false
+    return true
   } catch { return false }
 }
 
@@ -90,7 +154,90 @@ function isProductUrl(url: string): boolean {
 // 产品名提取
 // ═══════════════════════════════════════════════════════════════
 
+// 知名平台/工具名 — 不是独立开发者的产品
+const NAME_BLACKLIST = new Set([
+  // 大模型/AI 平台
+  'chatgpt', 'claude', 'deepseek', 'openai', 'anthropic', 'stability',
+  'huggingface', 'gemini', 'copilot', 'poe', 'coze', 'monica', 'midjourney',
+  // 知名工具/平台
+  'notion', 'vercel', 'github', 'gitlab', 'bitbucket', 'stackoverflow',
+  'figma', 'sketch', 'photoshop', 'canva', 'slack', 'discord', 'telegram',
+  'cursor', 'vscode', 'vim', 'emacs', 'jetbrains', 'xcode',
+  'wordpress', 'shopify', 'webflow', 'framer', 'workflowy',
+  'supabase', 'firebase', 'mongodb', 'postgres', 'redis', 'mysql',
+  'stripe', 'paypal', 'wechat', 'weixin', 'alipay',
+  'feishu', 'dingtalk', 'lark', 'n8n',
+  // 大厂
+  'google', 'apple', 'microsoft', 'facebook', 'meta', 'amazon',
+  'oracle', 'ibm', 'bytedance', 'tencent', 'alibaba', 'baidu',
+  'aws', 'azure', 'gcp', 'cloudflare', 'heroku', 'railway',
+  // 编程语言/框架
+  'flutter', 'react', 'vue', 'angular', 'svelte', 'nextjs', 'nuxt',
+  'tailwindcss', 'typescript', 'javascript', 'python', 'golang', 'rust',
+  'kubernetes', 'docker', 'nginx', 'linux', 'windows', 'macos', 'ios',
+  'chrome', 'android', 'safari',
+  // 太通用的英文词（不是产品名）
+  'mcp', 'sdk', 'api', 'cli', 'app', 'web', 'blog', 'docs', 'forum',
+  'chat', 'page', 'pages', 'home', 'site', 'tool', 'tools', 'code',
+  'data', 'file', 'test', 'demo', 'main', 'info', 'help', 'play',
+  'work', 'list', 'news', 'book', 'link', 'open', 'space', 'logo',
+  'job', 'jobs', 'pan', 'url', 'bash', 'https', 'http', 'name',
+  'support', 'platform', 'developer', 'learning', 'schema', 'remove',
+  'agents', 'agent', 'tokens', 'mirrors', 'archive', 'skills', 'skill',
+  'project', 'saas', 'svg', 'bot', 'mac', 'easy', 'vibe', 'curl',
+  'craft', 'reflect', 'translator', 'step1', 'fragments',
+  'nodejs', 'vitejs', 'puppeteer', 'trello', 'gitpod', 'dora',
+])
+
+function isNameBlacklisted(name: string): boolean {
+  return NAME_BLACKLIST.has(name.toLowerCase().trim())
+}
+
+// 名字质量检查
+function isNameQualityOk(name: string): boolean {
+  // 太短
+  if (name.length < 3) return false
+  // 纯数字或以数字开头的随机串
+  if (/^\d/.test(name) && !/\d{4}/.test(name)) return false
+  // 看起来像随机字符串（辅音密度过高，无元音）
+  const lower = name.toLowerCase()
+  const vowelRatio = (lower.match(/[aeiouy]/g) || []).length / lower.length
+  if (lower.length >= 4 && vowelRatio < 0.15 && !/[\u4e00-\u9fff]/.test(name)) return false
+  // URL 片段残留
+  if (/^(id\d+|chromewebstore|testflight|searchengineland|chatgpt\d)$/i.test(name)) return false
+  // 包含 UUID/hash 片段
+  if (/[0-9a-f]{8,}/i.test(name) && name.length > 15) return false
+  // 看起来像域名后缀组合 (D1v, B23, 0v0, etc.)
+  if (/^[A-Z0-9][a-z0-9]{1,2}$/i.test(name)) return false
+  // 人名（个人博客/主页，不是产品）— 名字+姓氏模式
+  if (/^[A-Z][a-z]+[A-Z][a-z]+$/.test(name) && name.length > 12) return false
+  // GitHub 风格的长连字符名超过 4 段通常是描述性的，不是产品名
+  if (name.split('-').length > 4) return false
+  // awesome-* 列表不是产品
+  if (/^awesome-/i.test(name)) return false
+  // chinese-independent-developer 等资源汇总
+  if (/^chinese-/i.test(name) && name.length > 20) return false
+  // SKILL-* 通常是 Claude skill，不是独立产品
+  if (/^SKILL-/i.test(name)) return false
+  return true
+}
+
 function extractName(url: string, body: string): string | null {
+  // 先从正文提取（优先级最高：maker 自己说的名字最准）
+  const textPatterns = [
+    /(?:做了|发布了?|上线了?|开源了?|推出了?)\s*(?:一个|一款)?\s*[「【《]([^」】》\n]{2,20})[」】》]/,
+    /(?:做了|发布了?|上线了?|开源了?|推出了?)\s*(?:一个|一款)?\s*([A-Za-z][\w.-]{2,25})/,
+    /^([A-Za-z][\w.-]{3,25})\s*[，,—\-:：|]/m,
+  ]
+  for (const p of textPatterns) {
+    const m = body.match(p)
+    if (m?.[1] && m[1].trim().length >= 2) {
+      const candidate = m[1].trim()
+      if (!isNameBlacklisted(candidate) && isNameQualityOk(candidate)) return candidate
+    }
+  }
+
+  // 再从 URL 提取
   try {
     const u = new URL(url)
     const host = u.hostname.replace('www.', '').toLowerCase()
@@ -98,7 +245,13 @@ function extractName(url: string, body: string): string | null {
     // GitHub 仓库
     if (host === 'github.com') {
       const parts = u.pathname.split('/').filter(Boolean)
-      if (parts.length >= 2 && parts[1].length >= 3) return parts[1]
+      if (parts.length >= 2 && parts[1].length >= 3) {
+        const repoName = parts[1]
+        // GitHub 仓库名如果含太多连字符（看起来像描述），取第一段
+        const segments = repoName.split('-')
+        const candidate = segments.length <= 3 ? repoName : segments.slice(0, 2).join('-')
+        if (!isNameBlacklisted(candidate) && isNameQualityOk(candidate)) return candidate
+      }
       return null
     }
 
@@ -111,23 +264,19 @@ function extractName(url: string, body: string): string | null {
       }
     }
 
+    // Chrome Web Store
+    if (host.includes('chromewebstore.google.com')) {
+      // 无法从 URL 提取有意义的名字
+      return null
+    }
+
     // 自有域名
     const domain = host.split('.')[0]
     if (domain.length >= 3 && domain.length <= 20) {
-      return domain.charAt(0).toUpperCase() + domain.slice(1)
+      const candidate = domain.charAt(0).toUpperCase() + domain.slice(1)
+      if (!isNameBlacklisted(candidate) && isNameQualityOk(candidate)) return candidate
     }
   } catch { /* ignore */ }
-
-  // 从正文提取
-  const patterns = [
-    /(?:做了|发布了?|上线了?|开源了?|推出了?)\s*(?:一个|一款)?\s*([A-Za-z][\w.-]{2,25})/,
-    /(?:做了|发布了?|上线了?|开源了?|推出了?)\s*(?:一个|一款)?\s*[「【《]([^」】》\n]{2,20})[」】》]/,
-    /^([A-Za-z][\w.-]{3,25})\s*[，,—\-:：|]/m,
-  ]
-  for (const p of patterns) {
-    const m = body.match(p)
-    if (m?.[1] && m[1].length >= 2) return m[1].trim()
-  }
 
   return null
 }

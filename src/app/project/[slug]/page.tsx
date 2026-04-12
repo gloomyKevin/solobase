@@ -50,8 +50,21 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     milestones.push({ date: p.publishedAt.slice(0, 10), text: "产品发布" });
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: p.name,
+    description: p.tagline,
+    url: p.url,
+    ...(p.screenshot && { image: p.screenshot }),
+    ...(p.author && { author: { "@type": "Person", name: p.author } }),
+    ...(p.publishedAt && { datePublished: p.publishedAt.slice(0, 10) }),
+    applicationCategory: p.topics?.[0] || "Utility",
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <style>{`.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}`}</style>
 
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10">
