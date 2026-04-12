@@ -18,6 +18,7 @@ export interface FeedProjectItem extends FeedItem {
   stage: string;
   stageColor: string;
   topics: string[];
+  author?: string;
 }
 
 export interface FeedPostItem extends FeedItem {
@@ -56,7 +57,7 @@ function ProjectCard({ item, onImageError }: { item: FeedProjectItem; onImageErr
   if (!imgOk) return null; // 图片加载失败，整个卡片隐藏
 
   return (
-    <a href={item.url} target="_blank" rel="noopener noreferrer" className="group block">
+    <Link href={`/project/${item.slug}`} target="_blank" className="group block">
       <article className="overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 cursor-pointer flex flex-col h-full">
         <div className="relative aspect-[16/10] overflow-hidden bg-muted shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -79,7 +80,7 @@ function ProjectCard({ item, onImageError }: { item: FeedProjectItem; onImageErr
           </div>
         </div>
       </article>
-    </a>
+    </Link>
   );
 }
 
@@ -97,13 +98,8 @@ function PostCard({ item }: { item: FeedPostItem }) {
         {item.body && !item.title && (
           <p className="text-[11px] text-muted-foreground/50 line-clamp-2 mt-1">{item.body.slice(0, 100)}</p>
         )}
-        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border/10">
-          {item.engagement.likes > 0 && (
-            <span className="text-[9px] text-muted-foreground/40">♡ {item.engagement.likes}</span>
-          )}
-          {item.engagement.comments > 0 && (
-            <span className="text-[9px] text-muted-foreground/40">💬 {item.engagement.comments}</span>
-          )}
+        <div className="flex items-center gap-3 mt-2 pt-2 border-t border-border/10">
+          <span className="text-[9px] text-muted-foreground/30">{item.author}</span>
           {item.topics[0] && (
             <span className="ml-auto text-[9px] text-muted-foreground/40 bg-muted/40 rounded-full px-1.5 py-0.5">{item.topics[0]}</span>
           )}

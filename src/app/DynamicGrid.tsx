@@ -315,7 +315,7 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
     case "A": {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[0];
       return (
-        <a href={p.url || `#`} target="_blank" rel="noopener noreferrer" className="block h-full"><article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
+        <a href={`/project/${p.slug}`} target="_blank" className="block h-full"><article className="group overflow-hidden rounded-2xl bg-card border border-border/40 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full flex flex-col md:flex-row cursor-pointer">
           <div className="relative md:w-[55%] shrink-0 aspect-[16/9] md:aspect-auto md:min-h-[200px] overflow-hidden bg-muted">
             <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/30 via-transparent to-transparent" />
@@ -359,7 +359,7 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
       const p = ps[seqIdx % Math.max(ps.length, 1)] ?? projects[seqIdx % projects.length];
       const badge = p.revenue ? { label: `💰 ${p.revenue}`, cls: "bg-secondary/10 text-secondary" } : p.founderType === "non_tech_ai" ? { label: "🤖 AI 做的", cls: "bg-primary/10 text-primary" } : null;
       return (
-        <a href={p.url || `#`} target="_blank" rel="noopener noreferrer" className="block h-full"><article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">
+        <a href={`/project/${p.slug}`} target="_blank" className="block h-full"><article className="group overflow-hidden rounded-xl border border-border/40 bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 h-full cursor-pointer flex flex-col">
           <div className="relative aspect-[16/10] overflow-hidden bg-muted shrink-0">
             <div className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
             {badge && <span className={`absolute top-2 left-2 rounded-full px-2 py-0.5 text-[9px] font-semibold backdrop-blur-sm ${badge.cls}`}>{badge.label}</span>}
@@ -381,8 +381,8 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
     case "C": {
       const isIdea = item.dataSrc === "想法";
       const list = isIdea
-        ? IDEAS.slice(0, 3).map(i => ({ url: "", title: i.text.slice(0, 20) + "...", sub: i.author, img: "", dot: "#F59E0B", meta: "想法" }))
-        : ps.slice(0, 3).map(p => ({ url: p.url || "", title: p.name, sub: p.tagline, img: p.screenshot, dot: p.stageColor, meta: SN[p.stage] }));
+        ? IDEAS.slice(0, 3).map(i => ({ slug: "", title: i.text.slice(0, 20) + "...", sub: i.author, img: "", dot: "#F59E0B", meta: "想法" }))
+        : ps.slice(0, 3).map(p => ({ slug: p.slug, title: p.name, sub: p.tagline, img: p.screenshot, dot: p.stageColor, meta: SN[p.stage] }));
       return (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 h-full">
           {list.map((c, i) => {
@@ -403,7 +403,7 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
                 </div>
               </article>
             );
-            return c.url ? <a key={i} href={c.url} target="_blank" rel="noopener noreferrer">{inner}</a> : <div key={i}>{inner}</div>;
+            return c.slug ? <a key={i} href={`/project/${c.slug}`} target="_blank">{inner}</a> : <div key={i}>{inner}</div>;
           })}
         </div>
       );
@@ -485,7 +485,7 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
           </div>
           <div className="flex-1 space-y-px">
             {list.map((p, i) => (
-              <a key={p.slug} href={p.url || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 hover:bg-muted/30 transition-colors cursor-pointer">
+              <a key={p.slug} href={`/project/${p.slug}`} className="flex items-center gap-2.5 rounded-lg px-1.5 py-1.5 hover:bg-muted/30 transition-colors cursor-pointer">
                 <span className="font-latin text-[13px] font-bold text-muted-foreground/20 w-4 text-right shrink-0">{i + 1}</span>
                 <div className="shrink-0 h-8 w-8 rounded-md bg-muted overflow-hidden"><div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${p.screenshot})` }} /></div>
                 <div className="min-w-0 flex-1">
@@ -508,7 +508,7 @@ function RenderContainer({ item, projects, seqIdx, onTopicFilter }: {
           <h3 className="text-[13px] font-semibold mb-3">{item.dataSrc}</h3>
           <div className="flex gap-2.5 overflow-x-auto no-scrollbar -mr-4 pr-4 flex-1">
             {list.map(p => (
-              <a key={p.slug} href={p.url || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 w-[45%] sm:w-[28%] cursor-pointer group/inner">
+              <a key={p.slug} href={`/project/${p.slug}`} className="shrink-0 w-[45%] sm:w-[28%] cursor-pointer group/inner">
                 <div className="aspect-[16/10] rounded-lg bg-muted overflow-hidden mb-2">
                   <div className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover/inner:scale-[1.03]" style={{ backgroundImage: `url(${p.screenshot})` }} />
                 </div>
