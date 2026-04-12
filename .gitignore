@@ -40,6 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# database
+*.db
+*.db-shm
+*.db-wal
+
 # crawl
 scripts/crawl/config.json
 data/raw/

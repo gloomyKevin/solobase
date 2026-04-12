@@ -309,6 +309,7 @@ export const projects = sqliteTable('projects', {
   tagline:      text('tagline'),
   description:  text('description'),
   url:          text('url').notNull(),
+  urlNormalized:text('url_normalized'),  // normalizeUrl(url)，用于 deterministic 去重
   screenshot:   text('screenshot'),
   stage:        text('stage'),
   topics:       text('topics', { mode: 'json' }).$type<string[]>(),
@@ -325,6 +326,7 @@ export const projects = sqliteTable('projects', {
   updatedAt:    integer('updated_at', { mode: 'timestamp' }).notNull(),
 }, (t) => ({
   idxUrl:     index('idx_proj_url').on(t.url),
+  idxUrlNorm: index('idx_proj_url_norm').on(t.urlNormalized),
   idxPublish: index('idx_proj_publish').on(t.publishStatus),
 }))
 
@@ -432,8 +434,16 @@ export const submissions = sqliteTable('submissions', {
   makerId:        text('maker_id').references(() => makers.id),
 
   // 原始输入（maker 的原始声音，永远保留）
+  // claim_request 类型额外携带 verificationData，避免 verify-claim.ts 用 as any 读取
   rawInput:     text('raw_input', { mode: 'json' })
-                  .$type<{ type: 'url' | 'text'; content: string }>(),
+                  .$type<
+                    | { type: 'url';  content: string }
+                    | { type: 'text'; content: string }
+                    | { type: 'claim_request'; content: string; verificationData: {
+                        githubRepo?: string   // "owner/repo"，用于 github_file 验证
+                        jikeHandle?: string   // 即刻用户 ID，用于 jike_bio 验证
+                      }}
+                  >(),
 
   // AI 处理结果（草稿）
   aiExtracted:  text('ai_extracted', { mode: 'json' }),
@@ -629,11 +639,36 @@ WeeklyMetrics 中 llm_error_rate 可追踪失败趋势。
 
 ### 6.4 去重两阶段
 
-**Phase 1（Deterministic blocking）**：URL 精确匹配 → 高置信候选，写 `dedup_candidates`。
+**Phase 1（Deterministic blocking）**：URL 规范化后精确匹配 → 高置信候选，写 `dedup_candidates`。
+
+URL 比较前必须先规范化，否则 `http://colamd.com`、`https://www.colamd.com/` 和 `https://colamd.com` 会被识别为三条不同记录：
+
+```typescript
+// scripts/utils/normalize-url.ts
+export function normalizeUrl(raw: string): string {
+  try {
+    const u = new URL(raw)
+    const host = u.hostname.replace(/^www\./, '').toLowerCase()
+    const path = u.pathname.replace(/\/+$/, '').toLowerCase()  // 去尾部斜杠
+    return `${host}${path}`
+  } catch {
+    return raw.toLowerCase().trim()
+  }
+}
+// "https://www.Colamd.com/app/" → "colamd.com/app"
+// "http://colamd.com"          → "colamd.com"
+```
+
+去重流程：
+1. 新 project 写入时计算 `normalizeUrl(project.url)` 存为 `url_normalized`（可加索引列，或查询时动态计算）
+2. Enrichment Agent Step 5 对 `inferredProductUrl` 做同样规范化后查 `projects.url_normalized`
+3. 命中 → 写 `dedup_candidates`（detectionMethod='url_normalized'，不自动 merge）
+
+> **字段补充**：`projects` 表需增加 `urlNormalized text` 列（Phase 1 迁移时随 schema 一并建好），加 `idxUrlNorm index('idx_proj_url_norm').on(t.urlNormalized)` 索引。
 
 **Phase 2（Embedding candidates）**：`cos_sim > 0.90` → 候选对写入，**不自动合并**。同赛道不同产品的相似度可能同样很高，必须由编辑确认后才执行 merge，且 merge 操作可回退（split action）。
 
-> **Embedding 在 Phase 8 才启用**。Phase 1-7 期间只做 Phase 1（URL 精确匹配）。
+> **Embedding 在 Phase 8 才启用**。Phase 1-7 期间只做 Phase 1（URL 规范化匹配）。
 
 ---
 
@@ -802,6 +837,28 @@ trust_level=maker_verified（完成认领）
   ③ 不含明确垃圾信号（同确定性规则）
   ④ LLM 快速判断：is_indie_maker_content = true
 ```
+
+### 7.4 trust_level → 字段写权限映射
+
+`trust_level` 有两层含义需要显式分开：**数据来源可信度** 和 **字段写入权限**。混用会在 claim 完成、maker 覆盖字段后产生语义模糊。
+
+下表规定每个 trust 级别对产品字段的写权限：
+
+| 字段类别 | scraped | native_submitted | maker_verified | editor |
+|---------|---------|-----------------|----------------|--------|
+| name · tagline · url | 系统写入，不可自改 | patch（进 submissions，等轻审核） | 直接写 | 直接写 |
+| description · stage · topics | 系统写入，不可自改 | patch（进 submissions，等轻审核） | 直接写 | 直接写 |
+| screenshot | 系统写入（Microlink） | patch | 直接写 | 直接写 |
+| featuredInsight · vibes | ❌ | ❌ | ❌ | 直接写 |
+| is_editors_pick · editorNotes | ❌ | ❌ | ❌ | 直接写 |
+| trustLevel · publishStatus | ❌ | ❌ | ❌ | 直接写 |
+| product_updates（时间线） | ❌ | ❌ | 直接写（零审核） | 直接写 |
+
+**关键规则：**
+
+- `native_submitted` 提交的是 **patch 请求**（写入 `submissions.makerOverrides`），不直接覆写 `projects` 表字段。patch 通过轻审核后才 merge 进 canonical。
+- `maker_verified` 直接写 `projects` 表，但 **编辑专属字段**（featuredInsight、editorNotes、is_editors_pick）即使是 maker_verified 也无法修改，避免 maker 覆盖编辑的策划表达。
+- 验证通过（domain_txt/github_file/jike_bio）≠ 信任升级。验证只证明"控制了这个资产"，写权限升级发生在编辑轻审批之后。
 
 ---
 
@@ -1104,8 +1161,9 @@ async function checkPendingVerifications() {
         break
       }
       case 'github_file': {
-        // sub 需要包含 githubRepo 字段（存储在 rawInput.githubRepo）
-        const githubRepo = (sub.rawInput as any)?.githubRepo
+        // rawInput 类型为 claim_request，verificationData.githubRepo 有类型保障
+        if (sub.rawInput?.type !== 'claim_request') break
+        const githubRepo = sub.rawInput.verificationData?.githubRepo
         if (!githubRepo) break
         const url = `https://raw.githubusercontent.com/${githubRepo}/main/.solobase-verify`
         const text = await fetch(url).then(r => r.ok ? r.text() : '').catch(() => '')
@@ -1113,7 +1171,8 @@ async function checkPendingVerifications() {
         break
       }
       case 'jike_bio': {
-        const jikeHandle = (sub.rawInput as any)?.jikeHandle
+        if (sub.rawInput?.type !== 'claim_request') break
+        const jikeHandle = sub.rawInput.verificationData?.jikeHandle
         if (!jikeHandle) break
         // 即刻 profile 是公开 HTML，抓取 bio 字段
         const html = await fetch(`https://web.okjike.com/u/${jikeHandle}`)

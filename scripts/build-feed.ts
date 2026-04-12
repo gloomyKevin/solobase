@@ -629,4 +629,136 @@ function main() {
   console.log(`  生成时间: ${cache.meta.generatedAt}`)
 }
 
-main()
+// ═══════════════════════════════════════════════════════════════
+// DB 模式（Phase 1+）：从 Turso 读取 publish_status=published 的记录
+// 运行：npx tsx scripts/build-feed.ts --from-db
+// ═══════════════════════════════════════════════════════════════
+
+const STAGE_COLOR: Record<string, string> = {
+  idea:       '#9B8AFB',
+  building:   '#60A5FA',
+  launched:   '#34D399',
+  revenue:    '#FBBF24',
+  paused:     '#9CA3AF',
+  shutdown:   '#F87171',
+}
+
+async function buildFromDB() {
+  console.log('=== 构建 feed.json（DB 模式）===\n')
+
+  const { createClient } = await import('@libsql/client')
+  const { drizzle }      = await import('drizzle-orm/libsql')
+  const { eq, and }      = await import('drizzle-orm')
+  const schema           = await import('../db/schema')
+
+  const client = createClient({
+    url: process.env.DATABASE_URL_LOCAL ?? process.env.DATABASE_URL ?? 'file:./local.db',
+    authToken: process.env.DATABASE_AUTH_TOKEN,
+  })
+  const db = drizzle(client, { schema })
+
+  // ── 查询已发布的 projects ──
+  const dbProjects = await db.query.projects.findMany({
+    where: and(
+      eq(schema.projects.publishStatus, 'published'),
+      eq(schema.projects.entityStatus,  'active'),
+    ),
+    orderBy: (p, { desc }) => [desc(p.publishedAtEditorial)],
+    with: {
+      // 通过 project_sources 关联到 content_item，获取 source/engagement 信息
+      sources: {
+        where: (ps: any, { eq }: any) => eq(ps.sourceType, 'primary_mention'),
+        limit: 1,
+        with: { contentItem: true },
+      },
+    },
+  })
+
+  console.log(`  DB projects (published): ${dbProjects.length}`)
+
+  const projects: FeedProject[] = dbProjects.map(p => {
+    const ci = (p as any).sources?.[0]?.contentItem
+
+    return {
+      slug:        p.slug,
+      name:        p.name,
+      tagline:     p.tagline ?? (ci?.body?.replace(/\n/g, ' ').slice(0, 80) ?? ''),
+      description: p.description ?? ci?.body ?? '',
+      url:         p.url,
+      screenshot:  p.screenshot ?? null,
+      stage:       p.stage ?? 'launched',
+      stageColor:  STAGE_COLOR[p.stage ?? 'launched'] ?? STAGE_COLOR.launched,
+      score:       0, // Enrichment Agent 运行后补充
+      topics:      (p.topics ?? []) as string[],
+      author:      ci?.authorName ?? '',
+      authorBio:   ci?.authorBio ?? '',
+      source:      ci?.source ?? 'unknown',
+      sourceUrl:   ci?.sourceUrl ?? '',
+      engagement:  { likes: ci?.likesCount ?? 0, comments: ci?.commentsCount ?? 0 },
+      topComments: (ci?.topComments ?? []) as { author: string; content: string; likes: number }[],
+      publishedAt: p.publishedAtEditorial?.toISOString() ?? new Date().toISOString(),
+    } as FeedProject
+  })
+
+  // ── 查询已发布的 posts（content_items）──
+  const dbPosts = await db.query.contentItems.findMany({
+    where: and(
+      eq(schema.contentItems.publishStatus, 'published'),
+      eq(schema.contentItems.entityStatus,  'active'),
+    ),
+    orderBy: (ci: any, { desc }: any) => [desc(ci.publishedAtEditorial)],
+  })
+
+  console.log(`  DB posts (published):    ${dbPosts.length}`)
+
+  const posts: FeedPost[] = dbPosts.map(ci => ({
+    id:          ci.id,
+    slug:        makePostSlug(ci.id),
+    type:        ci.contentType ?? 'other',
+    title:       ci.inferredProductName ?? '',
+    body:        ci.body.slice(0, 5000),
+    author:      ci.authorName,
+    authorBio:   ci.authorBio ?? '',
+    score:       0,
+    engagement:  { likes: ci.likesCount ?? 0, comments: ci.commentsCount ?? 0 },
+    topics:      (ci.topics ?? []) as string[],
+    publishedAt: ci.publishedAt?.toISOString() ?? '',
+    readingTime: estimateReadingTime(ci.body),
+  }))
+
+  // ── 降级：DB 为空时回退到 JSON ──
+  if (projects.length === 0) {
+    console.log('\n  DB 中无已发布 projects，回退到 JSON 模式...\n')
+    return main()
+  }
+
+  // ── 输出 ──
+  const sourceCounts: Record<string, number> = {}
+  for (const p of projects) sourceCounts[p.source] = (sourceCounts[p.source] ?? 0) + 1
+
+  const cache: FeedCache = {
+    projects,
+    posts,
+    meta: {
+      generatedAt:  new Date().toISOString(),
+      projectCount: projects.length,
+      postCount:    posts.length,
+      sources:      sourceCounts,
+    },
+  }
+
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(cache, null, 2), 'utf-8')
+  const sizeMB = (fs.statSync(OUTPUT_PATH).size / 1024 / 1024).toFixed(1)
+
+  console.log(`\n=== 完成（DB 模式）===`)
+  console.log(`  data/feed.json: ${sizeMB}MB`)
+  console.log(`  Project: ${projects.length}`)
+  console.log(`  Post:    ${posts.length}`)
+}
+
+// ── 入口选择 ──
+if (process.argv.includes('--from-db')) {
+  buildFromDB().catch(err => { console.error(err); process.exit(1) })
+} else {
+  main()
+}
