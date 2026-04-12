@@ -16,6 +16,7 @@
     "pipeline:daily": "tsx scripts/pipeline/run.ts && npm run feed:db"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.88.0",
     "@libsql/client": "^0.17.2",
     "@resvg/resvg-js": "^2.6.2",
     "class-variance-authority": "^0.7.1",
