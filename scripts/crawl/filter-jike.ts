@@ -94,8 +94,8 @@ function scorePost(post: any): ScoredPost | null {
   // ── 硬过滤：直接丢弃 ──
   if (isNoise(content)) return null
   if (post.type === 'REPOST') return null
-  // 没有外部链接 + 没有图片 = 大概率纯讨论，丢弃
-  if (links.length === 0 && (!post.pictures || post.pictures.length === 0)) return null
+  // 极短且无链接无图 = 无信息量，丢弃（保留纯文字的长帖，如独立开发复盘）
+  if (links.length === 0 && (!post.pictures || post.pictures.length === 0) && content.length < 100) return null
 
   let score = 0
   const signals: string[] = []

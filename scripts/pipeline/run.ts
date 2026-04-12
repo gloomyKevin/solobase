@@ -182,12 +182,24 @@ function standardizePH(raw: any): StandardItem {
 // ═══════════════════════════════════════════════════════════════════
 
 function standardizeV2EX(raw: any): StandardItem {
+  const htmlContent = raw.content || ''
+
+  // 提取嵌在 HTML 中的图片
+  const imgPattern = /<img[^>]+src=["']([^"']+)["']/gi
+  const imgUrls: string[] = []
+  let imgMatch: RegExpExecArray | null
+  while ((imgMatch = imgPattern.exec(htmlContent)) !== null) {
+    const u = imgMatch[1]
+    if (u.startsWith('http')) imgUrls.push(u)
+  }
+  const imgSet = new Set(imgUrls)
+
+  // 从 content 中提取外部链接（排除 v2ex 站内链接和已归入 media 的图片 URL）
   const links: string[] = []
-  // 从 content 中提取 URL
   const urlPattern = /https?:\/\/[^\s<\])"']+/g
-  const bodyUrls = (raw.content || '').match(urlPattern) || []
+  const bodyUrls = htmlContent.match(urlPattern) || []
   for (const url of bodyUrls) {
-    if (!url.includes('v2ex.com') && !url.includes('imgur.com/a/')) links.push(url)
+    if (!url.includes('v2ex.com') && !imgSet.has(url)) links.push(url)
   }
 
   // 回复提取高赞/有价值的
@@ -207,7 +219,7 @@ function standardizeV2EX(raw: any): StandardItem {
     source_url: raw.url || `https://www.v2ex.com/t/${raw.id}`,
     body: `${raw.title || ''}\n\n${raw.content || ''}`,
     title: raw.title || '',
-    media: [], // V2EX 帖子图片嵌在 content HTML 里，暂不提取
+    media: [...new Set(imgUrls)],
     external_links: [...new Set(links)],
     author_name: raw.member?.username || '',
     author_id: raw.member?.username || '',
@@ -242,11 +254,24 @@ function standardizeV2EX(raw: any): StandardItem {
 // ═══════════════════════════════════════════════════════════════════
 
 function standardizeLinuxdo(raw: any): StandardItem {
+  const bodyText = raw.body || ''
+
+  // 提取图片 URL（支持 Markdown 语法和 HTML img 标签）
+  const imgUrls: string[] = []
+  const mdImgRe = /!\[[^\]]*\]\((https?:\/\/[^)]+)\)/g
+  const htmlImgRe = /<img[^>]+src=["'](https?:\/\/[^"']+)["']/gi
+  let m: RegExpExecArray | null
+  while ((m = mdImgRe.exec(bodyText)) !== null) imgUrls.push(m[1])
+  while ((m = htmlImgRe.exec(bodyText)) !== null) imgUrls.push(m[1])
+  const uniqueImgUrls = [...new Set(imgUrls)]
+  const imgSet = new Set(uniqueImgUrls)
+
+  // 提取外部链接（排除已归入 media 的图片 URL）
   const links: string[] = []
   const urlPattern = /https?:\/\/[^\s<\])"']+/g
-  const bodyUrls = (raw.body || '').match(urlPattern) || []
+  const bodyUrls = bodyText.match(urlPattern) || []
   for (const url of bodyUrls) {
-    if (!url.includes('linux.do')) links.push(url)
+    if (!url.includes('linux.do') && !imgSet.has(url)) links.push(url)
   }
 
   const topComments = (raw.top_replies || []).map((r: any) => ({
@@ -262,7 +287,7 @@ function standardizeLinuxdo(raw: any): StandardItem {
     source_url: `https://linux.do/t/topic/${raw.id}`,
     body: `${raw.title || ''}\n\n${raw.body || ''}`,
     title: raw.title || '',
-    media: [],
+    media: uniqueImgUrls,
     external_links: [...new Set(links)],
     author_name: raw.author_name || raw.author || '',
     author_id: raw.author || '',

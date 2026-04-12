@@ -471,19 +471,20 @@ function main() {
     const slug = slugify(name)
     if (!slug || seenSlugs.has(slug)) continue
 
-    // 图片验证
+    // 图片验证（无截图的项目允许通过，显示为文字卡片）
     const images = (item.media || []).filter((u: string) => u?.startsWith('https://'))
-    if (images.length === 0) continue
+    const firstImage = images[0] || ''
 
-    // 抽样验证图片（前 50 个全验，之后每 5 个验 1 个节省时间）
+    // 有图片时才做可用性校验
     let imgValid = true
-    if (imgChecked < 50 || imgChecked % 5 === 0) {
-      imgValid = validateImageSync(images[0])
-      if (!imgValid) imgFailed++
+    if (firstImage) {
+      if (imgChecked < 50 || imgChecked % 5 === 0) {
+        imgValid = validateImageSync(firstImage)
+        if (!imgValid) imgFailed++
+      }
+      imgChecked++
+      if (!imgValid) continue
     }
-    imgChecked++
-
-    if (!imgValid) continue
 
     seenSlugs.add(slug)
     seenUrls.add(primaryUrl)
@@ -497,7 +498,7 @@ function main() {
       tagline: extractTagline(body),
       description: body.slice(0, 1000),
       url: primaryUrl,
-      screenshot: images[0],
+      screenshot: firstImage,
       stage,
       stageColor: stageColorMap[stage] || '#9CA3AF',
       score: item.density_score?.total ?? 0,
